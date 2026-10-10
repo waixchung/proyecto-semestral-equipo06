@@ -31,6 +31,54 @@ h1, h2, h3, h4, h5, h6 {
   font-family: Georgia, "Times New Roman", serif;
   color: #1F2937;
   line-height: 1.3;
+/* ---------- 1. Variables: paleta de cinco colores y tipografías ---------- */
+:root {
+  --eq06-resaltado: #A61E4D;   /* acento y acciones */
+  --eq06-oscuro: #1F2937;      /* texto y hover */
+  --eq06-fondo: #F3F4F6;       /* fondo y filas */
+  --eq06-superficie: #FFFFFF;  /* superficies */
+  --eq06-borde: #6B7280;       /* solo bordes, nunca texto */
+  --eq06-fuente-titulo: Georgia, "Times New Roman", serif;
+  --eq06-fuente-texto: Arial, Helvetica, sans-serif;
+}
+
+/* ---------- 2. Reglas universales ---------- */
+* {
+  box-sizing: border-box;
+}
+
+/* Color de resaltado universal: foco visible en cualquier elemento */
+*:focus {
+  outline: 2px solid var(--eq06-resaltado);
+  outline-offset: 2px;
+}
+
+/* Color de resaltado universal: texto seleccionado */
+::selection {
+  background: var(--eq06-resaltado);
+  color: var(--eq06-superficie);
+}
+
+/* ---------- 3. Base: cuerpo y tipografía ---------- */
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--eq06-fondo);
+  color: var(--eq06-oscuro);
+  font-family: var(--eq06-fuente-texto);
+  font-size: 16px;
+  line-height: 1.5;
+  text-align: left;
+}
+
+/* Selector de agrupación: títulos y subtítulos en Georgia */
+h1, h2, h3 {
+  margin: 0 0 16px;
+  font-family: var(--eq06-fuente-titulo);
+  font-weight: bold;
+  color: var(--eq06-oscuro);
 }
 
 h1 {
@@ -55,6 +103,10 @@ a {
 
 a:hover {
   color: #1F2937;
+}
+
+p {
+  margin: 0;
 }
 
 img {
@@ -320,6 +372,258 @@ img {
 }
 
 /* --- Tarjetas / indicadores --- */
+}
+
+/* Enlaces: acento, subrayados, sin fondo ni borde; hover oscuro */
+a {
+  color: var(--eq06-resaltado);
+  text-decoration: underline;
+  background: none;
+  border: 0;
+}
+
+a:hover {
+  color: var(--eq06-oscuro);
+}
+
+/* Texto solo para lectores de pantalla (títulos de sección sin mostrar) */
+.eq06-oculto {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* ---------- 4. Componentes comunes ---------- */
+
+/* Botones (sirve para <a> y <button>) */
+.eq06-boton {
+  display: inline-block;
+  padding: 12px 16px;
+  border: 1px solid var(--eq06-resaltado);
+  border-radius: 4px;
+  background: var(--eq06-resaltado);
+  color: var(--eq06-superficie);
+  font-family: var(--eq06-fuente-texto);
+  font-size: 16px;
+  line-height: 1.5;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.eq06-boton:hover {
+  background: var(--eq06-oscuro);
+  border-color: var(--eq06-oscuro);
+  color: var(--eq06-superficie);
+}
+
+/* Tablas */
+.eq06-tabla-contenedor {
+  overflow-x: auto; /* en móvil: desplazamiento horizontal */
+}
+
+.eq06-tabla {
+  width: 100%;
+  min-width: 560px;
+  border-collapse: collapse;
+  background: var(--eq06-superficie);
+}
+
+.eq06-tabla caption {
+  padding-bottom: 8px;
+  text-align: left;
+}
+
+.eq06-tabla th,
+.eq06-tabla td {
+  padding: 12px;
+  border: 1px solid var(--eq06-borde);
+  color: var(--eq06-oscuro);
+  text-align: left;
+}
+
+.eq06-tabla thead th {
+  background: var(--eq06-fondo);
+}
+
+.eq06-tabla tbody tr:hover {
+  background: var(--eq06-fondo);
+}
+
+/* Etiqueta "Stock bajo": texto + color (no depende solo del color) */
+.eq06-etiqueta-bajo {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 0 8px;
+  border: 1px solid var(--eq06-resaltado);
+  border-radius: 4px;
+  color: var(--eq06-resaltado);
+  font-size: 14px;
+  font-weight: bold;
+}
+
+/* Formularios (base común; se usará en las pantallas con formulario) */
+.eq06-conjunto {
+  margin: 0 0 16px;
+  padding: 16px;
+  border: 1px solid var(--eq06-borde);
+  border-radius: 4px;
+  background: var(--eq06-superficie);
+}
+
+.eq06-conjunto legend {
+  padding: 0 8px;
+  font-family: var(--eq06-fuente-titulo);
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.eq06-grupo-campo {
+  margin-bottom: 16px;
+}
+
+.eq06-etiqueta {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.eq06-campo {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--eq06-borde);
+  border-radius: 4px;
+  background: var(--eq06-superficie);
+  color: var(--eq06-oscuro);
+  font-family: var(--eq06-fuente-texto);
+  font-size: 16px;
+}
+
+.eq06-campo:hover {
+  border-color: var(--eq06-oscuro);
+}
+
+.eq06-campo:focus {
+  outline: 2px solid var(--eq06-resaltado);
+  outline-offset: 0;
+}
+
+/* ---------- 5. Estructura común: encabezado, menú, contenido y pie ---------- */
+.eq06-encabezado {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 16px;
+  padding: 12px 24px;
+  background: var(--eq06-superficie);
+  border-bottom: 4px solid var(--eq06-resaltado);
+}
+
+.eq06-marca {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--eq06-fuente-titulo);
+  font-size: 20px;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.eq06-sesion {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.eq06-rol {
+  margin-right: 8px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.eq06-cuerpo {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 220px 1fr;
+}
+
+.eq06-menu-lateral {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 16px;
+  background: var(--eq06-superficie);
+  border-right: 1px solid var(--eq06-borde);
+}
+
+.eq06-menu-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.eq06-menu-lista a {
+  display: block;
+  padding: 8px 12px;
+  border-left: 4px solid transparent;
+}
+
+.eq06-menu-lista .eq06-activo {
+  background: var(--eq06-fondo);
+  border-left-color: var(--eq06-resaltado);
+  font-weight: bold;
+}
+
+.eq06-negocio-figura {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+}
+
+.eq06-negocio-figura img {
+  display: block;
+}
+
+.eq06-negocio-figura figcaption {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+/* Selector de id: contenedor del contenido principal */
+#eq06-principal {
+  min-width: 0; /* permite el desplazamiento horizontal de las tablas */
+  padding: 24px;
+}
+
+.eq06-pie {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px 24px;
+  padding: 12px 24px;
+  background: var(--eq06-superficie);
+  border-top: 1px solid var(--eq06-borde);
+}
+
+/* ---------- 6. Dashboard del Encargado (P04.2) ---------- */
+.eq06-seccion {
+  margin-bottom: 24px;
+}
+
 .eq06-indicadores {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
@@ -565,5 +869,227 @@ img {
 
   h1 {
     font-size: 24px;
+  }
+}
+}
+
+.eq06-indicador {
+  padding: 16px;
+  background: var(--eq06-superficie);
+  border: 1px solid var(--eq06-borde);
+  border-radius: 4px;
+}
+
+.eq06-indicador-valor {
+  font-family: var(--eq06-fuente-titulo);
+  font-size: 28px;
+  font-weight: bold;
+  color: var(--eq06-resaltado);
+}
+
+.eq06-indicador-titulo {
+  margin: 0;
+  font-family: var(--eq06-fuente-texto);
+  font-size: 14px;
+}
+
+.eq06-acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+/* ---------- 7. Móvil (los tamaños de texto se conservan) ---------- */
+@media (max-width: 768px) {
+  .eq06-encabezado,
+  .eq06-pie {
+    padding-right: 16px;
+    padding-left: 16px;
+  }
+
+  .eq06-cuerpo {
+    grid-template-columns: 1fr;
+  }
+
+  .eq06-menu-lateral {
+    border-right: 0;
+    border-bottom: 1px solid var(--eq06-borde);
+  }
+
+  .eq06-menu-lista {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  #eq06-principal {
+    padding: 16px;
+  }
+}
+
+/* Restablecer contraseña */
+.eq06-restablecer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.eq06-tarjeta-clave {
+  width: 100%;
+  max-width: 440px;
+  padding: 24px;
+  background: var(--eq06-superficie);
+  border: 1px solid var(--eq06-borde);
+  border-radius: 4px;
+}
+
+.eq06-tarjeta-clave .eq06-boton {
+  width: 100%;
+}
+
+.eq06-ayuda-clave {
+  width: 100%;
+  margin-top: 16px;
+}
+
+.eq06-aviso-clave {
+  margin-top: 12px;
+  padding: 16px;
+  border-left: 4px solid var(--eq06-resaltado);
+  background: var(--eq06-superficie);
+}
+
+@media (max-width: 768px) {
+  .eq06-tarjeta-clave {
+    padding: 16px;
+  }
+}
+
+/* Usuarios y asignación de roles */
+.eq06-formulario-usuario {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.eq06-boton-secundario {
+  background: var(--eq06-superficie);
+  color: var(--eq06-resaltado);
+}
+
+.eq06-dialogo-usuario {
+  position: static;
+  width: 100%;
+  max-width: 560px;
+  margin: 16px 0;
+  padding: 16px;
+  border: 2px solid var(--eq06-resaltado);
+  border-radius: 4px;
+  background: var(--eq06-superficie);
+  color: var(--eq06-oscuro);
+}
+
+.eq06-dialogo-usuario .eq06-boton {
+  margin-top: 16px;
+}
+
+.eq06-boton:disabled {
+  background: var(--eq06-fondo);
+  border-color: var(--eq06-borde);
+  color: var(--eq06-oscuro);
+  cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .eq06-formulario-usuario {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Categorías y unidades de medida */
+.eq06-selector-catalogo {
+  display: inline-block;
+  margin: 0 8px 16px 0;
+  padding: 12px 16px;
+  border: 1px solid var(--eq06-borde);
+  border-radius: 4px;
+  background: var(--eq06-superficie);
+  cursor: pointer;
+}
+
+.eq06-selector-catalogo:hover {
+  border-color: var(--eq06-resaltado);
+}
+
+#eq06-vista-categorias:checked + label,
+#eq06-vista-unidades:checked + label {
+  background: var(--eq06-resaltado);
+  border-color: var(--eq06-resaltado);
+  color: var(--eq06-superficie);
+}
+
+#eq06-vista-categorias:focus-visible + label,
+#eq06-vista-unidades:focus-visible + label {
+  outline: 2px solid var(--eq06-resaltado);
+  outline-offset: 2px;
+}
+
+.eq06-panel-catalogo {
+  display: none;
+  margin-bottom: 24px;
+}
+
+#eq06-vista-categorias:checked ~ #eq06-panel-categorias,
+#eq06-vista-unidades:checked ~ #eq06-panel-unidades {
+  display: block;
+}
+
+.eq06-formulario-catalogo {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+@media (max-width: 768px) {
+  .eq06-formulario-catalogo {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Recurso no disponible */
+.eq06-recurso {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+}
+
+.eq06-tarjeta-recurso {
+  width: 100%;
+  max-width: 560px;
+  padding: 32px;
+  border: 1px solid var(--eq06-borde);
+  border-top: 4px solid var(--eq06-resaltado);
+  border-radius: 4px;
+  background: var(--eq06-superficie);
+}
+
+.eq06-codigo-recurso {
+  margin-bottom: 16px;
+  color: var(--eq06-resaltado);
+}
+
+.eq06-retorno-recurso {
+  margin-top: 24px;
+}
+
+.eq06-ayuda-recurso {
+  width: 100%;
+  max-width: 560px;
+}
+
+@media (max-width: 768px) {
+  .eq06-tarjeta-recurso {
+    padding: 20px;
   }
 }

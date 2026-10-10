@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Aviso de acceso denegado a una función del sistema de inventario.">
+  <title>Acceso denegado | Inventario</title>
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+
+  <header class="eq06-encabezado">
+    <a class="eq06-marca" href="dashboard-encargado.html">
+      <img src="img/logo.svg" alt="Logotipo de Inventario" width="40" height="40">
+      <span>Inventario</span>
+    </a>
+    <div class="eq06-sesion">
+      <p class="eq06-rol">Encargado de inventario</p>
+      <a href="#">Perfil</a>
+      <a href="#">Salir</a>
+    </div>
+  </header>
+
+  <div class="eq06-cuerpo">
+
+    <div class="eq06-menu-lateral">
+      <nav aria-label="Menú principal">
+        <ul class="eq06-menu-lista">
+          <li><a href="dashboard-encargado.html">Dashboard</a></li>
+          <li><a href="#">Inventario</a></li>
+          <li><a href="#">Recepción</a></li>
+          <li><a href="#">Salidas</a></li>
+          <li><a href="#">Movimientos</a></li>
+          <li><a href="#">Reportes y alertas</a></li>
+        </ul>
+      </nav>
+
+      <aside>
+        <figure class="eq06-negocio-figura">
+          <img src="img/negocio.svg" alt="Ilustración de un local de comida" width="64" height="64">
+          <figcaption>Negocio de comida</figcaption>
+        </figure>
+      </aside>
+    </div>
+
+    <main id="eq06-principal" class="eq06-recurso">
+      <section class="eq06-tarjeta-recurso" aria-labelledby="eq06-titulo-recurso">
+        <h1 id="eq06-titulo-recurso">Acceso denegado</h1>
+        <p>Tu cuenta no tiene permiso para acceder a esta función.</p>
+        <nav class="eq06-acciones eq06-retorno-recurso" aria-label="Opciones de retorno">
+          <a class="eq06-boton" href="dashboard-encargado.html">Volver al dashboard</a>
+        </nav>
+      </section>
+      <aside class="eq06-ayuda-recurso" aria-labelledby="eq06-titulo-retorno">
+        <h2 class="eq06-oculto" id="eq06-titulo-retorno">Retorno sin sesión</h2>
+        <article>
+          <h3 class="eq06-oculto">Acceso al inicio del sistema</h3>
+          <p>Si no has iniciado sesión, <a href="#">volver al inicio</a>.</p>
+        </article>
+      </aside>
+      <!-- Vista estática para Encargado de inventario.
+           Al implementar la lógica se ajustarán menú y destino al rol.
+           Sin sesión, se mostrará navegación pública y retorno al Inicio (P01).
+           La autorización debe comprobarse también para URL directa.
+           Esta página no impone permisos ni devuelve un estado HTTP real. -->
+    </main>
+
+  </div>
+
+  <footer class="eq06-pie">
+    <p>Inventario · Pequeños negocios de comida</p>
+    <p>Control de existencias · <em>Sin pagos ni facturación</em></p>
+  </footer>
+
+</body>
+</html>
