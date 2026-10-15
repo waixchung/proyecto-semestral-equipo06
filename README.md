@@ -28,13 +28,13 @@ Repositorio principal para el desarrollo del proyecto semestral de desarrollo we
 ![Validacion de pantalla "Detalle de Producto"](/img/Validaciones/detalle-producto-validado.png)
 
 ### Pantalla "Formulario de Productos"
-![Validacion de pantalla "Formulario de Productos"](/img/Validaciones/formulario-productos-validado.png)
+![Validacion de pantalla "Formulario de Productos"](/img/Validaciones/formulario-producto-validado.png)
 
 ### Pantalla "Formulario de Proveedores"
 ![Validacion de pantalla "Formulario de Proveedores"](/img/Validaciones/formulario-proveedores-validado.png)
 
 ### Pantalla "Gestion de Productos"
-![Validacion de pantalla "Gestión de Productos"](/img/Validaciones/gestion-productos-validado.png)
+![Validacion de pantalla "Gestión de Productos"](/img/Validaciones/gestion-producto-validado.png)
 
 ### Pantalla "Gestión de Proveedores"
 ![Validacion de pantalla "Gestión de Proveedores"](/img/Validaciones/gestion-proveedores-validado.png)
