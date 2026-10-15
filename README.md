@@ -76,8 +76,8 @@ Repositorio principal para el desarrollo del proyecto semestral de desarrollo we
 ![Validacion de pantalla "Restablecer Contraseña"](/img/Validaciones/restablecer-contrasena-validado.png)
 
 ### Pantalla "Usuarios y Roles"
-![Validacion de pantalla "Usuarios y Roles"](/img/Validaciones/usuarios-roles-validados.png)
+![Validacion de pantalla "Usuarios y Roles"](/img/Validaciones/usuarios-roles-validado.png)
 
 ## Validaciones W3C - CSS
 ### esilos.css
-![Validacion de archivo "estilos.css"](/img/Validaciones/estilos-css-validado.png)
+![Validacion de archivo "estilos.css"](/img/Validaciones/estilos-css-validados.png)
