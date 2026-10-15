@@ -10,4 +10,4 @@ Repositorio principal para el desarrollo del proyecto semestral de desarrollo we
 
 ## Validaciones W3C - HTML
 ### Pantalla "Acceso Denegado"
-![Validacion de pantalla "Acceso denegado"](proyecto-semestral-equipo06/img/Validaciones/acceso-denegado-validado.png)
+![Validacion de pantalla "Acceso denegado"](/img/Validaciones/acceso-denegado-validado.png)
