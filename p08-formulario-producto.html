@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulario de producto · Inventario</title>
+  <meta name="description" content="Alta o edición de producto. Stock mínimo configurable por producto (CE-01).">
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+  <header class="eq06-header">
+    <a href="p04-dashboard.html" class="eq06-logo">[logo] Inventario</a>
+    <div class="eq06-header-right">
+      <span class="eq06-rol">Administrador</span>
+      <div class="eq06-header-actions">
+        <a href="#" class="eq06-btn eq06-btn-secundario">Perfil</a>
+        <a href="#" class="eq06-btn eq06-btn-secundario">Salir</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="eq06-layout">
+    <aside class="eq06-sidebar">
+      <nav aria-label="Menú principal">
+        <ul>
+          <li><a href="p04-dashboard.html">Dashboard</a></li>
+          <li><a href="p05-listado-inventario.html">Inventario</a></li>
+          <li><a href="p07-gestion-productos.html" class="eq06-activo">Productos</a></li>
+          <li><a href="#">Proveedores</a></li>
+          <li><a href="#">Movimientos</a></li>
+          <li><a href="#">Reportes y alertas</a></li>
+          <li><a href="#">Administración</a></li>
+        </ul>
+      </nav>
+      <p class="eq06-nota" style="padding: 16px 20px;">Negocio de comida</p>
+    </aside>
+
+    <main class="eq06-main">
+      <div class="eq06-titulo-pagina">
+        <h1>Nuevo producto / Editar producto</h1>
+      </div>
+
+      <section class="eq06-seccion">
+        <form class="eq06-form" method="post" action="#" id="eq06-form-producto">
+          <fieldset>
+            <legend>Datos del producto</legend>
+
+            <div class="eq06-fila-campos">
+              <div class="eq06-campo-grupo">
+                <label for="eq06-nombre">Nombre <abbr title="obligatorio">*</abbr></label>
+                <input type="text" id="eq06-nombre" name="nombre" class="eq06-campo"
+                       required minlength="2" maxlength="100" autocomplete="off"
+                       placeholder="Ej. Arroz" value="Arroz">
+              </div>
+              <div class="eq06-campo-grupo">
+                <label for="eq06-codigo">Código único <abbr title="obligatorio">*</abbr></label>
+                <input type="text" id="eq06-codigo" name="codigo" class="eq06-campo"
+                       required pattern="PR-[0-9]{3,}" maxlength="20" autocomplete="off"
+                       placeholder="PR-001" value="PR-001"
+                       title="Formato: PR- seguido de números">
+              </div>
+            </div>
+
+            <div class="eq06-fila-campos">
+              <div class="eq06-campo-grupo">
+                <label for="eq06-categoria-form">Categoría <abbr title="obligatorio">*</abbr></label>
+                <select id="eq06-categoria-form" name="categoria" class="eq06-campo" required>
+                  <option value="">Seleccione…</option>
+                  <option value="granos" selected>Granos</option>
+                  <option value="aceites">Aceites</option>
+                  <option value="vegetales">Vegetales</option>
+                </select>
+              </div>
+              <div class="eq06-campo-grupo">
+                <label for="eq06-unidad">Unidad de medida <abbr title="obligatorio">*</abbr></label>
+                <select id="eq06-unidad" name="unidad" class="eq06-campo" required>
+                  <option value="">Seleccione…</option>
+                  <option value="kg" selected>kg</option>
+                  <option value="L">L</option>
+                  <option value="und">und</option>
+                </select>
+                <p class="eq06-nota">Con historial: unidad bloqueada si altera su interpretación.</p>
+              </div>
+            </div>
+
+            <div class="eq06-fila-campos">
+              <div class="eq06-campo-grupo">
+                <label for="eq06-stock-min">Stock mínimo <abbr title="obligatorio">*</abbr> · CE-01</label>
+                <input type="number" id="eq06-stock-min" name="stock_minimo" class="eq06-campo"
+                       required min="0" step="0.01" value="8"
+                       placeholder="0">
+                <p class="eq06-nota">CE-01: mínimo propio del producto, en su unidad.</p>
+              </div>
+              <div class="eq06-campo-grupo">
+                <label for="eq06-proveedor">Proveedor principal</label>
+                <select id="eq06-proveedor" name="proveedor" class="eq06-campo">
+                  <option value="">Sin proveedor</option>
+                  <option value="dist-central" selected>Distribuidora Central</option>
+                  <option value="mayorista-norte">Mayorista Norte</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="eq06-campo-grupo">
+              <label for="eq06-estado-form">Estado</label>
+              <select id="eq06-estado-form" name="estado" class="eq06-campo">
+                <option value="activo" selected>Activo</option>
+                <option value="inactivo">Inactivo</option>
+              </select>
+            </div>
+
+            <div class="eq06-alerta eq06-alerta-info" role="note">
+              <strong>RB-01:</strong> saldo &lt; mínimo → Stock bajo; saldo = mínimo → Normal.
+              No hay edición directa del stock desde este formulario.
+            </div>
+
+            <div class="eq06-acciones-form">
+              <button type="submit" class="eq06-btn">Guardar</button>
+              <a href="p07-gestion-productos.html" class="eq06-btn eq06-btn-secundario">Cancelar</a>
+            </div>
+          </fieldset>
+        </form>
+      </section>
+    </main>
+  </div>
+
+  <footer class="eq06-footer">
+    <span>Inventario · Pequeños negocios de comida</span>
+    <span>Control de existencias · Sin pagos ni facturación</span>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Panel de administración del sistema de inventario: acceso exclusivo del Administrador a usuarios y roles, categorías, unidades de medida, productos y proveedores.">
+  <title>Administración del sistema | Inventario</title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+
+  <header class="eq06-encabezado">
+    <div class="eq06-encabezado-interno">
+      <a class="eq06-marca" href="p04-dashboard.html">
+        <img src="logo.svg" alt="Logotipo de Inventario" width="40" height="40">
+        <span>Inventario</span>
+      </a>
+      <div class="eq06-sesion">
+        <strong>Administrador</strong>
+        <a href="p16-perfil.html">Perfil</a>
+        <a href="p01-inicio.html">Salir</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="eq06-cuerpo">
+
+    <nav class="eq06-menu" aria-label="Menú principal">
+      <ul class="eq06-menu-lista">
+        <li><a href="p04-dashboard.html">Dashboard</a></li>
+        <li><a href="p05-inventario.html">Inventario</a></li>
+        <li><a href="p07-productos.html">Productos</a></li>
+        <li><a href="p09-proveedores.html">Proveedores</a></li>
+        <li><a href="p13-movimientos.html">Movimientos</a></li>
+        <li><a href="p14-reportes.html">Reportes y alertas</a></li>
+        <li><a href="p15-administracion.html" aria-current="page">Administración</a></li>
+      </ul>
+      <p class="eq06-menu-pie">Negocio de comida</p>
+    </nav>
+
+    <main id="eq06-contenido">
+      <h1>Administración del sistema</h1>
+
+      <section class="eq06-seccion" aria-labelledby="eq06-titulo-modulos">
+        <h2 id="eq06-titulo-modulos">Usuarios y catálogos</h2>
+
+        <nav class="eq06-tarjetas" aria-label="Accesos de administración">
+          <article class="eq06-tarjeta">
+            <h3>Usuarios y roles</h3>
+            <p class="eq06-texto-tarjeta">Cuentas, permisos y activación</p>
+            <a href="c04-usuarios-roles.html">Abrir → C04</a>
+          </article>
+
+          <article class="eq06-tarjeta">
+            <h3>Categorías</h3>
+            <p class="eq06-texto-tarjeta">Agrupación de productos</p>
+            <a href="c05-categorias-unidades.html">Abrir → C05</a>
+          </article>
+
+          <article class="eq06-tarjeta">
+            <h3>Unidades de medida</h3>
+            <p class="eq06-texto-tarjeta"><abbr title="kilogramos">kg</abbr>, <abbr title="litros">L</abbr>, unidades y otras</p>
+            <a href="c05-categorias-unidades.html">Abrir → C05</a>
+          </article>
+
+          <article class="eq06-tarjeta">
+            <h3>Productos</h3>
+            <p class="eq06-texto-tarjeta">Catálogo y stock mínimo</p>
+            <a href="p07-productos.html">Abrir → P07</a>
+          </article>
+
+          <article class="eq06-tarjeta">
+            <h3>Proveedores</h3>
+            <p class="eq06-texto-tarjeta">Datos de contacto y estado</p>
+            <a href="p09-proveedores.html">Abrir → P09</a>
+          </article>
+        </nav>
+      </section>
+    </main>
+
+  </div>
+
+  <footer class="eq06-pie">
+    <div class="eq06-pie-interno">
+      <p><strong>Inventario</strong> · Pequeños negocios de comida</p>
+      <p>Control de existencias · Sin pagos ni facturación</p>
+    </div>
+  </footer>
+
+</body>
+</html>
