@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Administración de cuentas y asignación de roles para el sistema de inventario de pequeños negocios de comida.">
+  <title>Usuarios y asignación de roles | Inventario</title>
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+
+  <header class="eq06-encabezado">
+    <a class="eq06-marca" href="dashboard-administrador.html">
+      <img src="img/logo.svg" alt="Logotipo de Inventario" width="40" height="40">
+      <span>Inventario</span>
+    </a>
+    <div class="eq06-sesion">
+      <p class="eq06-rol">Administrador</p>
+      <a href="#">Perfil</a>
+      <a href="#">Salir</a>
+    </div>
+  </header>
+
+  <div class="eq06-cuerpo">
+
+    <div class="eq06-menu-lateral">
+      <nav aria-label="Menú principal">
+        <ul class="eq06-menu-lista">
+          <li><a href="dashboard-administrador.html">Dashboard</a></li>
+          <li><a href="listado-inventario.html">Inventario</a></li>
+          <li><a href="gestion-productos.html">Productos</a></li>
+          <li><a href="gestion-proveedores.html">Proveedores</a></li>
+          <li><a href="historial-movimientos.html">Movimientos</a></li>
+          <li><a href="reportes-alertas.html">Reportes y alertas</a></li>
+          <li><a class="eq06-activo" href="usuarios-roles.html" aria-current="page">Administración</a></li>
+        </ul>
+      </nav>
+
+      <aside>
+        <figure class="eq06-negocio-figura">
+          <img src="img/negocio.svg" alt="Ilustración de un local de comida" width="64" height="64">
+          <figcaption>Negocio de comida</figcaption>
+        </figure>
+      </aside>
+    </div>
+
+    <main id="eq06-principal">
+      <h1>Usuarios y roles</h1>
+
+      <section class="eq06-seccion" aria-labelledby="eq06-titulo-busqueda">
+        <h2 class="eq06-oculto" id="eq06-titulo-busqueda">Buscar cuenta</h2>
+        <form method="post" action="#">
+          <fieldset class="eq06-conjunto">
+            <legend>Buscar cuenta</legend>
+            <div class="eq06-grupo-campo">
+              <label class="eq06-etiqueta" for="eq06-buscar-cuenta">Nombre o correo</label>
+              <input class="eq06-campo" type="search" id="eq06-buscar-cuenta"
+                     name="eq06-buscar-cuenta" maxlength="100" autocomplete="off"
+                     placeholder="Ejemplo: Ana o ana@ejemplo.com">
+            </div>
+            <div class="eq06-acciones">
+              <button class="eq06-boton" type="submit">Buscar</button>
+              <a class="eq06-boton eq06-boton-secundario" href="#eq06-panel-usuario">Nueva cuenta</a>       <!-- PENDIENTE FORMULARIO DE USUARIOS. -->
+            </div>
+          </fieldset>
+        </form>
+      </section>
+
+      <!-- Datos de ejemplo; editar solo lleva al panel, sin cargar registros. -->
+      <section class="eq06-seccion" aria-labelledby="eq06-titulo-cuentas">
+        <h2 class="eq06-oculto" id="eq06-titulo-cuentas">Cuentas registradas</h2>
+        <div class="eq06-tabla-contenedor">
+          <table class="eq06-tabla">
+            <caption>Cuentas de ejemplo y sus roles asignados</caption>
+            <thead>
+              <tr>
+                <th scope="col">Usuario</th>
+                <th scope="col">Correo</th>
+                <th scope="col">Rol</th>
+                <th scope="col">Estado</th>
+                <th scope="col">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">Ana</th>
+                <td>ana@ejemplo.com</td>
+                <td>Recepcionista</td>
+                <td>Activa</td>
+                <td>
+                  <a href="#eq06-panel-usuario" aria-label="Editar la cuenta de Ana">Editar</a> /
+                  <button class="eq06-boton eq06-boton-secundario" type="button" aria-label="Desactivar la cuenta de Ana">Desactivar</button>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">Luis</th>
+                <td>luis@ejemplo.com</td>
+                <td>Encargado</td>
+                <td>Activa</td>
+                <td>
+                  <a href="#eq06-panel-usuario" aria-label="Editar la cuenta de Luis">Editar</a> /
+                  <button class="eq06-boton eq06-boton-secundario" type="button" aria-label="Desactivar la cuenta de Luis">Desactivar</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="eq06-seccion" id="eq06-panel-usuario" aria-labelledby="eq06-titulo-panel">
+        <h2 id="eq06-titulo-panel">Panel de creación / edición</h2>
+        <form method="post" action="#">
+          <fieldset class="eq06-conjunto">
+            <legend>Datos de la cuenta</legend>
+            <div class="eq06-formulario-usuario">
+              <div class="eq06-grupo-campo">
+                <label class="eq06-etiqueta" for="eq06-nombre-usuario">Nombre *</label>
+                <input class="eq06-campo" type="text" id="eq06-nombre-usuario"
+                       name="eq06-nombre-usuario" required minlength="2" maxlength="80"
+                       autocomplete="name" placeholder="Ejemplo: Ana">
+              </div>
+              <div class="eq06-grupo-campo">
+                <label class="eq06-etiqueta" for="eq06-correo-usuario">Correo electrónico *</label>
+                <input class="eq06-campo" type="email" id="eq06-correo-usuario"
+                       name="eq06-correo-usuario" required maxlength="100"
+                       autocomplete="email" placeholder="ana@ejemplo.com">
+              </div>
+              <div class="eq06-grupo-campo">
+                <label class="eq06-etiqueta" for="eq06-roles-usuario">Rol(es) válidos *</label>
+                <select class="eq06-campo" id="eq06-roles-usuario" name="eq06-roles-usuario"
+                        multiple size="3" required aria-describedby="eq06-ayuda-roles">
+                  <option value="administrador">Administrador</option>
+                  <option value="encargado">Encargado</option>
+                  <option value="recepcionista">Recepcionista</option>
+                </select>
+                <p id="eq06-ayuda-roles">Selecciona al menos un rol. En escritorio, usa Ctrl (Windows) o Command (Mac) para seleccionar varios.</p>
+              </div>
+              <div class="eq06-grupo-campo">
+                <label class="eq06-etiqueta" for="eq06-estado-usuario">Estado</label>
+                <select class="eq06-campo" id="eq06-estado-usuario" name="eq06-estado-usuario">
+                  <option value="activa">Activa</option>
+                  <option value="inactiva">Inactiva</option>
+                </select>
+              </div>
+            </div>
+            <p>Los campos con * son obligatorios.</p>
+          </fieldset>
+          <div class="eq06-acciones">
+            <button class="eq06-boton" type="submit">Guardar</button>
+            <button class="eq06-boton eq06-boton-secundario" type="reset">Cancelar</button>
+          </div>
+          <!-- Cancelar restablece los campos; no navega ni guarda datos. -->
+        </form>
+      </section>
+
+      <section class="eq06-seccion" aria-labelledby="eq06-titulo-reglas">
+        <h2 id="eq06-titulo-reglas">Consideraciones de administración</h2>
+        <article>
+          <h3 class="eq06-oculto">Reglas para cuentas y roles</h3>
+          <ul>
+            <li>Cada cuenta debe tener <strong>al menos un rol válido</strong>.</li>
+            <li>No se puede desactivar ni quitar el rol al <strong>último administrador activo</strong>.</li>
+            <li>Los roles se administran aquí; no se editan desde el perfil personal.</li>
+            <li>El alta y la entrega de contraseña están <em>pendientes de definición</em>.</li>
+          </ul>
+          <!-- Ejemplo de diálogo sin JavaScript. En el sistema final se mostrará
+               solo al intentar desactivar o quitar el rol al último administrador. -->
+          <details>
+            <summary>Ver ejemplo de operación bloqueada</summary>
+            <dialog open class="eq06-dialogo-usuario" aria-labelledby="eq06-titulo-bloqueo">
+              <h3 id="eq06-titulo-bloqueo">Operación no permitida</h3>
+              <p>No puedes desactivar ni quitar el rol al último administrador activo. Debe quedar otro administrador activo para realizar este cambio.</p>
+              <button class="eq06-boton" type="button" disabled>Desactivar cuenta</button>
+            </dialog>
+          </details>
+        </article>
+      </section>
+      <!-- Maqueta HTML/CSS: no busca, carga, guarda ni desactiva cuentas.
+           La autorización y la protección del último administrador requieren lógica futura. -->
+    </main>
+  </div>
+
+  <footer class="eq06-pie">
+    <p>Inventario · Pequeños negocios de comida</p>
+    <p>Control de existencias · <em>Sin pagos ni facturación</em></p>
+  </footer>
+</body>
+</html>
