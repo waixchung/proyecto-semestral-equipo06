@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detalle de producto · Inventario</title>
+  <meta name="description" content="Detalle del producto Arroz PR-001. Stock actual, mínimo, historial de movimientos.">
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+  <header class="eq06-header">
+    <a href="dashboard-administrador.html" class="eq06-logo">[logo] Inventario</a>
+    <div class="eq06-header-right">
+      <span class="eq06-rol">Administrador</span>
+      <div class="eq06-header-actions">
+        <a href="perfil-usuario.html" class="eq06-btn eq06-btn-secundario">Perfil</a>
+        <a href="inicio-sesion.html" class="eq06-btn eq06-btn-secundario">Salir</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="eq06-layout">
+    <aside class="eq06-sidebar">
+      <nav aria-label="Menú principal">
+        <ul>
+          <li><a href="dashboard-administrador.html">Dashboard</a></li>
+          <li><a href="listado-inventario.html">Inventario</a></li>
+          <li><a href="gestion-productos.html">Productos</a></li>
+          <li><a href="gestion-proveedores.html">Proveedores</a></li>
+          <li><a href="historial-movimientos.html">Movimientos</a></li>
+          <li><a href="reportes-alertas.html">Reportes y alertas</a></li>
+          <li><a href="panel-administracion.html">Administración</a></li>
+        </ul>
+      </nav>
+      <p class="eq06-nota" style="padding: 16px 20px;">Negocio de comida</p>
+    </aside>
+
+    <main class="eq06-main">
+      <div class="eq06-titulo-pagina">
+        <h1>Arroz · <abbr title="Código de producto">PR-001</abbr></h1>
+        <a href="formulario-producto.html" class="eq06-btn">Editar</a>
+      </div>
+
+      <section class="eq06-seccion" aria-labelledby="datos-producto">
+        <h2 id="datos-producto" class="eq06-sr-only">Datos del producto</h2>
+        <dl class="eq06-detalle-grid">
+          <div class="eq06-detalle-item">
+            <dt>Categoría</dt>
+            <dd>Granos</dd>
+          </div>
+          <div class="eq06-detalle-item">
+            <dt>Unidad</dt>
+            <dd>kg</dd>
+          </div>
+          <div class="eq06-detalle-item">
+            <dt>Proveedor principal</dt>
+            <dd>Distribuidora Central</dd>
+          </div>
+          <div class="eq06-detalle-item">
+            <dt>Stock actual</dt>
+            <dd>5 kg · <span class="eq06-badge eq06-badge-bajo">Stock bajo</span></dd>
+          </div>
+          <div class="eq06-detalle-item">
+            <dt>Stock mínimo</dt>
+            <dd>8 kg</dd>
+          </div>
+          <div class="eq06-detalle-item">
+            <dt>Estado del producto</dt>
+            <dd><span class="eq06-badge eq06-badge-activo">Activo</span></dd>
+          </div>
+        </dl>
+      </section>
+
+      <section class="eq06-seccion">
+        <h2>Historial del producto · Más reciente primero</h2>
+        <div class="eq06-tabla-wrap">
+          <table class="eq06-tabla">
+            <caption>Movimientos del producto Arroz</caption>
+            <thead>
+              <tr>
+                <th scope="col">Fecha</th>
+                <th scope="col">Tipo</th>
+                <th scope="col">Cantidad</th>
+                <th scope="col">Usuario</th>
+                <th scope="col">Referencia</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><time datetime="2026-10-05T10:30">05/10/2026 10:30</time></td>
+                <td>Entrada</td>
+                <td>+5 kg</td>
+                <td>Ana</td>
+                <td>REC-0021</td>
+              </tr>
+              <tr>
+                <td><time datetime="2026-10-04T16:10">04/10/2026 16:10</time></td>
+                <td>Salida</td>
+                <td>−3 kg</td>
+                <td>Luis</td>
+                <td>SAL-0034</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="eq06-mt-16">
+          <a href="listado-inventario.html" class="eq06-btn eq06-btn-secundario">Volver</a>
+        </p>
+        <p class="eq06-nota eq06-mt-8">Recepcionista: mismos datos básicos, sin botón Editar.</p>
+      </section>
+    </main>
+  </div>
+
+  <footer class="eq06-footer">
+    <span>Inventario · Pequeños negocios de comida</span>
+    <span>Control de existencias · Sin pagos ni facturación</span>
+  </footer>
+</body>
+</html>
