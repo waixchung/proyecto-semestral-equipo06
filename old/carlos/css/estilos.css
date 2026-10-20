@@ -1,65 +1,483 @@
-/* =========================================================
-   Inventario · Pequeños negocios de comida
-   Hoja de estilos — Prefijo de equipo: eq06-
-   Acento: #A61E4D
-   ========================================================= */
+/* Inventario para pequenos negocios de comida - Equipo 06
+   CSS unificado de CSS UNIFICADO.txt y estilos.css.
+   Declaraciones identicas deduplicadas; variantes conservadas.
+   Acento principal: #A61E4D. */
 
-/* --- Universal --- */
+
+:root {
+  --eq06-acento: #A61E4D;
+  --eq06-claro: #F3F4F6;
+  --eq06-blanco: #FFFFFF;
+}
+
+* {
+  accent-color: #A61E4D;
+}
+
+*:focus-visible {
+  outline: 2px solid #A61E4D;
+  outline-offset: 2px;
+}
+
+::selection {
+  background: #A61E4D;
+  color: #FFFFFF;
+}
+
+body {
+  background: var(--eq06-claro);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  margin: 0 0 12px;
+  color: var(--eq06-oscuro);
+}
+
+h3 {
+  font-size: 16px;
+}
+
+p {
+  margin: 0 0 12px;
+}
+
+#eq06-contenido {
+  min-width: 0;
+}
+
+.eq06-pagina {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: var(--eq06-blanco);
+}
+
+.eq06-encabezado {
+  gap: 12px 16px;
+  padding: 12px 16px;
+  background: var(--eq06-claro);
+  border-bottom: 1px solid var(--eq06-borde);
+}
+
+.eq06-marca {
+  font-family: Georgia, "Times New Roman", serif;
+  color: var(--eq06-oscuro);
+}
+
+.eq06-rol {
+  margin: 0;
+  font-weight: 700;
+}
+
+.eq06-acciones {
+  align-items: center;
+  gap: 8px 16px;
+}
+
+.eq06-cuerpo {
+  grid-template-columns: 220px minmax(0, 1fr);
+}
+
+.eq06-menu {
+  padding: 16px;
+  background: var(--eq06-claro);
+  border-right: 1px solid var(--eq06-borde);
+}
+
+.eq06-menu ul {
+  list-style: none;
+  margin: 0 0 24px;
+  padding: 0;
+}
+
+.eq06-menu li {
+  margin-bottom: 8px;
+  padding: 4px 8px;
+  border-left: 4px solid transparent;
+}
+
+.eq06-menu li.eq06-activo {
+  background: var(--eq06-blanco);
+  border-left-color: var(--eq06-acento);
+}
+
+.eq06-menu li.eq06-activo a {
+  font-weight: 700;
+}
+
+.eq06-negocio {
+  font-size: 14px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.eq06-principal {
+  padding: 24px;
+  background: var(--eq06-blanco);
+}
+
+.eq06-pie {
+  gap: 8px 16px;
+  padding: 12px 16px;
+  background: var(--eq06-claro);
+}
+
+.eq06-pie p {
+  margin: 0;
+}
+
+.eq06-oculto {
+  clip: rect(0, 0, 0, 0);
+}
+
+.eq06-enlace, .eq06-menu a {
+  color: var(--eq06-acento);
+  text-decoration: underline;
+  background: none;
+  border: 0;
+}
+
+.eq06-enlace:hover, .eq06-menu a:hover {
+  color: var(--eq06-oscuro);
+}
+
+.eq06-boton {
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 700;
+  color: var(--eq06-blanco);
+  background: var(--eq06-acento);
+  border: 1px solid var(--eq06-acento);
+  text-align: center;
+}
+
+.eq06-boton-sec {
+  color: var(--eq06-acento);
+  background: var(--eq06-blanco);
+}
+
+.eq06-boton-sec:hover {
+  color: var(--eq06-blanco);
+}
+
+.eq06-boton-ancho {
+  display: block;
+  width: 100%;
+}
+
+.eq06-fila-botones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  margin: 16px 0 24px;
+}
+
+.eq06-heroe {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  align-items: center;
+}
+
+.eq06-ilustracion {
+  background: var(--eq06-claro);
+  border: 1px solid var(--eq06-borde);
+  padding: 16px;
+  text-align: center;
+}
+
+.eq06-figura {
+  margin: 0;
+}
+
+.eq06-figura figcaption {
+  margin-top: 8px;
+}
+
+.eq06-tarjetas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.eq06-tarjeta {
+  padding: 16px;
+  background: var(--eq06-blanco);
+  border: 1px solid var(--eq06-borde);
+  border-top: 4px solid var(--eq06-acento);
+}
+
+.eq06-tarjeta p:last-child {
+  margin-bottom: 0;
+}
+
+.eq06-caja {
+  max-width: 440px;
+  margin: 0 auto;
+}
+
+.eq06-formulario {
+  margin: 0;
+}
+
+.eq06-conjunto {
+  margin: 0;
+  padding: 16px 24px 24px;
+  background: var(--eq06-blanco);
+}
+
+.eq06-leyenda {
+  padding: 0 8px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.eq06-grupo {
+  margin-bottom: 16px;
+}
+
+.eq06-etiqueta {
+  font-weight: 700;
+}
+
+.eq06-campo {
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.5;
+  background: var(--eq06-blanco);
+}
+
+.eq06-campo:focus {
+  outline: 2px solid var(--eq06-acento);
+}
+
+.eq06-casilla {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.eq06-casilla .eq06-etiqueta {
+  margin: 0;
+}
+
+.eq06-filtros {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.eq06-aviso {
+  margin: 16px 0 0;
+  padding: 12px 16px;
+  background: var(--eq06-claro);
+  border: 1px solid var(--eq06-borde);
+}
+
+.eq06-aviso-error {
+  border-left: 4px solid var(--eq06-acento);
+}
+
+.eq06-nota {
+  margin-top: 24px;
+  padding: 16px;
+  background: var(--eq06-blanco);
+}
+
+.eq06-nota ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.eq06-caja + .eq06-nota {
+  max-width: 440px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.eq06-estado {
+  display: inline-block;
+  padding: 0 8px;
+  font-size: 14px;
+  font-weight: 700;
+  border: 1px solid var(--eq06-borde);
+  border-radius: 4px;
+  background: var(--eq06-blanco);
+}
+
+.eq06-estado-bajo {
+  color: var(--eq06-blanco);
+  background: var(--eq06-acento);
+  border-color: var(--eq06-acento);
+}
+
+.eq06-estado-cero {
+  color: var(--eq06-blanco);
+  background: var(--eq06-oscuro);
+  border-color: var(--eq06-oscuro);
+}
+
+.eq06-metricas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 16px;
+}
+
+.eq06-metrica {
+  padding: 16px;
+  background: var(--eq06-claro);
+  border: 1px solid var(--eq06-borde);
+}
+
+.eq06-cifra {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--eq06-acento);
+}
+
+.eq06-metrica h3 {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 400;
+}
+
+.eq06-titulo-barra {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.eq06-titulo-barra h1 {
+  margin: 0;
+}
+
+.eq06-datos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin: 0 0 24px;
+}
+
+.eq06-datos dt {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.eq06-datos dd {
+  margin: 0;
+  padding: 12px;
+  background: var(--eq06-claro);
+  border: 1px solid var(--eq06-borde);
+  border-radius: 4px;
+}
+
+.eq06-tabla-contenedor {
+  margin-bottom: 24px;
+}
+
+.eq06-tabla {
+  min-width: 520px;
+  background: var(--eq06-blanco);
+  color: var(--eq06-oscuro);
+}
+
+.eq06-tabla th, .eq06-tabla td {
+  padding: 12px;
+  text-align: left;
+  border: 1px solid var(--eq06-borde);
+}
+
+.eq06-tabla thead th {
+  background: var(--eq06-claro);
+  font-weight: 700;
+}
+
+.eq06-tabla tbody tr:hover {
+  background: var(--eq06-claro);
+}
+
+@media (max-width: 768px) {
+  .eq06-menu {
+    border-bottom: 1px solid var(--eq06-borde);
+  }
+
+  .eq06-menu ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  .eq06-menu li {
+    margin-bottom: 0;
+  }
+
+  .eq06-heroe {
+    grid-template-columns: 1fr;
+  }
+
+  .eq06-principal {
+    padding: 16px;
+  }
+
+  .eq06-conjunto {
+    padding: 16px;
+  }
+
+}
+
+
 * {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
 }
 
-/* --- Base --- */
 html {
   font-size: 16px;
 }
 
 body {
   font-family: Arial, Helvetica, sans-serif;
-  font-size: 16px;
-  line-height: 1.5;
   color: #1F2937;
   background-color: #F3F4F6;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: Georgia, "Times New Roman", serif;
   color: #1F2937;
   line-height: 1.3;
-/* ---------- 1. Variables: paleta de cinco colores y tipografías ---------- */
+}
+
 :root {
-  --eq06-resaltado: #A61E4D;   /* acento y acciones */
-  --eq06-oscuro: #1F2937;      /* texto y hover */
-  --eq06-fondo: #F3F4F6;       /* fondo y filas */
-  --eq06-superficie: #FFFFFF;  /* superficies */
-  --eq06-borde: #6B7280;       /* solo bordes, nunca texto */
+  --eq06-resaltado: #A61E4D;
+  --eq06-oscuro: #1F2937;
+  --eq06-fondo: #F3F4F6;
+  --eq06-superficie: #FFFFFF;
+  --eq06-borde: #6B7280;
   --eq06-fuente-titulo: Georgia, "Times New Roman", serif;
   --eq06-fuente-texto: Arial, Helvetica, sans-serif;
 }
 
-/* ---------- 2. Reglas universales ---------- */
 * {
   box-sizing: border-box;
 }
 
-/* Color de resaltado universal: foco visible en cualquier elemento */
 *:focus {
   outline: 2px solid var(--eq06-resaltado);
   outline-offset: 2px;
 }
 
-/* Color de resaltado universal: texto seleccionado */
 ::selection {
   background: var(--eq06-resaltado);
   color: var(--eq06-superficie);
 }
 
-/* ---------- 3. Base: cuerpo y tipografía ---------- */
 body {
   margin: 0;
   min-height: 100vh;
@@ -73,7 +491,6 @@ body {
   text-align: left;
 }
 
-/* Selector de agrupación: títulos y subtítulos en Georgia */
 h1, h2, h3 {
   margin: 0 0 16px;
   font-family: var(--eq06-fuente-titulo);
@@ -98,7 +515,6 @@ h3 {
 
 a {
   color: #A61E4D;
-  text-decoration: underline;
 }
 
 a:hover {
@@ -115,7 +531,6 @@ img {
   display: block;
 }
 
-/* --- Layout principal --- */
 .eq06-header {
   background-color: #FFFFFF;
   border-bottom: 1px solid #6B7280;
@@ -147,9 +562,7 @@ img {
 }
 
 .eq06-rol {
-  font-size: 14px;
   color: #6B7280;
-  font-weight: bold;
 }
 
 .eq06-header-actions {
@@ -210,7 +623,6 @@ img {
   gap: 8px;
 }
 
-/* --- Botones --- */
 .eq06-btn {
   display: inline-block;
   background-color: #A61E4D;
@@ -255,7 +667,6 @@ img {
   color: #FFFFFF;
 }
 
-/* --- Formularios --- */
 .eq06-form {
   background-color: #FFFFFF;
   border: 1px solid #6B7280;
@@ -290,11 +701,7 @@ img {
 }
 
 .eq06-campo {
-  width: 100%;
-  padding: 12px;
   border: 1px solid #6B7280;
-  border-radius: 4px;
-  font-size: 16px;
   font-family: Arial, sans-serif;
   background-color: #FFFFFF;
   color: #1F2937;
@@ -306,7 +713,6 @@ img {
 
 .eq06-campo:focus {
   outline: 2px solid #A61E4D;
-  outline-offset: 0;
   border-color: #A61E4D;
 }
 
@@ -329,21 +735,17 @@ img {
   margin-top: 4px;
 }
 
-/* --- Tablas --- */
 .eq06-tabla-wrap {
   overflow-x: auto;
   margin-top: 16px;
 }
 
 .eq06-tabla {
-  width: 100%;
-  border-collapse: collapse;
   background-color: #FFFFFF;
   border: 1px solid #6B7280;
 }
 
 .eq06-tabla caption {
-  text-align: left;
   font-weight: bold;
   font-size: 14px;
   padding: 8px 0;
@@ -356,9 +758,7 @@ img {
 
 .eq06-tabla th,
 .eq06-tabla td {
-  padding: 12px;
   border: 1px solid #6B7280;
-  text-align: left;
   font-size: 15px;
 }
 
@@ -371,10 +771,6 @@ img {
   background-color: #F3F4F6;
 }
 
-/* --- Tarjetas / indicadores --- */
-}
-
-/* Enlaces: acento, subrayados, sin fondo ni borde; hover oscuro */
 a {
   color: var(--eq06-resaltado);
   text-decoration: underline;
@@ -386,7 +782,6 @@ a:hover {
   color: var(--eq06-oscuro);
 }
 
-/* Texto solo para lectores de pantalla (títulos de sección sin mostrar) */
 .eq06-oculto {
   position: absolute;
   width: 1px;
@@ -399,9 +794,6 @@ a:hover {
   white-space: nowrap;
 }
 
-/* ---------- 4. Componentes comunes ---------- */
-
-/* Botones (sirve para <a> y <button>) */
 .eq06-boton {
   display: inline-block;
   padding: 12px 16px;
@@ -420,11 +812,6 @@ a:hover {
   background: var(--eq06-oscuro);
   border-color: var(--eq06-oscuro);
   color: var(--eq06-superficie);
-}
-
-/* Tablas */
-.eq06-tabla-contenedor {
-  overflow-x: auto; /* en móvil: desplazamiento horizontal */
 }
 
 .eq06-tabla {
@@ -455,7 +842,6 @@ a:hover {
   background: var(--eq06-fondo);
 }
 
-/* Etiqueta "Stock bajo": texto + color (no depende solo del color) */
 .eq06-etiqueta-bajo {
   display: inline-block;
   margin-left: 8px;
@@ -467,7 +853,6 @@ a:hover {
   font-weight: bold;
 }
 
-/* Formularios (base común; se usará en las pantallas con formulario) */
 .eq06-conjunto {
   margin: 0 0 16px;
   padding: 16px;
@@ -515,7 +900,6 @@ a:hover {
   outline-offset: 0;
 }
 
-/* ---------- 5. Estructura común: encabezado, menú, contenido y pie ---------- */
 .eq06-encabezado {
   display: flex;
   flex-wrap: wrap;
@@ -534,7 +918,6 @@ a:hover {
   font-family: var(--eq06-fuente-titulo);
   font-size: 20px;
   font-weight: bold;
-  text-decoration: none;
 }
 
 .eq06-sesion {
@@ -570,13 +953,9 @@ a:hover {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
 }
 
 .eq06-menu-lista a {
-  display: block;
   padding: 8px 12px;
   border-left: 4px solid transparent;
 }
@@ -603,9 +982,8 @@ a:hover {
   font-weight: bold;
 }
 
-/* Selector de id: contenedor del contenido principal */
 #eq06-principal {
-  min-width: 0; /* permite el desplazamiento horizontal de las tablas */
+  min-width: 0;
   padding: 24px;
 }
 
@@ -619,7 +997,6 @@ a:hover {
   border-top: 1px solid var(--eq06-borde);
 }
 
-/* ---------- 6. Dashboard del Encargado (P04.2) ---------- */
 .eq06-seccion {
   margin-bottom: 24px;
 }
@@ -653,7 +1030,6 @@ a:hover {
   margin-top: 4px;
 }
 
-/* --- Badges / estados --- */
 .eq06-badge {
   display: inline-block;
   padding: 2px 8px;
@@ -690,7 +1066,6 @@ a:hover {
   color: #FFFFFF;
 }
 
-/* --- Filtros --- */
 .eq06-filtros {
   background-color: #FFFFFF;
   border: 1px solid #6B7280;
@@ -714,7 +1089,6 @@ a:hover {
   gap: 8px;
 }
 
-/* --- Detalle producto --- */
 .eq06-detalle-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -754,7 +1128,6 @@ a:hover {
   margin: 0;
 }
 
-/* --- Alertas --- */
 .eq06-alerta {
   padding: 12px 16px;
   border-radius: 4px;
@@ -775,7 +1148,6 @@ a:hover {
   color: #A61E4D;
 }
 
-/* --- Secciones --- */
 .eq06-seccion {
   margin-bottom: 28px;
 }
@@ -790,7 +1162,6 @@ a:hover {
   color: #6B7280;
 }
 
-/* --- Utilidades --- */
 .eq06-sr-only {
   position: absolute;
   width: 1px;
@@ -802,11 +1173,18 @@ a:hover {
   border: 0;
 }
 
-.eq06-mt-8 { margin-top: 8px; }
-.eq06-mt-16 { margin-top: 16px; }
-.eq06-mb-16 { margin-bottom: 16px; }
+.eq06-mt-8 {
+  margin-top: 8px;
+}
 
-/* --- Responsive --- */
+.eq06-mt-16 {
+  margin-top: 16px;
+}
+
+.eq06-mb-16 {
+  margin-bottom: 16px;
+}
+
 @media (max-width: 768px) {
   .eq06-layout {
     flex-direction: column;
@@ -860,6 +1238,7 @@ a:hover {
   .eq06-indicadores {
     grid-template-columns: 1fr 1fr;
   }
+
 }
 
 @media (max-width: 480px) {
@@ -870,8 +1249,9 @@ a:hover {
   h1 {
     font-size: 24px;
   }
+
 }
-}
+
 
 .eq06-indicador {
   padding: 16px;
@@ -894,12 +1274,9 @@ a:hover {
 }
 
 .eq06-acciones {
-  display: flex;
-  flex-wrap: wrap;
   gap: 16px;
 }
 
-/* ---------- 7. Móvil (los tamaños de texto se conservan) ---------- */
 @media (max-width: 768px) {
   .eq06-encabezado,
   .eq06-pie {
@@ -918,15 +1295,15 @@ a:hover {
 
   .eq06-menu-lista {
     flex-direction: row;
-    flex-wrap: wrap;
   }
 
   #eq06-principal {
     padding: 16px;
   }
+
 }
 
-/* Restablecer contraseña */
+
 .eq06-restablecer {
   display: flex;
   flex-direction: column;
@@ -962,9 +1339,10 @@ a:hover {
   .eq06-tarjeta-clave {
     padding: 16px;
   }
+
 }
 
-/* Usuarios y asignación de roles */
+
 .eq06-formulario-usuario {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1003,9 +1381,10 @@ a:hover {
   .eq06-formulario-usuario {
     grid-template-columns: 1fr;
   }
+
 }
 
-/* Categorías y unidades de medida */
+
 .eq06-selector-catalogo {
   display: inline-block;
   margin: 0 8px 16px 0;
@@ -1053,9 +1432,10 @@ a:hover {
   .eq06-formulario-catalogo {
     grid-template-columns: 1fr;
   }
+
 }
 
-/* Recurso no disponible */
+
 .eq06-recurso {
   display: flex;
   flex-direction: column;
@@ -1092,4 +1472,370 @@ a:hover {
   .eq06-tarjeta-recurso {
     padding: 20px;
   }
+
+}
+
+
+.eq06-conjunto {
+  min-width: 0;
+}
+
+.eq06-titulo-fila {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.eq06-titulo-fila h1 {
+  margin-bottom: 0;
+}
+
+.eq06-busqueda-fila {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 16px;
+}
+
+.eq06-busqueda-fila .eq06-grupo-campo {
+  flex: 1 1 240px;
+  margin-bottom: 0;
+}
+
+.eq06-tabla-proveedores {
+  min-width: 760px;
+}
+
+.eq06-estado {
+  font-weight: bold;
+}
+
+.eq06-lista-acciones {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.eq06-nota {
+  padding: 12px;
+  border: 1px solid var(--eq06-borde);
+  border-left: 4px solid var(--eq06-resaltado);
+  background: var(--eq06-fondo);
+}
+
+.eq06-dialogo {
+  width: calc(100% - 32px);
+  max-width: 440px;
+  padding: 24px;
+  border: 1px solid var(--eq06-borde);
+  border-radius: 4px;
+  background: var(--eq06-superficie);
+  color: var(--eq06-oscuro);
+}
+
+.eq06-dialogo-acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.eq06-panel-proveedor {
+  width: 100%;
+  max-width: 960px;
+}
+
+.eq06-formulario-proveedor {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px 24px;
+}
+
+.eq06-formulario-proveedor .eq06-grupo-campo {
+  min-width: 0;
+  margin-bottom: 0;
+}
+
+.eq06-ayuda-proveedor {
+  margin-top: 8px;
+  font-size: 14px;
+}
+
+.eq06-referencia-proveedor {
+  margin-top: 12px;
+}
+
+.eq06-formulario-proveedor textarea {
+  resize: vertical;
+}
+
+.eq06-cancelar-proveedor {
+  background: var(--eq06-superficie);
+  color: var(--eq06-resaltado);
+}
+
+.eq06-nota-proveedor {
+  margin-top: 24px;
+  padding: 16px;
+  border-left: 4px solid var(--eq06-resaltado);
+  background: var(--eq06-superficie);
+}
+
+@media (max-width: 768px) {
+  .eq06-formulario-proveedor {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+
+.eq06-encabezado,
+.eq06-pie {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 20px;
+  background: #FFFFFF;
+  border-bottom: 1px solid #6B7280;
+}
+
+.eq06-marca {
+  font-weight: 700;
+  color: #1F2937;
+  text-decoration: none;
+}
+
+.eq06-encabezado-derecha {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.eq06-usuario {
+  font-size: 14px;
+}
+
+.eq06-enlace-cabecera,
+.eq06-boton-secundario {
+  color: #1F2937;
+  background: #FFFFFF;
+  border: 1px solid #6B7280;
+  border-radius: 4px;
+  padding: 8px 12px;
+  text-decoration: none;
+  font: inherit;
+  cursor: pointer;
+}
+
+.eq06-enlace-cabecera:hover,
+.eq06-boton-secundario:hover {
+  border-color: #1F2937;
+  background: #F3F4F6;
+}
+
+.eq06-distribucion {
+  display: grid;
+  grid-template-columns: 210px minmax(0, 1fr);
+  min-height: calc(100vh - 116px);
+}
+
+.eq06-menu {
+  border-right: 1px solid #6B7280;
+  padding: 16px 12px;
+  background: #F3F4F6;
+}
+
+.eq06-menu-lista {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.eq06-menu-lista a {
+  display: block;
+  padding: 10px 12px;
+  color: #1F2937;
+  text-decoration: none;
+  border-radius: 4px;
+}
+
+.eq06-menu-lista a:hover,
+.eq06-menu-lista a[aria-current="page"] {
+  background: #E5E7EB;
+  font-weight: 700;
+}
+
+.eq06-contenido {
+  min-width: 0;
+  padding: 24px;
+}
+
+.eq06-panel {
+  max-width: 1050px;
+  margin: 0 auto;
+  background: #FFFFFF;
+  border: 1px solid #6B7280;
+  padding: 20px;
+}
+
+.eq06-panel h1 {
+  margin: 0 0 20px;
+}
+
+.eq06-grupo-datos,
+.eq06-grupo-detalle {
+  border: 0;
+  padding: 0;
+  margin: 0 0 20px;
+  min-width: 0;
+}
+
+.eq06-grupo-datos legend,
+.eq06-grupo-detalle legend {
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.eq06-campos-recepcion {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr 1.4fr;
+  gap: 16px;
+}
+
+.eq06-grupo-campo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.eq06-grupo-campo label {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.eq06-campo {
+  max-width: 100%;
+}
+
+.eq06-campo[readonly] {
+  background: #F3F4F6;
+}
+
+.eq06-tabla-contenedor {
+  overflow-x: auto;
+}
+
+.eq06-tabla-recepcion {
+  border-collapse: collapse;
+  width: 100%;
+  min-width: 650px;
+}
+
+.eq06-tabla-recepcion caption {
+  text-align: left;
+  padding-bottom: 8px;
+  font-size: 14px;
+}
+
+.eq06-tabla-recepcion th,
+.eq06-tabla-recepcion td {
+  border: 1px solid #6B7280;
+  padding: 12px;
+  text-align: left;
+}
+
+.eq06-tabla-recepcion th {
+  background: #F3F4F6;
+}
+
+.eq06-tabla-recepcion tbody tr:hover {
+  background: #F3F4F6;
+}
+
+.eq06-tabla-recepcion .eq06-campo {
+  min-width: 100px;
+}
+
+.eq06-etiqueta-oculta {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.eq06-agregar-linea {
+  margin-top: 12px;
+}
+
+.eq06-aviso {
+  background: #F3F4F6;
+  border: 1px solid #6B7280;
+  padding: 12px;
+  margin-bottom: 16px;
+}
+
+.eq06-acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.eq06-nota {
+  font-size: 14px;
+}
+
+.eq06-pie {
+  border-top: 1px solid #6B7280;
+  border-bottom: 0;
+  font-size: 14px;
+}
+
+@media (max-width: 768px) {
+  .eq06-encabezado,
+    .eq06-pie {
+    flex-wrap: wrap;
+  }
+
+  .eq06-distribucion {
+    grid-template-columns: 1fr;
+  }
+
+  .eq06-menu {
+    border-right: 0;
+    border-bottom: 1px solid #6B7280;
+  }
+
+  .eq06-menu-lista {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .eq06-contenido {
+    padding: 12px;
+  }
+
+  .eq06-panel {
+    padding: 16px;
+  }
+
+  .eq06-campos-recepcion {
+    grid-template-columns: 1fr;
+  }
+
 }
