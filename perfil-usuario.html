@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Perfil de usuario del sistema de inventario: consulta y actualiza tus datos personales, revisa tu rol asignado y cambia tu contraseña.">
+  <title>Mi perfil | Inventario</title>
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+
+  <header class="eq06-encabezado">
+    <div class="eq06-encabezado-interno">
+      <a class="eq06-marca" href="dashboard-administrador.html">
+        <img src="logo.svg" alt="Logotipo de Inventario" width="40" height="40">
+        <span>Inventario</span>
+      </a>
+      <div class="eq06-sesion">
+        <strong>Encargado de inventario</strong>
+        <a href="perfil-usuario.html" aria-current="page">Perfil</a>
+        <a href="pantalla-inicio.html">Salir</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="eq06-cuerpo">
+
+    <nav class="eq06-menu" aria-label="Menú principal">
+      <ul class="eq06-menu-lista">
+        <li><a href="dashboard-administrador.html">Dashboard</a></li>
+        <li><a href="listado-inventario.html">Inventario</a></li>
+        <li><a href="recepcion-mercancia.html">Recepción</a></li>
+        <li><a href="registro-salida.html">Salidas</a></li>
+        <li><a href="historial-movimientos.html">Movimientos</a></li>
+        <li><a href="reportes-alertas.html">Reportes y alertas</a></li>
+      </ul>
+      <p class="eq06-menu-pie">Negocio de comida</p>
+    </nav>
+
+    <main id="eq06-contenido">
+      <h1>Mi perfil</h1>
+
+      <section class="eq06-seccion" aria-labelledby="eq06-titulo-datos">
+        <h2 id="eq06-titulo-datos">Datos personales</h2>
+
+        <form action="#" method="post">
+          <fieldset class="eq06-grupo">
+            <legend>Información de la cuenta</legend>
+
+            <div class="eq06-fila eq06-fila-mitad">
+              <div class="eq06-campo-bloque">
+                <label class="eq06-etiqueta" for="eq06-nombre">Nombre</label>
+                <input type="text" id="eq06-nombre" name="nombre" class="eq06-campo" required minlength="3" maxlength="60" pattern="[A-Za-zÁÉÍÓÚÜÑáéíóúüñ ]{3,60}" title="Solo letras y espacios, entre 3 y 60 caracteres" autocomplete="name" placeholder="Nombre y apellido" value="Luis Pérez">
+              </div>
+
+              <div class="eq06-campo-bloque">
+                <label class="eq06-etiqueta" for="eq06-correo">Correo</label>
+                <input type="email" id="eq06-correo" name="correo" class="eq06-campo" required maxlength="100" autocomplete="email" placeholder="usuario@dominio.com" value="luis@ejemplo.com">
+              </div>
+            </div>
+
+            <div class="eq06-campo-bloque">
+              <label class="eq06-etiqueta" for="eq06-rol">Rol asignado [solo lectura]</label>
+              <output id="eq06-rol" name="rol" class="eq06-campo eq06-solo-lectura">Encargado de inventario</output>
+            </div>
+          </fieldset>
+
+          <div class="eq06-acciones">
+            <button type="submit" class="eq06-boton">Guardar datos</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="eq06-seccion" aria-labelledby="eq06-titulo-clave">
+        <h2 id="eq06-titulo-clave">Cambiar contraseña</h2>
+
+        <form action="#" method="post">
+          <fieldset class="eq06-grupo">
+            <legend>Nueva contraseña</legend>
+
+            <div class="eq06-fila eq06-fila-tres">
+              <div class="eq06-campo-bloque">
+                <label class="eq06-etiqueta" for="eq06-clave-actual">Contraseña actual</label>
+                <input type="password" id="eq06-clave-actual" name="clave_actual" class="eq06-campo" required minlength="8" maxlength="64" autocomplete="current-password" placeholder="Contraseña actual">
+              </div>
+
+              <div class="eq06-campo-bloque">
+                <label class="eq06-etiqueta" for="eq06-clave-nueva">Nueva contraseña</label>
+                <input type="password" id="eq06-clave-nueva" name="clave_nueva" class="eq06-campo" required minlength="8" maxlength="64" autocomplete="new-password" placeholder="Mínimo 8 caracteres">
+              </div>
+
+              <div class="eq06-campo-bloque">
+                <label class="eq06-etiqueta" for="eq06-clave-confirmar">Confirmar nueva</label>
+                <input type="password" id="eq06-clave-confirmar" name="clave_confirmar" class="eq06-campo" required minlength="8" maxlength="64" autocomplete="new-password" placeholder="Repite la nueva contraseña">
+              </div>
+            </div>
+          </fieldset>
+
+          <div class="eq06-acciones">
+            <button type="submit" class="eq06-boton">Cambiar contraseña</button>
+          </div>
+        </form>
+      </section>
+    </main>
+
+  </div>
+
+  <footer class="eq06-pie">
+    <div class="eq06-pie-interno">
+      <p><strong>Inventario</strong> · Pequeños negocios de comida</p>
+      <p>Control de existencias · Sin pagos ni facturación</p>
+    </div>
+  </footer>
+
+</body>
+</html>

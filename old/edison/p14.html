@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Reportes y alertas de stock: consulta los productos por debajo del mínimo y los de mayor consumo en un período, solo en modo consulta.">
+  <title>Reportes y alertas de stock | Inventario</title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+
+  <header class="eq06-encabezado">
+    <div class="eq06-encabezado-interno">
+      <a class="eq06-marca" href="p04-dashboard.html">
+        <img src="logo.svg" alt="Logotipo de Inventario" width="40" height="40">
+        <span>Inventario</span>
+      </a>
+      <div class="eq06-sesion">
+        <strong>Encargado de inventario</strong>
+        <a href="p16-perfil.html">Perfil</a>
+        <a href="p01-inicio.html">Salir</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="eq06-cuerpo">
+
+    <nav class="eq06-menu" aria-label="Menú principal">
+      <ul class="eq06-menu-lista">
+        <li><a href="p04-dashboard.html">Dashboard</a></li>
+        <li><a href="p05-inventario.html">Inventario</a></li>
+        <li><a href="p11-recepcion.html">Recepción</a></li>
+        <li><a href="p12-salida-inventario.html">Salidas</a></li>
+        <li><a href="p13-movimientos.html">Movimientos</a></li>
+        <li><a href="p14-reportes.html" aria-current="page">Reportes y alertas</a></li>
+      </ul>
+      <p class="eq06-menu-pie">Negocio de comida</p>
+    </nav>
+
+    <main id="eq06-contenido">
+      <h1>Reportes y alertas</h1>
+
+      <section class="eq06-seccion" aria-labelledby="eq06-titulo-periodo">
+        <h2 id="eq06-titulo-periodo">Período y filtros</h2>
+        <form action="#" method="post">
+          <fieldset class="eq06-grupo">
+            <legend>Filtros del reporte</legend>
+
+            <div class="eq06-filtros">
+              <div class="eq06-campo-bloque">
+                <label class="eq06-etiqueta" for="eq06-desde">Desde</label>
+                <input type="date" id="eq06-desde" name="desde" class="eq06-campo" required value="2026-10-01" max="2026-12-31">
+              </div>
+
+              <div class="eq06-campo-bloque">
+                <label class="eq06-etiqueta" for="eq06-hasta">Hasta</label>
+                <input type="date" id="eq06-hasta" name="hasta" class="eq06-campo" required value="2026-10-05" min="2026-10-01" max="2026-12-31">
+              </div>
+
+              <div class="eq06-campo-bloque">
+                <label class="eq06-etiqueta" for="eq06-categoria">Categoría</label>
+                <select id="eq06-categoria" name="categoria" class="eq06-campo">
+                  <option value="" selected>Todas</option>
+                  <option value="granos">Granos</option>
+                  <option value="aceites">Aceites</option>
+                  <option value="vegetales">Vegetales</option>
+                </select>
+              </div>
+
+              <div class="eq06-campo-bloque">
+                <label class="eq06-etiqueta" for="eq06-producto">Producto</label>
+                <select id="eq06-producto" name="producto" class="eq06-campo">
+                  <option value="" selected>Todos</option>
+                  <option value="PR-001">Arroz</option>
+                  <option value="PR-002">Aceite</option>
+                  <option value="PR-003">Tomate</option>
+                </select>
+              </div>
+            </div>
+          </fieldset>
+
+          <div class="eq06-acciones">
+            <button type="submit" class="eq06-boton">Aplicar período</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="eq06-seccion" aria-labelledby="eq06-titulo-resultados">
+        <h2 id="eq06-titulo-resultados">Resultados del período</h2>
+
+        <div class="eq06-tarjetas">
+          <article class="eq06-tarjeta">
+            <h3>Productos con alerta</h3>
+            <div class="eq06-tabla-contenedor">
+              <table class="eq06-tabla eq06-tabla-compacta">
+                <caption>Stock actual por debajo del mínimo</caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Producto</th>
+                    <th scope="col">Actual</th>
+                    <th scope="col">Mínimo</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Arroz · <span class="eq06-etiqueta-estado">Stock bajo</span></td>
+                    <td>5 <abbr title="kilogramos">kg</abbr></td>
+                    <td>8 <abbr title="kilogramos">kg</abbr></td>
+                  </tr>
+                  <tr>
+                    <td>Tomate · <span class="eq06-etiqueta-estado">Stock bajo</span> <span class="eq06-etiqueta-estado eq06-etiqueta-neutra">Sin stock</span></td>
+                    <td>0 <abbr title="kilogramos">kg</abbr></td>
+                    <td>3 <abbr title="kilogramos">kg</abbr></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </article>
+
+          <article class="eq06-tarjeta">
+            <h3>Mayor consumo · Unidad explícita</h3>
+            <div class="eq06-tabla-contenedor">
+              <table class="eq06-tabla eq06-tabla-compacta">
+                <caption>Salidas confirmadas del período</caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Producto</th>
+                    <th scope="col">Salidas del período</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Arroz</td>
+                    <td>14 <abbr title="kilogramos">kg</abbr></td>
+                  </tr>
+                  <tr>
+                    <td>Aceite</td>
+                    <td>8 <abbr title="litros">L</abbr></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </article>
+        </div>
+
+        <aside class="eq06-nota-panel" aria-label="Nota sobre el reporte">
+          <p><strong>Movimientos confirmados del período:</strong> 5 entradas / 2 salidas. <em>No sumar cantidades de unidades distintas.</em></p>
+        </aside>
+      </section>
+    </main>
+
+  </div>
+
+  <footer class="eq06-pie">
+    <div class="eq06-pie-interno">
+      <p><strong>Inventario</strong> · Pequeños negocios de comida</p>
+      <p>Control de existencias · Sin pagos ni facturación</p>
+    </div>
+  </footer>
+
+</body>
+</html>
