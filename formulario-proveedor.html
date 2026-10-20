@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Formulario de registro y edición de proveedores para el inventario de pequeños negocios de comida.">
+  <title>Nuevo proveedor | Inventario</title>
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+
+  <header class="eq06-encabezado">
+    <a class="eq06-marca" href="dashboard-administrador.html">
+      <img src="img/logo.svg" alt="Logotipo de Inventario" width="40" height="40">
+      <span>Inventario</span>
+    </a>
+    <div class="eq06-sesion">
+      <p class="eq06-rol">Administrador</p>
+      <a href="perfil-usuario.html">Perfil</a>
+      <a href="registro-salida.html">Salir</a>
+    </div>
+  </header>
+
+  <div class="eq06-cuerpo">
+
+    <div class="eq06-menu-lateral">
+      <nav aria-label="Menú principal">
+        <ul class="eq06-menu-lista">
+          <li><a href="dashboard-administrador.html">Dashboard</a></li>
+          <li><a href="listado-inventario.html">Inventario</a></li>
+          <li><a href="gestion-productos.html">Productos</a></li>
+          <li><a class="eq06-activo" href="gestion-proveedores.html" aria-current="page">Proveedores</a></li>
+          <li><a href="historial-movimientos.html">Movimientos</a></li>
+          <li><a href="reportes-alertas.html">Reportes y alertas</a></li>
+          <li><a href="panel-administracion.html">Administración</a></li>
+        </ul>
+      </nav>
+
+      <aside>
+        <figure class="eq06-negocio-figura">
+          <img src="img/negocio.svg" alt="Ilustración de un local de comida" width="64" height="64">
+          <figcaption>Negocio de comida</figcaption>
+        </figure>
+      </aside>
+    </div>
+
+    <main id="eq06-principal">
+      <section class="eq06-panel-proveedor" aria-labelledby="eq06-titulo-proveedor">
+        <h1 id="eq06-titulo-proveedor">Datos del proveedor</h1>
+        <!-- Modo Nuevo: campos vacíos. Modo Editar: completar value y el texto
+             del textarea con los datos del proveedor; cambiar también el title.
+             Modo Consulta: usar readonly en input/textarea y disabled en select;
+             retirar el botón Guardar y dejar un enlace Volver a proveedores.
+             No se implementa cambio de modo ni persistencia en esta etapa. -->
+        <form method="post" action="#">
+          <fieldset class="eq06-conjunto">
+            <legend>Información del proveedor</legend>
+            <div class="eq06-formulario-proveedor">
+              <div class="eq06-grupo-campo">
+                <label class="eq06-etiqueta" for="eq06-nombre-proveedor">Nombre o razón social *</label>
+                <input class="eq06-campo" type="text" id="eq06-nombre-proveedor"
+                       name="eq06-nombre-proveedor" required maxlength="120"
+                       autocomplete="organization" placeholder="Ejemplo: Distribuidora Central">
+              </div>
+              <div class="eq06-grupo-campo">
+                <label class="eq06-etiqueta" for="eq06-contacto-proveedor">Persona de contacto</label>
+                <input class="eq06-campo" type="text" id="eq06-contacto-proveedor"
+                       name="eq06-contacto-proveedor" maxlength="100"
+                       autocomplete="name" placeholder="Ejemplo: Ana López">
+              </div>
+              <div class="eq06-grupo-campo">
+                <label class="eq06-etiqueta" for="eq06-telefono-proveedor">Teléfono</label>
+                <input class="eq06-campo" type="tel" id="eq06-telefono-proveedor"
+                       name="eq06-telefono-proveedor" maxlength="25"
+                       autocomplete="tel" placeholder="Ejemplo: 6000-0001">
+              </div>
+              <div class="eq06-grupo-campo">
+                <label class="eq06-etiqueta" for="eq06-correo-proveedor">Correo electrónico</label>
+                <input class="eq06-campo" type="email" id="eq06-correo-proveedor"
+                       name="eq06-correo-proveedor" maxlength="100"
+                       autocomplete="email" placeholder="Ejemplo: ana@ejemplo.com"
+                       aria-describedby="eq06-ayuda-correo-proveedor">
+                <p class="eq06-ayuda-proveedor" id="eq06-ayuda-correo-proveedor">Opcional. Si lo completas, debe tener un formato válido.</p>
+              </div>
+              <div class="eq06-grupo-campo">
+                <label class="eq06-etiqueta" for="eq06-direccion-proveedor">Dirección</label>
+                <input class="eq06-campo" type="text" id="eq06-direccion-proveedor"
+                       name="eq06-direccion-proveedor" maxlength="200"
+                       autocomplete="address-line1" placeholder="Ejemplo: Ciudad de Panamá">
+                <label class="eq06-etiqueta eq06-referencia-proveedor" for="eq06-referencia-proveedor">Continuación de dirección / referencia</label>
+                <textarea class="eq06-campo" id="eq06-referencia-proveedor"
+                          name="eq06-referencia-proveedor" rows="3" maxlength="300"
+                          placeholder="Ejemplo: Local 2, frente al parque"></textarea>
+              </div>
+              <div class="eq06-grupo-campo">
+                <label class="eq06-etiqueta" for="eq06-estado-proveedor">Estado</label>
+                <select class="eq06-campo" id="eq06-estado-proveedor" name="eq06-estado-proveedor">
+                  <option value="activo">Activo</option>
+                  <option value="inactivo">Inactivo</option>
+                </select>
+              </div>
+            </div>
+            <p class="eq06-ayuda-proveedor">El campo con * es obligatorio.</p>
+          </fieldset>
+          <div class="eq06-acciones">
+            <button class="eq06-boton" type="submit">Guardar</button>
+            <a class="eq06-boton eq06-cancelar-proveedor" href="gestion-proveedores.html">Cancelar</a>
+          </div>
+        </form>
+        <article class="eq06-nota-proveedor">
+          <h2 class="eq06-oculto">Historial de recepciones</h2>
+          <p>Actualizar los datos de contacto <strong>no modifica las recepciones históricas</strong>.</p>
+        </article>
+        <!-- Reservar mensajes de error con role="alert" para estados de error
+             reales en la implementación futura; no hay errores simulados activos.
+             Guardar no persiste datos. Cancelar vuelve a P09 sin enviar el formulario. -->
+      </section>
+    </main>
+  </div>
+
+  <footer class="eq06-pie">
+    <p>Inventario · Pequeños negocios de comida</p>
+    <p>Control de existencias · <em>Sin pagos ni facturación</em></p>
+  </footer>
+</body>
+</html>
