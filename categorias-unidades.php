@@ -1,5 +1,5 @@
 <?php
-// rev:nb4-h2
+
 define('APP_ACCESO', true);
 
 // Configuración de variables contextuales
