@@ -1,0 +1,213 @@
+<?php
+// rev:nb4-h2
+define('APP_ACCESO', true);
+
+// Configuración de variables contextuales
+$titulo_pagina = 'Categorías y unidades de medida';
+// Nota: En el futuro esto vendrá de la sesión ($_SESSION['rol'])
+$rol_usuario = 'Administrador'; 
+$usuario_autenticado = true; 
+$pagina_actual = 'administracion'; 
+
+// Carga de componentes modulares
+require_once 'includes/encabezado.php';
+require_once 'includes/menu.php';
+?>
+
+<main id="eq06-principal">
+  <h1>Catálogos auxiliares</h1>
+  <!-- Selector nativo de dos vistas: funciona solo con HTML y CSS. -->
+  <div class="eq06-catalogos">
+    <input class="eq06-oculto" type="radio" id="eq06-vista-categorias" name="eq06-vista-catalogo" checked>
+    <label class="eq06-selector-catalogo" for="eq06-vista-categorias">Categorías</label>
+    
+    <input class="eq06-oculto" type="radio" id="eq06-vista-unidades" name="eq06-vista-catalogo">
+    <label class="eq06-selector-catalogo" for="eq06-vista-unidades">Unidades de medida</label>
+
+    <section class="eq06-panel-catalogo" id="eq06-panel-categorias" aria-labelledby="eq06-titulo-categorias">
+      <h2 id="eq06-titulo-categorias">Categorías</h2>
+      <form method="post" action="#">
+        <fieldset class="eq06-conjunto">
+          <legend>Buscar</legend>
+          <div class="eq06-grupo-campo">
+            <label class="eq06-etiqueta" for="eq06-buscar-categorias">Nombre</label>
+            <input class="eq06-campo" type="search" id="eq06-buscar-categorias" name="eq06-buscar-categorias" maxlength="80" autocomplete="off" placeholder="Buscar por nombre">
+          </div>
+          <div class="eq06-acciones">
+            <button class="eq06-boton" type="submit">Buscar</button>
+            <a class="eq06-boton eq06-boton-secundario" href="#eq06-formulario-categorias">Nuevo registro</a>
+          </div>
+        </fieldset>
+      </form>
+      
+      <div class="eq06-tabla-contenedor eq06-seccion">
+        <table class="eq06-tabla">
+          <caption>Categorías: registros de ejemplo</caption>
+          <thead>
+            <tr>
+              <th scope="col">Nombre</th>
+              <th scope="col">Descripción</th>
+              <th scope="col">Estado</th>
+              <th scope="col">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Granos</th>
+              <td>Arroz, harina y otros</td>
+              <td>Activo</td>
+              <td>
+                <a href="#eq06-formulario-categorias" aria-label="Editar Granos">Editar</a> /
+                <button class="eq06-boton eq06-boton-secundario" type="button" aria-label="Desactivar Granos">Desactivar</button>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">Vegetales</th>
+              <td>Productos frescos</td>
+              <td>Activo</td>
+              <td>
+                <a href="#eq06-formulario-categorias" aria-label="Editar Vegetales">Editar</a> /
+                <button class="eq06-boton eq06-boton-secundario" type="button" aria-label="Desactivar Vegetales">Desactivar</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <form method="post" action="#" id="eq06-formulario-categorias">
+        <fieldset class="eq06-conjunto">
+          <legend>Crear / editar registro</legend>
+          <div class="eq06-formulario-catalogo">
+            <div class="eq06-grupo-campo">
+              <label class="eq06-etiqueta" for="eq06-nombre-categorias">Nombre *</label>
+              <input class="eq06-campo" type="text" id="eq06-nombre-categorias" name="eq06-nombre-categorias" required minlength="2" maxlength="80" autocomplete="off" placeholder="Ejemplo: Granos">
+            </div>
+            <div class="eq06-grupo-campo">
+              <label class="eq06-etiqueta" for="eq06-extra-categorias">Descripción</label>
+              <textarea class="eq06-campo" id="eq06-extra-categorias" name="eq06-extra-categorias" rows="3" maxlength="200" placeholder="Ejemplo: Alimentos secos"></textarea>
+            </div>
+            <div class="eq06-grupo-campo">
+              <label class="eq06-etiqueta" for="eq06-estado-categorias">Estado</label>
+              <select class="eq06-campo" id="eq06-estado-categorias" name="eq06-estado-categorias">
+                <option value="activo">Activo</option>
+                <option value="inactivo">Inactivo</option>
+              </select>
+            </div>
+          </div>
+          <p>El nombre es obligatorio (*).</p>
+        </fieldset>
+        <div class="eq06-acciones">
+          <button class="eq06-boton" type="submit">Guardar formulario</button>
+          <button class="eq06-boton eq06-boton-secundario" type="reset">Cancelar</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="eq06-panel-catalogo" id="eq06-panel-unidades" aria-labelledby="eq06-titulo-unidades">
+      <h2 id="eq06-titulo-unidades">Unidades de medida</h2>
+      <form method="post" action="#">
+        <fieldset class="eq06-conjunto">
+          <legend>Buscar</legend>
+          <div class="eq06-grupo-campo">
+            <label class="eq06-etiqueta" for="eq06-buscar-unidades">Nombre</label>
+            <input class="eq06-campo" type="search" id="eq06-buscar-unidades" name="eq06-buscar-unidades" maxlength="80" autocomplete="off" placeholder="Buscar por nombre">
+          </div>
+          <div class="eq06-acciones">
+            <button class="eq06-boton" type="submit">Buscar</button>
+            <a class="eq06-boton eq06-boton-secundario" href="#eq06-formulario-unidades">Nuevo registro</a>
+          </div>
+        </fieldset>
+      </form>
+      
+      <div class="eq06-tabla-contenedor eq06-seccion">
+        <table class="eq06-tabla">
+          <caption>Unidades de medida: registros de ejemplo</caption>
+          <thead>
+            <tr>
+              <th scope="col">Nombre</th>
+              <th scope="col">Símbolo</th>
+              <th scope="col">Estado</th>
+              <th scope="col">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Kilogramo</th>
+              <td><abbr title="Kilogramo">kg</abbr></td>
+              <td>Activo</td>
+              <td>
+                <a href="#eq06-formulario-unidades" aria-label="Editar Kilogramo">Editar</a> /
+                <button class="eq06-boton eq06-boton-secundario" type="button" aria-label="Desactivar Kilogramo">Desactivar</button>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">Litro</th>
+              <td><abbr title="Litro">L</abbr></td>
+              <td>Activo</td>
+              <td>
+                <a href="#eq06-formulario-unidades" aria-label="Editar Litro">Editar</a> /
+                <button class="eq06-boton eq06-boton-secundario" type="button" aria-label="Desactivar Litro">Desactivar</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <form method="post" action="#" id="eq06-formulario-unidades">
+        <fieldset class="eq06-conjunto">
+          <legend>Crear / editar registro</legend>
+          <div class="eq06-formulario-catalogo">
+            <div class="eq06-grupo-campo">
+              <label class="eq06-etiqueta" for="eq06-nombre-unidades">Nombre *</label>
+              <input class="eq06-campo" type="text" id="eq06-nombre-unidades" name="eq06-nombre-unidades" required minlength="2" maxlength="80" autocomplete="off" placeholder="Ejemplo: Kilogramo">
+            </div>
+            <div class="eq06-grupo-campo">
+              <label class="eq06-etiqueta" for="eq06-extra-unidades">Símbolo</label>
+              <input class="eq06-campo" type="text" id="eq06-extra-unidades" name="eq06-extra-unidades" maxlength="12" autocomplete="off" placeholder="Ejemplo: kg">
+            </div>
+            <div class="eq06-grupo-campo">
+              <label class="eq06-etiqueta" for="eq06-estado-unidades">Estado</label>
+              <select class="eq06-campo" id="eq06-estado-unidades" name="eq06-estado-unidades">
+                <option value="activo">Activo</option>
+                <option value="inactivo">Inactivo</option>
+              </select>
+            </div>
+          </div>
+          <p>El nombre es obligatorio (*).</p>
+        </fieldset>
+        <div class="eq06-acciones">
+          <button class="eq06-boton" type="submit">Guardar formulario</button>
+          <button class="eq06-boton eq06-boton-secundario" type="reset">Cancelar</button>
+        </div>
+      </form>
+    </section>
+  </div>
+
+  <section class="eq06-seccion" aria-labelledby="eq06-titulo-reglas-catalogo">
+    <h2 id="eq06-titulo-reglas-catalogo">Uso de los catálogos</h2>
+    <article>
+      <h3 class="eq06-oculto">Conservación del historial</h3>
+      <ul>
+        <li>Los registros con uso histórico se <strong>desactivan</strong>; no se eliminan.</li>
+        <li>No se deben reinterpretar las cantidades históricas al modificar una unidad.</li>
+        <li>Los registros inactivos no se ofrecen en nuevas selecciones; se conservan en el historial.</li>
+      </ul>
+      <details>
+        <summary>Ver ejemplo de confirmación de desactivación</summary>
+        <dialog open class="eq06-dialogo-usuario" aria-labelledby="eq06-titulo-confirmacion-catalogo">
+          <h3 id="eq06-titulo-confirmacion-catalogo">Registro con uso histórico</h3>
+          <p>Este registro está asociado a productos o movimientos. Se desactivará conservando el historial y las cantidades registradas.</p>
+          <p><em>Ejemplo visual: no se realizará ningún cambio.</em></p>
+          <button class="eq06-boton" type="button">Confirmar desactivación</button>
+        </dialog>
+      </details>
+    </article>
+  </section>
+  <!-- Maqueta: la búsqueda, carga para edición, guardado y desactivación
+       requieren lógica futura. Nuevo/Editar solo navega al formulario.
+       Cancelar restablece los campos. Solo Administrador tendrá acceso. -->
+</main>
+
+<?php
+require_once 'includes/pie.php';
+?>
