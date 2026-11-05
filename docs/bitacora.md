@@ -18,3 +18,16 @@
 * Finalizar la migración a PHP de todas las vistas faltantes.
 * Crear la clase `Validador` y las funciones globales de saneamiento.
 * Iniciar el procesamiento de datos (método POST) en los primeros formularios del sistema.
+
+* ## Sesión de Trabajo: 04 de Noviembre de 2026
+
+**Participantes:**
+* Wai Chung
+
+**Actividades realizadas:**
+* **Creación de clases:** Se crearon las clases para Productos (entidad principal), Proveedores (entidad secundaria), Usuarios y Validador.
+
+**Tareas pendientes:**
+* Finalizar la migración a PHP de todas las vistas faltantes.
+* Crear las funciones globales de saneamiento.
+* Iniciar el procesamiento de datos (método POST) en los primeros formularios del sistema.
