@@ -1,15 +1,11 @@
 <?php
-
 define('APP_ACCESO', true);
 
-// Configuración de variables contextuales
-$titulo_pagina = 'Recepcion de mercancia | Inventario';
-// Nota: En el futuro esto vendrá de la sesión ($_SESSION['rol'])
-$rol_usuario = 'Recepcionista de mercancia'; 
+$titulo_pagina = 'Recepción de mercancía | Inventario';
+$rol_usuario = 'Recepcionista de mercancía'; 
 $usuario_autenticado = true; 
 $pagina_actual = 'recepcion-mercancia'; 
 
-// Carga de componentes modulares
 require_once 'includes/encabezado.php';
 require_once 'includes/menu.php';
 ?>
@@ -67,28 +63,12 @@ require_once 'includes/menu.php';
                   <input class="eq06-campo" type="number" id="eq06-cantidad-1" name="cantidad_1" min="0.01" step="0.01" value="5" required>
                 </td>
                 <td>kg (automática)</td>
-                <td><button class="eq06-boton-secundario" type="button">Retirar línea</button></td>
-              </tr>
-              <tr>
-                <td>
-                  <label class="eq06-etiqueta-oculta" for="eq06-producto-2">Producto, línea 2</label>
-                  <select class="eq06-campo" id="eq06-producto-2" name="producto_2" required>
-                    <option value="">Seleccione un producto</option>
-                    <option value="arroz">Arroz / PR-001</option>
-                    <option value="aceite" selected>Aceite / PR-002</option>
-                  </select>
-                </td>
-                <td>
-                  <label class="eq06-etiqueta-oculta" for="eq06-cantidad-2">Cantidad de la línea 2</label>
-                  <input class="eq06-campo" type="number" id="eq06-cantidad-2" name="cantidad_2" min="0.01" step="0.01" value="3" required>
-                </td>
-                <td>L (automática)</td>
-                <td><button class="eq06-boton-secundario" type="button">Retirar línea</button></td>
+                <td><button class="eq06-boton-secundario" type="button">Quitar</button></td>
               </tr>
             </tbody>
           </table>
         </div>
-        <button class="eq06-boton-secundario eq06-agregar-linea" type="button">+ Agregar línea</button>
+        <button class="eq06-boton-secundario eq06-agregar-linea" type="button">+ Incluir</button>
       </fieldset>
 
       <aside class="eq06-aviso" aria-label="Aviso antes de confirmar">
@@ -98,12 +78,8 @@ require_once 'includes/menu.php';
         <button class="eq06-boton" type="submit">Confirmar recepción</button>
         <button class="eq06-boton-secundario" type="reset">Cancelar</button>
       </div>
-      <p class="eq06-nota">Campos obligatorios. La confirmación es solo una representación visual en esta etapa.</p>
-      <div class="eq06-estado" role="status" aria-live="polite"></div>
     </form>
   </section>
 </main>
 
-<?php
-require_once 'includes/pie.php';
-?>
+<?php require_once 'includes/pie.php'; ?>
