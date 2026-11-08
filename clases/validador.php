@@ -38,4 +38,9 @@ class Validador {
         }
         return ''; // Retorna string vacío si no hay error en ese campo
     }
+
+    // Obtener todos los errores como arreglo
+    public function getErrores() {
+        return $this->errores;
+    }
 }
