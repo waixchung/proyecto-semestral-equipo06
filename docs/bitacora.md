@@ -31,3 +31,40 @@
 * Finalizar la migración a PHP de todas las vistas faltantes.
 * Crear las funciones globales de saneamiento.
 * Iniciar el procesamiento de datos (método POST) en los primeros formularios del sistema.
+
+* ## Sesión de Trabajo: 06 de Noviembre de 2026
+
+**Participantes:**
+* Wai Chung
+
+**Actividades realizadas:**
+* **Migración de pantallas a PHP:** Se finalizó la migración de pantallas de HTML base a PHP, integrando header, footer y menúes con los archivos del directorio /includes.
+
+**Tareas pendientes:**
+* Crear las funciones globales de saneamiento.
+* Iniciar el procesamiento de datos (método POST) en los primeros formularios del sistema.
+
+* ## Sesión de Trabajo: 07 de Noviembre de 2026
+
+**Participantes:**
+* Wai Chung
+
+**Actividades realizadas:**
+* **Implementación de correcciones y mejoras:** Se realizaron las correcciones y mejoras requeridas posterior a la presentación del Hito 1. Se incluyen las modificaciones visuales y la implementación de los campos de precio unitario y fecha de vencimiento.
+* **Diseño de scripts de procesamiento:** Se dió inicio al diseño de los scripts que serán desarrollados para el procesamiento de los formularios.
+
+**Tareas pendientes:**
+* Crear las funciones globales de saneamiento.
+* Iniciar el procesamiento de datos (método POST) en los primeros formularios del sistema.
+* Crear los datos de prueba.
+
+* ## Sesión de Trabajo: 08 de Noviembre de 2026
+
+**Participantes:**
+* Wai Chung
+
+**Actividades realizadas:**
+* **Implementación de scripts de procesamiento:** Se realizaró la implementación de los scripts de procesamiento necesarios para el correcto uso de los formularios, validando la correcta funcionalidad y validez de los flujos y reglas de negocio establecidas.
+
+**Tareas pendientes:**
+* Crear los datos de prueba.
