@@ -2,8 +2,8 @@
 // procesar_producto.php
 define('APP_ACCESO', true);
 require_once 'includes/funciones.php';
-require_once 'clases/Validador.php'; // Asegúrate de que la ruta sea correcta según tu estructura
-require_once 'clases/Producto.php';
+require_once 'clases/validador.php'; // Asegúrate de que la ruta sea correcta según tu estructura
+require_once 'clases/producto.php';
 
 // 1. Verificar el método HTTP
 if ($_SERVER['REQUEST_METHOD'] != 'POST') {
