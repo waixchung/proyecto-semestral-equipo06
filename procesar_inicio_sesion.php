@@ -1,48 +1,54 @@
 <?php
+session_start(); // 1. Iniciar la sesión antes de cualquier otra lógica
+
 define('APP_ACCESO', true);
 require_once 'includes/funciones.php';
-require_once 'clases/validador.php';
-require_once 'config/datos_demo.php'; // Incluimos los datos de prueba
+require_once 'clases/Validador.php';
+require_once 'config/datos_demo.php';
 
 if ($_SERVER['REQUEST_METHOD'] != 'POST') {
     header('Location: inicio-sesion.php');
     exit;
 }
 
-// 1. Recibir y sanear datos
 $usuario    = isset($_POST['usuario']) ? limpiar($_POST['usuario']) : '';
 $contrasena = isset($_POST['contrasena']) ? limpiar($_POST['contrasena']) : '';
 
-// 2. Validar que los campos no estén vacíos
 $validador = new Validador();
 $validador->requerido('usuario', $usuario, 'El usuario o correo es obligatorio.');
 $validador->requerido('contrasena', $contrasena, 'La contraseña es obligatoria.');
 
-// 3. Autenticación contra el arreglo de prueba
 $error_autenticacion = '';
 if (!$validador->hayErrores()) {
     $autenticado = false;
     
-    // Recorrer el arreglo simulando una consulta a la base de datos
     foreach ($usuarios_demo as $user_demo) {
         if ($user_demo['correo'] === $usuario && $user_demo['contrasena'] === $contrasena) {
             $autenticado = true;
-            // Nota para el futuro: Aquí se asignarán las variables de sesión
-            // $_SESSION['usuario_nombre'] = $user_demo['nombre'];
-            // $_SESSION['usuario_rol'] = $user_demo['rol'];
+            
+            // 2. Guardar datos en la memoria del servidor
+            $_SESSION['usuario_correo'] = $user_demo['correo'];
+            $_SESSION['usuario_nombre'] = $user_demo['nombre'];
+            $_SESSION['rol_usuario'] = $user_demo['rol'];
             break;
         }
     }
 
     if ($autenticado) {
-        header('Location: dashboard-administrador.php');
+        // 3. Redirigir dinámicamente según el rol
+        if ($_SESSION['rol_usuario'] === 'Administrador') {
+            header('Location: dashboard-administrador.php');
+        } elseif ($_SESSION['rol_usuario'] === 'Encargado de inventario' || $_SESSION['rol_usuario'] === 'Encargado') {
+            header('Location: dashboard-encargado.php');
+        } else {
+            header('Location: dashboard-recepcionista.php');
+        }
         exit;
     } else {
         $error_autenticacion = 'Credenciales inválidas. Intente nuevamente.';
     }
 }
 
-// 4. Evaluar resultados y retornar errores
 if ($validador->hayErrores() || $error_autenticacion !== '') {
     $errores = $validador->getErrores();
     if ($error_autenticacion !== '') {
