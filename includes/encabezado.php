@@ -12,8 +12,8 @@ defined('APP_ACCESO') or exit('Acceso denegado');
 <body>
   <header class="eq06-header">
     <a href="dashboard-administrador.php" class="eq06-logo">
-      <!-- Se consolidan las rutas estáticas al directorio "images" de la raíz -->
-      <img src="images/logo.svg" alt="Logotipo de Inventario" width="40" height="40"> 
+      <!-- Se corrige la ruta estática al directorio "img" -->
+      <img src="img/logo.svg" alt="Logotipo de Inventario" width="40" height="40"> 
       Inventario
     </a>
     <div class="eq06-header-right">
