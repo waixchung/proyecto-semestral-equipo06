@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Inicia sesión en Inventario con tu usuario o correo y tu contraseña.">
+  <title>Inicio de sesión · Inventario</title>
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+  <div class="eq06-pagina">
+    <header class="eq06-encabezado">
+      <a class="eq06-marca" href="p01-inicio.html"><img src="images/logo.svg" alt="Logotipo de Inventario" width="32" height="32"> Inventario</a>
+      <p class="eq06-rol">Acceso público</p>
+      <div class="eq06-acciones">
+        <a class="eq06-enlace" href="#">Ayuda</a>
+        <a class="eq06-boton" href="p02-inicio-sesion.html">Iniciar sesión</a>
+      </div>
+    </header>
+    <div class="eq06-cuerpo">
+      <nav class="eq06-menu" aria-label="Menú principal">
+      <ul>
+        <li><a href="pantalla-inicio.html">Inicio</a></li>
+        <li class="eq06-activo"><a href="inicio-sesion.html" aria-current="page">Iniciar sesión</a></li>
+        <li><a href="recuperar-clave.html">Recuperar clave</a></li>
+      </ul>
+      <p class="eq06-negocio">Negocio de comida</p>
+      </nav>
+      <main id="eq06-contenido" class="eq06-principal">
+        <section class="eq06-caja">
+          <h1>Iniciar sesión</h1>
+          <form class="eq06-formulario" method="post" action="#">
+            <fieldset class="eq06-conjunto">
+              <legend class="eq06-leyenda">Datos de acceso</legend>
+              <div class="eq06-grupo">
+                <label class="eq06-etiqueta" for="eq06-usuario">Usuario o correo *</label>
+                <input class="eq06-campo" type="text" id="eq06-usuario" name="usuario" required minlength="3" maxlength="100" autocomplete="username" placeholder="usuario@negocio.com">
+              </div>
+              <div class="eq06-grupo">
+                <label class="eq06-etiqueta" for="eq06-clave">Contraseña *</label>
+                <input class="eq06-campo" type="password" id="eq06-clave" name="clave" required minlength="8" maxlength="64" autocomplete="current-password" placeholder="Tu contraseña">
+              </div>
+              <div class="eq06-grupo eq06-casilla">
+                <input type="checkbox" id="eq06-recordar" name="recordar" value="si">
+                <label class="eq06-etiqueta" for="eq06-recordar">Recordarme</label>
+              </div>
+              <button class="eq06-boton eq06-boton-ancho" type="submit">Iniciar sesión</button>
+              <p class="eq06-aviso eq06-aviso-error" role="alert"><strong>Estado de error:</strong> No fue posible iniciar sesión.</p>
+            </fieldset>
+          </form>
+          <p><a class="eq06-enlace" href="recuperar-clave.html">¿Olvidaste tu contraseña?</a></p>
+        </section>
+        <aside class="eq06-nota">
+          <h2>Reglas de acceso</h2>
+          <ul>
+            <li>Usuario o correo y contraseña son obligatorios.</li>
+            <li>Credenciales inválidas o cuenta inactiva impiden el acceso.</li>
+            <li>El mensaje de error no revela qué dato falló.</li>
+          </ul>
+        </aside>
+      </main>
+    </div>
+    <footer class="eq06-pie">
+      <p>Inventario · Pequeños negocios de comida</p>
+      <p>Control de existencias · Sin pagos ni facturación</p>
+    </footer>
+  </div>
+</body>
+</html>
