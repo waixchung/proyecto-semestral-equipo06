@@ -1,52 +1,80 @@
 <?php
+if (!defined('APP_ACCESO')) { define('APP_ACCESO', true); }
 
-define('APP_ACCESO', true);
+// Inicialización para peticiones GET
+if (!isset($valores)) {
+    $valores = ['usuario' => ''];
+}
+if (!isset($errores)) {
+    $errores = [];
+}
 
-// Configuración de variables contextuales
-$titulo_pagina = 'Inicio de sesión · Inventario';
-$rol_usuario = 'Acceso público'; 
-$usuario_autenticado = false; 
-$pagina_actual = 'inicio-sesion'; 
-
-// Carga de componentes modulares
-require_once 'includes/encabezado.php';
-require_once 'includes/menu.php';
+$titulo_pagina = 'Iniciar sesión | Inventario';
+// No cargamos el menú interno porque es una página pública
 ?>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><?php echo $titulo_pagina; ?></title>
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+  <!-- Ajusta el encabezado público según tu maquetación -->
+  <header class="eq06-encabezado">
+    <div class="eq06-marca">Inventario</div>
+  </header>
 
-<main id="eq06-contenido" class="eq06-principal">
-  <section class="eq06-caja">
-    <h1>Iniciar sesión</h1>
-    <form class="eq06-formulario" method="post" action="procesar_inicio_sesion.php">
+  <main id="eq06-principal" style="max-width: 400px; margin: 2rem auto;">
+    <h1 style="text-align: center;">Iniciar sesión</h1>
+
+    <form method="post" action="procesar_inicio_sesion.php">
       <fieldset class="eq06-conjunto">
-        <legend class="eq06-leyenda">Datos de acceso</legend>
-        <div class="eq06-grupo">
-          <label class="eq06-etiqueta" for="eq06-usuario">Usuario o correo *</label>
-          <input class="eq06-campo" type="text" id="eq06-usuario" name="usuario" required minlength="3" maxlength="100" autocomplete="username" placeholder="usuario@negocio.com">
+        <legend>Datos de acceso</legend>
+        
+        <div class="eq06-grupo-campo">
+          <label class="eq06-etiqueta" for="usuario">Usuario o correo *</label>
+          <input class="eq06-campo <?php echo isset($errores['usuario']) ? 'eq06-campo-error' : ''; ?>" 
+                 type="text" id="usuario" name="usuario" required 
+                 value="<?php echo htmlspecialchars($valores['usuario']); ?>">
+          <?php if (isset($errores['usuario'])): ?>
+              <span class="eq06-mensaje-error" style="color: #A61E4D; font-size: 0.875rem;"><?php echo $errores['usuario']; ?></span>
+          <?php endif; ?>
         </div>
-        <div class="eq06-grupo">
-          <label class="eq06-etiqueta" for="eq06-clave">Contraseña *</label>
-          <input class="eq06-campo" type="password" id="eq06-clave" name="clave" required minlength="8" maxlength="64" autocomplete="current-password" placeholder="Tu contraseña">
+
+        <div class="eq06-grupo-campo" style="margin-top: 1rem;">
+          <label class="eq06-etiqueta" for="contrasena">Contraseña *</label>
+          <input class="eq06-campo <?php echo isset($errores['contrasena']) ? 'eq06-campo-error' : ''; ?>" 
+                 type="password" id="contrasena" name="contrasena" required>
+          <?php if (isset($errores['contrasena'])): ?>
+              <span class="eq06-mensaje-error" style="color: #A61E4D; font-size: 0.875rem;"><?php echo $errores['contrasena']; ?></span>
+          <?php endif; ?>
         </div>
-        <div class="eq06-grupo eq06-casilla">
-          <input type="checkbox" id="eq06-recordar" name="recordar" value="si">
-          <label class="eq06-etiqueta" for="eq06-recordar">Recordarme</label>
+
+        <div class="eq06-grupo-campo" style="margin-top: 1rem;">
+          <label>
+            <input type="checkbox" name="recordarme"> Recordarme
+          </label>
         </div>
-        <button class="eq06-boton eq06-boton-ancho" type="submit">Iniciar sesión</button>
-        <p class="eq06-aviso eq06-aviso-error" role="alert"><strong>Estado de error:</strong> No fue posible iniciar sesión.</p>
+
+        <div class="eq06-acciones" style="margin-top: 1rem;">
+          <button class="eq06-boton" type="submit" style="width: 100%; background-color: #A61E4D; color: white; padding: 10px; border: none; cursor: pointer;">Iniciar sesión</button>
+        </div>
+
+        <!-- Alerta de credenciales incorrectas -->
+        <?php if (isset($errores['auth'])): ?>
+            <div style="background-color: #f8d7da; color: #721c24; padding: 10px; margin-top: 15px; border: 1px solid #f5c6cb;">
+                <strong>Estado de error:</strong> <?php echo $errores['auth']; ?>
+            </div>
+        <?php endif; ?>
+
       </fieldset>
     </form>
-    <p><a class="eq06-enlace" href="recuperar-clave.php">¿Olvidaste tu contraseña?</a></p>
-  </section>
-  <aside class="eq06-nota">
-    <h2>Reglas de acceso</h2>
-    <ul>
-      <li>Usuario o correo y contraseña son obligatorios.</li>
-      <li>Credenciales inválidas o cuenta inactiva impiden el acceso.</li>
-      <li>El mensaje de error no revela qué dato falló.</li>
-    </ul>
-  </aside>
-</main>
 
-<?php
-require_once 'includes/pie.php';
-?>
+    <div style="margin-top: 1rem; text-align: center;">
+      <a href="recuperar-clave.php" style="color: #A61E4D;">¿Olvidaste tu contraseña?</a>
+    </div>
+  </main>
+</body>
+</html>
