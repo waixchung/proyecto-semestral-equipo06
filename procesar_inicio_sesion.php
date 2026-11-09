@@ -1,7 +1,7 @@
 <?php
 define('APP_ACCESO', true);
 require_once 'includes/funciones.php';
-require_once 'clases/Validador.php';
+require_once 'clases/validador.php';
 require_once 'config/datos_demo.php'; // Incluimos los datos de prueba
 
 if ($_SERVER['REQUEST_METHOD'] != 'POST') {
