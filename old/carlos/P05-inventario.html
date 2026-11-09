@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Consulta el stock disponible y filtra por producto, categoría y estado de stock.">
+  <title>Listado de inventario · Inventario</title>
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+  <div class="eq06-pagina">
+    <header class="eq06-encabezado">
+      <a class="eq06-marca" href="p01-inicio.html"><img src="images/logo.svg" alt="Logotipo de Inventario" width="32" height="32"> Inventario</a>
+      <p class="eq06-rol">Encargado de inventario</p>
+      <div class="eq06-acciones">
+        <a class="eq06-enlace" href="#">Perfil</a>
+        <a class="eq06-boton" href="p01-inicio.html">Salir</a>
+      </div>
+    </header>
+    <div class="eq06-cuerpo">
+      <nav class="eq06-menu" aria-label="Menú principal">
+      <ul>
+        <li><a href="p04-dashboard.html">Dashboard</a></li>
+        <li class="eq06-activo"><a href="p05-inventario.html" aria-current="page">Inventario</a></li>
+        <li><a href="#">Recepción</a></li>
+        <li><a href="#">Salidas</a></li>
+        <li><a href="#">Movimientos</a></li>
+        <li><a href="#">Reportes y alertas</a></li>
+      </ul>
+      <p class="eq06-negocio">Negocio de comida</p>
+      </nav>
+      <main id="eq06-contenido" class="eq06-principal">
+        <h1>Inventario</h1>
+        <section>
+          <h2 class="eq06-oculto">Filtros</h2>
+          <form class="eq06-formulario" method="post" action="#">
+            <fieldset class="eq06-conjunto">
+              <legend class="eq06-leyenda">Filtrar existencias</legend>
+              <div class="eq06-filtros">
+                <div>
+                  <label class="eq06-etiqueta" for="eq06-buscar">Buscar producto</label>
+                  <input class="eq06-campo" type="search" id="eq06-buscar" name="buscar" maxlength="60" autocomplete="off" placeholder="Nombre o código">
+                </div>
+                <div>
+                  <label class="eq06-etiqueta" for="eq06-categoria">Categoría</label>
+                  <select class="eq06-campo" id="eq06-categoria" name="categoria">
+                    <option value="">Todas</option><option value="granos">Granos</option><option value="vegetales">Vegetales</option><option value="aceites">Aceites</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="eq06-etiqueta" for="eq06-estado">Estado de stock</label>
+                  <select class="eq06-campo" id="eq06-estado" name="estado">
+                    <option value="">Todos</option><option value="normal">Normal</option><option value="bajo">Stock bajo</option><option value="cero">Sin stock</option>
+                  </select>
+                </div>
+              </div>
+              <div class="eq06-fila-botones">
+                <button class="eq06-boton" type="submit">Aplicar filtros</button>
+                <button class="eq06-boton eq06-boton-sec" type="reset">Limpiar</button>
+              </div>
+            </fieldset>
+          </form>
+        </section>
+        <section>
+          <h2>Existencias vigentes</h2>
+          <div class="eq06-tabla-contenedor">
+            <table class="eq06-tabla">
+              <caption>Stock actual por producto</caption>
+              <thead><tr><th scope="col">Producto / código</th><th scope="col">Categoría</th><th scope="col">Stock</th><th scope="col">Unidad</th><th scope="col">Estado</th><th scope="col">Acción</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">Arroz / PR-001</th><td>Granos</td><td>5</td><td><abbr title="kilogramos">kg</abbr></td><td><span class="eq06-estado eq06-estado-bajo">Stock bajo</span></td><td><a class="eq06-enlace" href="p06-detalle-producto.html">Ver detalle</a></td></tr>
+                <tr><th scope="row">Tomate / PR-003</th><td>Vegetales</td><td>0</td><td><abbr title="kilogramos">kg</abbr></td><td><span class="eq06-estado eq06-estado-bajo">Stock bajo</span> <span class="eq06-estado eq06-estado-cero">Sin stock</span></td><td><a class="eq06-enlace" href="p06-detalle-producto.html">Ver detalle</a></td></tr>
+                <tr><th scope="row">Aceite / PR-002</th><td>Aceites</td><td>12</td><td><abbr title="litros">L</abbr></td><td><span class="eq06-estado">Normal</span></td><td><a class="eq06-enlace" href="p06-detalle-producto.html">Ver detalle</a></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>3 resultados · Página 1 de 1</p>
+          <p class="eq06-aviso" role="status">Sin resultados: cambia los filtros o limpia la búsqueda.</p>
+        </section>
+        <aside class="eq06-nota">
+          <h2>Regla RB-01</h2>
+          <ul>
+            <li><strong>Stock bajo:</strong> stock actual &lt; mínimo.</li>
+            <li><strong>Normal:</strong> stock actual ≥ mínimo.</li>
+            <li><strong>Sin stock:</strong> etiqueta adicional si el stock actual = 0.</li>
+          </ul>
+          <p>Esta consulta no modifica existencias; cada fila abre el detalle.</p>
+        </aside>
+      </main>
+    </div>
+    <footer class="eq06-pie">
+      <p>Inventario · Pequeños negocios de comida</p>
+      <p>Control de existencias · Sin pagos ni facturación</p>
+    </footer>
+  </div>
+</body>
+</html>
