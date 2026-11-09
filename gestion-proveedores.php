@@ -1,15 +1,22 @@
 <?php
+session_start();
+
+// Validar que el usuario tenga una sesión activa. Si no, expulsarlo al login.
+if (!isset($_SESSION['rol_usuario'])) {
+    header('Location: inicio-sesion.php');
+    exit;
+}
 
 define('APP_ACCESO', true);
 
-// Configuración de variables contextuales
-$titulo_pagina = 'Gestión de proveedores | Inventario';
-// Nota: En el futuro esto vendrá de la sesión ($_SESSION['rol'])
-$rol_usuario = 'Administrador'; 
-$usuario_autenticado = true; 
+$titulo_pagina = 'Gestión de proveedores · Inventario'; 
 $pagina_actual = 'gestion-proveedores'; 
 
-// Carga de componentes modulares
+// Leer los datos directamente de la sesión
+$rol_usuario = $_SESSION['rol_usuario']; 
+$nombre_usuario = $_SESSION['usuario_nombre']; 
+$usuario_autenticado = true; 
+
 require_once 'includes/encabezado.php';
 require_once 'includes/menu.php';
 ?>

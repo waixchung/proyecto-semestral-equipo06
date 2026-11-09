@@ -1,10 +1,21 @@
 <?php
+session_start();
+
+// Validar que el usuario tenga una sesión activa. Si no, expulsarlo al login.
+if (!isset($_SESSION['rol_usuario'])) {
+    header('Location: inicio-sesion.php');
+    exit;
+}
+
 define('APP_ACCESO', true);
 
-$titulo_pagina = 'Recepción de mercancía | Inventario';
-$rol_usuario = 'Recepcionista de mercancía'; 
-$usuario_autenticado = true; 
+$titulo_pagina = 'Recepción de mercancía · Inventario'; 
 $pagina_actual = 'recepcion-mercancia'; 
+
+// Leer los datos directamente de la sesión
+$rol_usuario = $_SESSION['rol_usuario']; 
+$nombre_usuario = $_SESSION['usuario_nombre']; 
+$usuario_autenticado = true; 
 
 require_once 'includes/encabezado.php';
 require_once 'includes/menu.php';
