@@ -68,3 +68,14 @@
 
 **Tareas pendientes:**
 * Crear los datos de prueba.
+
+* ## Sesión de Trabajo: 09 de Noviembre de 2026
+
+**Participantes:**
+* Wai Chung
+
+**Actividades realizadas:**
+* **Proceso de QA:** Se realizaron las pruebas de funcionalidades y validación de integridad en cuanto a las reglas de negocio. Se aplicaron correcciones referentes al aspecto visual, así como de integración entre formularios y scripts de procesamiento. Se creó el script `procesar_inicio_sesion.php` y se corrigieron las referencias a formularios y dependencias del directorio `includes`. Se corrigieron aspectos de seguridad como el manejo de sesiones con los scripts y se crearon los datos de prueba bajo el directorio `config/datos_demo.php`
+
+**Tareas pendientes:**
+* Documentación técnica y de trazabilidad.
