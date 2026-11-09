@@ -1,11 +1,16 @@
 <?php
-// Si este archivo es llamado desde procesar_producto.php, APP_ACCESO ya estará definido.
-// Si se accede directamente, lo definimos aquí.
+session_start();
+
+// Proteger la vista: si no hay sesión, al login
+if (!isset($_SESSION['rol_usuario'])) {
+    header('Location: inicio-sesion.php');
+    exit;
+}
+
 if (!defined('APP_ACCESO')) {
     define('APP_ACCESO', true);
 }
 
-// Inicializamos arreglos vacíos si es la primera vez que se entra al formulario (GET)
 if (!isset($valores)) {
     $valores = [
         'nombre' => '',
@@ -23,14 +28,13 @@ if (!isset($errores)) {
     $errores = [];
 }
 
-// Configuración de variables contextuales
 $titulo_pagina = 'Formulario de producto · Inventario';
-// Nota: En el futuro esto vendrá de la sesión ($_SESSION['rol'])
-$rol_usuario = 'Administrador'; 
-$usuario_autenticado = true; 
 $pagina_actual = 'productos'; 
 
-// Carga de componentes modulares
+$rol_usuario = $_SESSION['rol_usuario']; 
+$nombre_usuario = $_SESSION['usuario_nombre']; 
+$usuario_autenticado = true; 
+
 require_once 'includes/encabezado.php';
 require_once 'includes/menu.php';
 ?>
@@ -175,6 +179,4 @@ require_once 'includes/menu.php';
   </div>
 </main>
 
-<?php
-require_once 'includes/pie.php';
-?>
+<?php require_once 'includes/pie.php'; ?>

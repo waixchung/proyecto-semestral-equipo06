@@ -1,4 +1,12 @@
 <?php
+session_start();
+
+// Proteger la vista: si no hay sesión, al login
+if (!isset($_SESSION['rol_usuario'])) {
+    header('Location: inicio-sesion.php');
+    exit;
+}
+
 if (!defined('APP_ACCESO')) { define('APP_ACCESO', true); }
 
 if (!isset($valores)) {
@@ -15,9 +23,11 @@ if (!isset($valores)) {
 if (!isset($errores)) { $errores = []; }
 
 $titulo_pagina = 'Nuevo proveedor | Inventario';
-$rol_usuario = 'Administrador'; 
+$pagina_actual = 'proveedores'; 
+
+$rol_usuario = $_SESSION['rol_usuario']; 
+$nombre_usuario = $_SESSION['usuario_nombre']; 
 $usuario_autenticado = true; 
-$pagina_actual = 'gestion-proveedores'; 
 
 require_once 'includes/encabezado.php';
 require_once 'includes/menu.php';
