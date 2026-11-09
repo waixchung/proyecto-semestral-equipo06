@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Pantalla para registrar la recepcion de mercancia y consultar su detalle en el inventario del negocio.">
+    <title>Recepcion de mercancia | Inventario</title>
+    <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+    <header class="eq06-encabezado">
+        <a class="eq06-marca" href="listado-inventario.html" aria-label="Inicio de Inventario">Inventario</a>
+        <div class="eq06-encabezado-derecha">
+            <span class="eq06-usuario">Recepcionista de mercancia</span>
+            <a class="eq06-enlace-cabecera" href="perfil-usuario.html">Perfil</a>
+            <a class="eq06-enlace-cabecera" href="inicio-sesion.html">Salir</a>
+        </div>
+    </header>
+
+    <div class="eq06-distribucion">
+        <nav class="eq06-menu" aria-label="Menu principal">
+            <ul class="eq06-menu-lista">
+                <li><a href="dashboard-recepcionista.html">Dashboard</a></li>
+                <li><a href="recepcion-mercancia.html" aria-current="page">Recepcion</a></li>
+                <li><a href="listado-inventario.html">Consulta de productos</a></li>
+            </ul>
+        </nav>
+
+        <main class="eq06-contenido">
+            <section class="eq06-panel" aria-labelledby="eq06-titulo-recepcion">
+                <h1 id="eq06-titulo-recepcion">Registrar recepción</h1>
+                <form class="eq06-formulario-recepcion" method="post" action="#">
+                    <fieldset class="eq06-grupo-datos">
+                        <legend>Datos de recepción</legend>
+                        <div class="eq06-campos-recepcion">
+                            <div class="eq06-grupo-campo">
+                                <label for="eq06-numero-recepcion">N.º de recepción</label>
+                                <input class="eq06-campo" type="text" id="eq06-numero-recepcion" name="numero_recepcion" placeholder="Se asigna al confirmar" readonly>
+                            </div>
+                            <div class="eq06-grupo-campo">
+                                <label for="eq06-fecha-recepcion">Fecha de recepción <span aria-hidden="true">*</span></label>
+                                <input class="eq06-campo" type="date" id="eq06-fecha-recepcion" name="fecha_recepcion" required>
+                            </div>
+                            <div class="eq06-grupo-campo">
+                                <label for="eq06-proveedor">Proveedor activo <span aria-hidden="true">*</span></label>
+                                <select class="eq06-campo" id="eq06-proveedor" name="proveedor" required>
+                                    <option value="">Seleccione un proveedor</option>
+                                    <option value="distribuidora-central">Distribuidora Central</option>
+                                </select>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="eq06-grupo-detalle">
+                        <legend>Detalle de mercancía recibida</legend>
+                        <div class="eq06-tabla-contenedor">
+                            <table class="eq06-tabla-recepcion">
+                                <caption>Productos que componen la recepción</caption>
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Producto activo</th>
+                                        <th scope="col">Cantidad <span aria-hidden="true">&gt; 0</span></th>
+                                        <th scope="col">Unidad</th>
+                                        <th scope="col">Acción</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <label class="eq06-etiqueta-oculta" for="eq06-producto-1">Producto, línea 1</label>
+                                            <select class="eq06-campo" id="eq06-producto-1" name="producto_1" required>
+                                                <option value="">Seleccione un producto</option>
+                                                <option value="arroz" selected>Arroz / PR-001</option>
+                                                <option value="aceite">Aceite / PR-002</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <label class="eq06-etiqueta-oculta" for="eq06-cantidad-1">Cantidad de la línea 1</label>
+                                            <input class="eq06-campo" type="number" id="eq06-cantidad-1" name="cantidad_1" min="0.01" step="0.01" value="5" required>
+                                        </td>
+                                        <td>kg (automática)</td>
+                                        <td><button class="eq06-boton-secundario" type="button">Retirar línea</button></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label class="eq06-etiqueta-oculta" for="eq06-producto-2">Producto, línea 2</label>
+                                            <select class="eq06-campo" id="eq06-producto-2" name="producto_2" required>
+                                                <option value="">Seleccione un producto</option>
+                                                <option value="arroz">Arroz / PR-001</option>
+                                                <option value="aceite" selected>Aceite / PR-002</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <label class="eq06-etiqueta-oculta" for="eq06-cantidad-2">Cantidad de la línea 2</label>
+                                            <input class="eq06-campo" type="number" id="eq06-cantidad-2" name="cantidad_2" min="0.01" step="0.01" value="3" required>
+                                        </td>
+                                        <td>L (automática)</td>
+                                        <td><button class="eq06-boton-secundario" type="button">Retirar línea</button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <button class="eq06-boton-secundario eq06-agregar-linea" type="button">+ Agregar línea</button>
+                    </fieldset>
+
+                    <aside class="eq06-aviso" aria-label="Aviso antes de confirmar">
+                        Antes de confirmar: revisar proveedor, productos y cantidades. No se guarda stock parcial.
+                    </aside>
+                    <div class="eq06-acciones">
+                        <button class="eq06-boton" type="submit">Confirmar recepción</button>
+                        <button class="eq06-boton-secundario" type="reset">Cancelar</button>
+                    </div>
+                    <p class="eq06-nota">* Campos obligatorios. La confirmación es solo una representación visual en esta etapa.</p>
+                    <div class="eq06-estado" role="status" aria-live="polite"></div>
+                </form>
+            </section>
+        </main>
+    </div>
+
+    <footer class="eq06-pie">
+        <span>Inventario · Pequeños negocios de comida</span>
+        <span>Control de existencias · Sin pagos ni facturación</span>
+    </footer>
+</body>
+</html>

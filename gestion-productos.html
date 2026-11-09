@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestión de productos · Inventario</title>
+  <meta name="description" content="Catálogo de productos. Crear, consultar, editar y desactivar productos del inventario.">
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+  <header class="eq06-header">
+    <a href="dashboard-administrador.html" class="eq06-logo">[logo] Inventario</a>
+    <div class="eq06-header-right">
+      <span class="eq06-rol">Administrador</span>
+      <div class="eq06-header-actions">
+        <a href="perfil-usuario.html" class="eq06-btn eq06-btn-secundario">Perfil</a>
+        <a href="inicio-sesion.html" class="eq06-btn eq06-btn-secundario">Salir</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="eq06-layout">
+    <aside class="eq06-sidebar">
+      <nav aria-label="Menú principal">
+        <ul>
+          <li><a href="dashboard-administrador.html">Dashboard</a></li>
+          <li><a href="listado-inventario.html">Inventario</a></li>
+          <li><a href="gestion-productos.html" class="eq06-activo">Productos</a></li>
+          <li><a href="gestion-proveedores.html">Proveedores</a></li>
+          <li><a href="historial-movimientos.html">Movimientos</a></li>
+          <li><a href="reportes-alertas.html">Reportes y alertas</a></li>
+          <li><a href="panel-administracion.html">Administración</a></li>
+        </ul>
+      </nav>
+      <p class="eq06-nota" style="padding: 16px 20px;">Negocio de comida</p>
+    </aside>
+
+    <main class="eq06-main">
+      <div class="eq06-titulo-pagina">
+        <h1>Catálogo de productos</h1>
+        <a href="formulario-producto.html" class="eq06-btn">Nuevo</a>
+      </div>
+
+      <section class="eq06-seccion" aria-labelledby="filtros-productos">
+        <h2 id="filtros-productos" class="eq06-sr-only">Filtros</h2>
+        <form class="eq06-filtros" method="post" action="#" role="search">
+          <div class="eq06-campo-grupo">
+            <label for="eq06-buscar-prod">Buscar</label>
+            <input type="text" id="eq06-buscar-prod" name="buscar" class="eq06-campo"
+                   placeholder="Nombre o código" maxlength="80" autocomplete="off">
+          </div>
+          <div class="eq06-campo-grupo">
+            <label for="eq06-cat-prod">Categoría</label>
+            <select id="eq06-cat-prod" name="categoria" class="eq06-campo">
+              <option value="">Todas</option>
+              <option value="granos">Granos</option>
+              <option value="aceites">Aceites</option>
+              <option value="vegetales">Vegetales</option>
+            </select>
+          </div>
+          <div class="eq06-campo-grupo">
+            <label for="eq06-estado-prod">Estado</label>
+            <select id="eq06-estado-prod" name="estado" class="eq06-campo">
+              <option value="">Todos</option>
+              <option value="activo">Activo</option>
+              <option value="inactivo">Inactivo</option>
+            </select>
+          </div>
+          <div class="eq06-filtros-acciones">
+            <button type="submit" class="eq06-btn">Aplicar</button>
+            <button type="reset" class="eq06-btn eq06-btn-secundario">Limpiar</button>
+          </div>
+        </form>
+        <p class="eq06-nota">
+          <a href="categorias-unidades.html">Categorías → C05</a> · <a href="categorias-unidades.html">Unidades → C05</a>
+        </p>
+      </section>
+
+      <div class="eq06-seccion">
+        <div class="eq06-tabla-wrap">
+          <table class="eq06-tabla">
+            <caption>Listado de productos del catálogo</caption>
+            <thead>
+              <tr>
+                <th scope="col">Código</th>
+                <th scope="col">Producto</th>
+                <th scope="col">Categoría</th>
+                <th scope="col">Estado</th>
+                <th scope="col">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><abbr title="Código de producto">PR-001</abbr></td>
+                <td>Arroz</td>
+                <td>Granos</td>
+                <td><span class="eq06-badge eq06-badge-activo">Activo</span></td>
+                <td>
+                  <a href="detalle-producto.html">Ver</a> /
+                  <a href="formulario-producto.html">Editar</a> /
+                  <a href="#" class="eq06-btn-peligro" style="text-decoration:underline;border:none;background:none;padding:0;color:#A61E4D;">Desactivar</a>
+                </td>
+              </tr>
+              <tr>
+                <td><abbr title="Código de producto">PR-002</abbr></td>
+                <td>Aceite</td>
+                <td>Aceites</td>
+                <td><span class="eq06-badge eq06-badge-activo">Activo</span></td>
+                <td>
+                  <a href="detalle-producto.html">Ver</a> /
+                  <a href="formulario-producto.html">Editar</a> /
+                  <a href="#" style="color:#A61E4D;">Desactivar</a>
+                </td>
+              </tr>
+              <tr>
+                <td><abbr title="Código de producto">PR-009</abbr></td>
+                <td>Harina anterior</td>
+                <td>Granos</td>
+                <td><span class="eq06-badge eq06-badge-inactivo">Inactivo</span></td>
+                <td>
+                  <a href="detalle-producto.html">Ver</a> /
+                  <a href="formulario-producto.html">Editar</a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="eq06-alerta eq06-alerta-info eq06-mt-16" role="status">
+          Confirmación de desactivación: el producto dejará de estar disponible para nuevos movimientos.
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <footer class="eq06-footer">
+    <span>Inventario · Pequeños negocios de comida</span>
+    <span>Control de existencias · Sin pagos ni facturación</span>
+  </footer>
+</body>
+</html>

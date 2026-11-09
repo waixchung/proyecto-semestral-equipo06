@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Detalle del producto Arroz (PR-001): datos, stock e historial de movimientos.">
+  <title>Detalle de producto · Inventario</title>
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+  <div class="eq06-pagina">
+    <header class="eq06-encabezado">
+      <a class="eq06-marca" href="p01-inicio.html"><img src="images/logo.svg" alt="Logotipo de Inventario" width="32" height="32"> Inventario</a>
+      <p class="eq06-rol">Administrador</p>
+      <div class="eq06-acciones">
+        <a class="eq06-enlace" href="#">Perfil</a>
+        <a class="eq06-boton" href="p01-inicio.html">Salir</a>
+      </div>
+    </header>
+    <div class="eq06-cuerpo">
+      <nav class="eq06-menu" aria-label="Menú principal">
+      <ul>
+        <li><a href="p04-dashboard.html">Dashboard</a></li>
+        <li><a href="p05-inventario.html">Inventario</a></li>
+        <li class="eq06-activo"><a href="p06-detalle-producto.html" aria-current="page">Productos</a></li>
+        <li><a href="#">Proveedores</a></li>
+        <li><a href="#">Movimientos</a></li>
+        <li><a href="#">Reportes y alertas</a></li>
+        <li><a href="#">Administración</a></li>
+      </ul>
+      <p class="eq06-negocio">Negocio de comida</p>
+      </nav>
+      <main id="eq06-contenido" class="eq06-principal">
+        <div class="eq06-titulo-barra">
+          <h1>Arroz · PR-001</h1>
+          <a class="eq06-boton" href="#">Editar</a>
+        </div>
+        <section>
+          <h2 class="eq06-oculto">Datos del producto</h2>
+          <dl class="eq06-datos">
+            <div><dt>Categoría</dt><dd>Granos</dd></div>
+            <div><dt>Unidad</dt><dd><abbr title="kilogramos">kg</abbr></dd></div>
+            <div><dt>Proveedor principal</dt><dd>Distribuidora Central</dd></div>
+            <div><dt>Stock actual</dt><dd>5 <abbr title="kilogramos">kg</abbr> · <span class="eq06-estado eq06-estado-bajo">Stock bajo</span></dd></div>
+            <div><dt>Stock mínimo</dt><dd>8 <abbr title="kilogramos">kg</abbr></dd></div>
+            <div><dt>Estado del producto</dt><dd>Activo</dd></div>
+          </dl>
+        </section>
+        <section>
+          <h2>Historial del producto · Más reciente primero</h2>
+          <div class="eq06-tabla-contenedor">
+            <table class="eq06-tabla">
+              <caption>Movimientos históricos del producto (no editables)</caption>
+              <thead><tr><th scope="col">Fecha</th><th scope="col">Tipo</th><th scope="col">Cantidad</th><th scope="col">Usuario</th><th scope="col">Referencia</th></tr></thead>
+              <tbody>
+                <tr><th scope="row"><time datetime="2026-10-05T10:30">05/10/2026 10:30</time></th><td>Entrada</td><td>+5 <abbr title="kilogramos">kg</abbr></td><td>Ana</td><td>REC-0021</td></tr>
+                <tr><th scope="row"><time datetime="2026-10-04T16:10">04/10/2026 16:10</time></th><td>Salida</td><td>−3 <abbr title="kilogramos">kg</abbr></td><td>Luis</td><td>SAL-0034</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <a class="eq06-boton eq06-boton-sec" href="p05-inventario.html">Volver</a>
+        </section>
+        <aside class="eq06-nota">
+          <h2>Permisos por rol</h2>
+          <p><strong>Recepcionista:</strong> ve los mismos datos básicos y el historial, <em>sin botón Editar</em>. La edición es exclusiva del Administrador.</p>
+        </aside>
+      </main>
+    </div>
+    <footer class="eq06-pie">
+      <p>Inventario · Pequeños negocios de comida</p>
+      <p>Control de existencias · Sin pagos ni facturación</p>
+    </footer>
+  </div>
+</body>
+</html>

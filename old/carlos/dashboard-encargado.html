@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Dashboard del Encargado de inventario: resumen de productos, alertas de stock bajo y movimientos recientes para negocios de comida.">
+  <title>Dashboard del Encargado de inventario | Inventario</title>
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+
+  <header class="eq06-encabezado">
+    <a class="eq06-marca" href="dashboard-encargado.html">
+      <img src="img/logo.svg" alt="Logotipo de Inventario" width="40" height="40">
+      <span>Inventario</span>
+    </a>
+    <div class="eq06-sesion">
+      <p class="eq06-rol">Encargado de inventario</p>
+      <a href="perfil-usuario.html">Perfil</a>
+      <a href="inicio-sesion.html">Salir</a>
+    </div>
+  </header>
+
+  <div class="eq06-cuerpo">
+
+    <div class="eq06-menu-lateral">
+      <nav aria-label="Menú principal">
+        <ul class="eq06-menu-lista">
+          <li><a class="eq06-activo" href="dashboard-encargado.html" aria-current="page">Dashboard</a></li>
+          <li><a href="listado-inventario.html">Inventario</a></li>
+          <li><a href="recepcion-mercancia.html">Recepción</a></li>
+          <li><a href="registro-salida.html">Salidas</a></li>
+          <li><a href="historial-movimientos.html">Movimientos</a></li>
+          <li><a href="reportes-alertas.html">Reportes y alertas</a></li>
+        </ul>
+      </nav>
+
+      <aside>
+        <figure class="eq06-negocio-figura">
+          <img src="img/negocio.svg" alt="Ilustración de un local de comida" width="64" height="64">
+          <figcaption>Negocio de comida</figcaption>
+        </figure>
+      </aside>
+    </div>
+
+    <main id="eq06-principal">
+      <h1>Resumen del inventario</h1>
+
+      <section class="eq06-seccion" aria-labelledby="eq06-titulo-indicadores">
+        <h2 class="eq06-oculto" id="eq06-titulo-indicadores">Indicadores del día</h2>
+        <div class="eq06-indicadores">
+          <article class="eq06-indicador">
+            <p class="eq06-indicador-valor"><strong>24</strong></p>
+            <h3 class="eq06-indicador-titulo">Productos activos</h3>
+          </article>
+          <article class="eq06-indicador">
+            <p class="eq06-indicador-valor"><strong>03</strong></p>
+            <h3 class="eq06-indicador-titulo">Stock bajo</h3>
+          </article>
+          <article class="eq06-indicador">
+            <p class="eq06-indicador-valor"><strong>05</strong></p>
+            <h3 class="eq06-indicador-titulo">Entradas del día</h3>
+          </article>
+          <article class="eq06-indicador">
+            <p class="eq06-indicador-valor"><strong>02</strong></p>
+            <h3 class="eq06-indicador-titulo">Salidas del día</h3>
+          </article>
+        </div>
+      </section>
+
+      <section class="eq06-seccion" aria-labelledby="eq06-titulo-acciones">
+        <h2 class="eq06-oculto" id="eq06-titulo-acciones">Acciones rápidas</h2>
+        <div class="eq06-acciones">
+          <a class="eq06-boton" href="recepcion-mercancia.html">Registrar recepción</a>
+          <button class="eq06-boton" type="button">Registrar salida</button>
+        </div>
+      </section>
+
+      <section class="eq06-seccion" aria-labelledby="eq06-titulo-alertas">
+        <h2 id="eq06-titulo-alertas">Alertas: stock actual &lt; stock mínimo</h2>
+        <div class="eq06-tabla-contenedor">
+          <table class="eq06-tabla">
+            <caption>Productos cuyo stock actual está por debajo del mínimo</caption>
+            <thead>
+              <tr>
+                <th scope="col">Producto</th>
+                <th scope="col">Stock actual</th>
+                <th scope="col">Mínimo</th>
+                <th scope="col">Acción</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">Arroz</th>
+                <td>5 <abbr title="kilogramos">kg</abbr> <span class="eq06-etiqueta-bajo">Stock bajo</span></td>
+                <td>8 <abbr title="kilogramos">kg</abbr></td>
+                <td><a href="detalle-producto.html" aria-label="Ver detalle del producto Arroz">Ver detalle del producto</a></td>
+              </tr>
+              <tr>
+                <th scope="row">Tomate</th>
+                <td>0 <abbr title="kilogramos">kg</abbr> <span class="eq06-etiqueta-bajo">Stock bajo</span></td>
+                <td>3 <abbr title="kilogramos">kg</abbr></td>
+                <td><a href="detalle-producto.html" aria-label="Ver detalle del producto Tomate">Ver detalle del producto</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="eq06-seccion" aria-labelledby="eq06-titulo-movimientos">
+        <h2 id="eq06-titulo-movimientos">Movimientos recientes</h2>
+        <div class="eq06-tabla-contenedor">
+          <table class="eq06-tabla">
+            <caption>Últimas entradas y salidas registradas</caption>
+            <thead>
+              <tr>
+                <th scope="col">Fecha</th>
+                <th scope="col">Producto</th>
+                <th scope="col">Tipo</th>
+                <th scope="col">Cantidad</th>
+                <th scope="col">Usuario</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><time datetime="2026-10-05">05/10/2026</time></td>
+                <td>Arroz</td>
+                <td>Entrada</td>
+                <td>+5 <abbr title="kilogramos">kg</abbr></td>
+                <td>Ana</td>
+              </tr>
+              <tr>
+                <td><time datetime="2026-10-05">05/10/2026</time></td>
+                <td>Aceite</td>
+                <td>Salida</td>
+                <td>−2 <abbr title="litros">L</abbr></td>
+                <td>Luis</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+  </div>
+
+  <footer class="eq06-pie">
+    <p>Inventario · Pequeños negocios de comida</p>
+    <p>Control de existencias · <em>Sin pagos ni facturación</em></p>
+  </footer>
+
+</body>
+</html>
