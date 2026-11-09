@@ -1,15 +1,12 @@
 <?php
-
 define('APP_ACCESO', true);
 
-// Configuración de variables contextuales
 $titulo_pagina = 'Detalle de producto · Inventario';
 // Nota: En el futuro esto vendrá de la sesión ($_SESSION['rol'])
 $rol_usuario = 'Administrador'; 
 $usuario_autenticado = true; 
 $pagina_actual = 'productos'; 
 
-// Carga de componentes modulares
 require_once 'includes/encabezado.php';
 require_once 'includes/menu.php';
 ?>
@@ -17,37 +14,57 @@ require_once 'includes/menu.php';
 <main class="eq06-main">
   <div class="eq06-titulo-pagina">
     <h1>Arroz · <abbr title="Código de producto">PR-001</abbr></h1>
-    <a href="formulario-producto.php" class="eq06-btn">Editar</a>
+    <div class="eq06-acciones-top">
+      <a href="formulario-producto.php" class="eq06-btn">Editar</a>
+    </div>
   </div>
 
-  <section class="eq06-seccion" aria-labelledby="datos-producto">
-    <h2 id="datos-producto" class="eq06-sr-only">Datos del producto</h2>
-    <dl class="eq06-detalle-grid">
-      <div class="eq06-detalle-item">
-        <dt>Categoría</dt>
-        <dd>Granos</dd>
+  <section class="eq06-seccion">
+    <div class="eq06-grid-datos">
+      
+      <div class="eq06-dato-tarjeta">
+        <span class="eq06-dato-label">Categoría</span>
+        <span class="eq06-dato-valor">Granos</span>
       </div>
-      <div class="eq06-detalle-item">
-        <dt>Unidad</dt>
-        <dd>kg</dd>
+      
+      <div class="eq06-dato-tarjeta">
+        <span class="eq06-dato-label">Unidad</span>
+        <span class="eq06-dato-valor">kg</span>
       </div>
-      <div class="eq06-detalle-item">
-        <dt>Proveedor principal</dt>
-        <dd>Distribuidora Central</dd>
+      
+      <div class="eq06-dato-tarjeta">
+        <span class="eq06-dato-label">Proveedor principal</span>
+        <span class="eq06-dato-valor">Distribuidora Central</span>
       </div>
-      <div class="eq06-detalle-item">
-        <dt>Stock actual</dt>
-        <dd>5 kg · <span class="eq06-badge eq06-badge-bajo">Stock bajo</span></dd>
+
+      <!-- NUEVO CAMPO: PRECIO -->
+      <div class="eq06-dato-tarjeta">
+        <span class="eq06-dato-label">Precio unitario</span>
+        <span class="eq06-dato-valor">$1.50</span>
       </div>
-      <div class="eq06-detalle-item">
-        <dt>Stock mínimo</dt>
-        <dd>8 kg</dd>
+
+      <!-- NUEVO CAMPO: FECHA DE CADUCIDAD -->
+      <div class="eq06-dato-tarjeta">
+        <span class="eq06-dato-label">Fecha de caducidad</span>
+        <span class="eq06-dato-valor">20/12/2026</span>
       </div>
-      <div class="eq06-detalle-item">
-        <dt>Estado del producto</dt>
-        <dd><span class="eq06-badge eq06-badge-activo">Activo</span></dd>
+      
+      <div class="eq06-dato-tarjeta">
+        <span class="eq06-dato-label">Stock actual</span>
+        <span class="eq06-dato-valor">5 kg · <span class="eq06-badge eq06-badge-bajo">Stock bajo</span></span>
       </div>
-    </dl>
+      
+      <div class="eq06-dato-tarjeta">
+        <span class="eq06-dato-label">Stock mínimo</span>
+        <span class="eq06-dato-valor">8 kg</span>
+      </div>
+      
+      <div class="eq06-dato-tarjeta">
+        <span class="eq06-dato-label">Estado del producto</span>
+        <span class="eq06-dato-valor"><span class="eq06-badge eq06-badge-normal">Activo</span></span>
+      </div>
+
+    </div>
   </section>
 
   <section class="eq06-seccion">
@@ -66,29 +83,31 @@ require_once 'includes/menu.php';
         </thead>
         <tbody>
           <tr>
-            <td><time datetime="2026-10-05T10:30">05/10/2026 10:30</time></td>
+            <td>05/10/2026 10:30</td>
             <td>Entrada</td>
             <td>+5 kg</td>
             <td>Ana</td>
             <td>REC-0021</td>
           </tr>
           <tr>
-            <td><time datetime="2026-10-04T16:10">04/10/2026 16:10</time></td>
+            <td>04/10/2026 16:10</td>
             <td>Salida</td>
-            <td>−3 kg</td>
+            <td>-3 kg</td>
             <td>Luis</td>
             <td>SAL-0034</td>
           </tr>
         </tbody>
       </table>
     </div>
-    <p class="eq06-mt-16">
-      <a href="listado-inventario.php" class="eq06-btn eq06-btn-secundario">Volver</a>
-    </p>
-    <p class="eq06-nota eq06-mt-8">Recepcionista: mismos datos básicos, sin botón Editar.</p>
+    
+    <div class="eq06-acciones-form" style="margin-top: 20px;">
+      <a href="gestion-productos.php" class="eq06-btn eq06-btn-secundario">Volver</a>
+    </div>
+    
+    <div class="eq06-alerta eq06-alerta-info" style="margin-top: 20px;">
+      Recepcionista: mismos datos básicos, sin botón Editar.
+    </div>
   </section>
 </main>
 
-<?php
-require_once 'includes/pie.php';
-?>
+<?php require_once 'includes/pie.php'; ?>
