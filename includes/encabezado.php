@@ -20,7 +20,7 @@ defined('APP_ACCESO') or exit('Acceso denegado');
       <span class="eq06-rol"><?php echo htmlspecialchars($rol_usuario ?? 'Usuario'); ?></span>
       <div class="eq06-header-actions">
         <a href="perfil-usuario.php" class="eq06-btn eq06-btn-secundario">Perfil</a>
-        <a href="inicio-sesion.php" class="eq06-btn eq06-btn-secundario">Salir</a>
+        <a href="cerrar-sesion.php" class="eq06-btn eq06-btn-secundario">Salir</a>
       </div>
     </div>
   </header>
