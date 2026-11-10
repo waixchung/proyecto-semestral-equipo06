@@ -14,7 +14,7 @@ if (!isset($_SESSION['rol_usuario'])) {
  
 // 2. Solo el Encargado de inventario registra salidas
 $rol_sesion = $_SESSION['rol_usuario'];
-if ($rol_sesion !== 'Encargado de inventario' && $rol_sesion !== 'Encargado') {
+if ($rol_sesion !== 'encargado' && $rol_sesion !== 'administrador') {
     header('Location: acceso-denegado.php');
     exit;
 }
