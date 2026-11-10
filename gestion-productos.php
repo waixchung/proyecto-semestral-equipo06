@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-// Validar que el usuario tenga una sesión activa. Si no, expulsarlo al login.
+// Proteger la vista: si no hay sesión, al login
 if (!isset($_SESSION['rol_usuario'])) {
     header('Location: inicio-sesion.php');
     exit;
@@ -9,10 +9,12 @@ if (!isset($_SESSION['rol_usuario'])) {
 
 define('APP_ACCESO', true);
 
-$titulo_pagina = 'Gestión de productos · Inventario'; 
-$pagina_actual = 'gestion-productos'; 
+// Requerir los datos semilla
+require_once 'config/datos_demo.php';
 
-// Leer los datos directamente de la sesión
+$titulo_pagina = 'Catálogo de productos · Inventario';
+$pagina_actual = 'productos'; 
+
 $rol_usuario = $_SESSION['rol_usuario']; 
 $nombre_usuario = $_SESSION['usuario_nombre']; 
 $usuario_autenticado = true; 
@@ -24,99 +26,107 @@ require_once 'includes/menu.php';
 <main class="eq06-main">
   <div class="eq06-titulo-pagina">
     <h1>Catálogo de productos</h1>
-    <a href="formulario-producto.php" class="eq06-btn">Nuevo</a>
+    <a href="formulario-producto.php" class="eq06-btn" style="background-color: #A61E4D; color: white; padding: 8px 16px; text-decoration: none; border-radius: 4px;">Nuevo</a>
   </div>
 
-  <section class="eq06-seccion" aria-labelledby="filtros-productos">
-    <h2 id="filtros-productos" class="eq06-sr-only">Filtros</h2>
-    <form class="eq06-filtros" method="post" action="#" role="search">
-      <div class="eq06-campo-grupo">
-        <label for="eq06-buscar-prod">Buscar</label>
-        <input type="text" id="eq06-buscar-prod" name="buscar" class="eq06-campo"
-               placeholder="Nombre o código" maxlength="80" autocomplete="off">
-      </div>
-      <div class="eq06-campo-grupo">
-        <label for="eq06-cat-prod">Categoría</label>
-        <select id="eq06-cat-prod" name="categoria" class="eq06-campo">
-          <option value="">Todas</option>
-          <option value="granos">Granos</option>
-          <option value="aceites">Aceites</option>
-          <option value="vegetales">Vegetales</option>
-        </select>
-      </div>
-      <div class="eq06-campo-grupo">
-        <label for="eq06-estado-prod">Estado</label>
-        <select id="eq06-estado-prod" name="estado" class="eq06-campo">
-          <option value="">Todos</option>
-          <option value="activo">Activo</option>
-          <option value="inactivo">Inactivo</option>
-        </select>
-      </div>
-      <div class="eq06-filtros-acciones">
-        <button type="submit" class="eq06-btn">Aplicar</button>
-        <button type="reset" class="eq06-btn eq06-btn-secundario">Limpiar</button>
+  <!-- Formulario de Búsqueda y Filtros -->
+  <section class="eq06-seccion" style="margin-bottom: 20px;">
+    <form method="get" action="gestion-productos.php" class="eq06-form" style="border: 1px solid #ddd; padding: 15px; border-radius: 4px;">
+      <div style="display: flex; gap: 15px; align-items: flex-end; flex-wrap: wrap;">
+        
+        <div style="flex: 2; min-width: 200px;">
+          <label for="buscar" style="display: block; font-weight: bold; margin-bottom: 5px; font-size: 0.875rem;">Buscar</label>
+          <input type="text" id="buscar" name="buscar" class="eq06-campo" placeholder="Nombre o código" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+        </div>
+
+        <div style="flex: 1; min-width: 150px;">
+          <label for="categoria" style="display: block; font-weight: bold; margin-bottom: 5px; font-size: 0.875rem;">Categoría</label>
+          <select id="categoria" name="categoria" class="eq06-campo" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+            <option value="">Todas</option>
+            <option value="Granos">Granos</option>
+            <option value="Aceites">Aceites</option>
+            <option value="Salsas">Salsas</option>
+            <option value="Lácteos">Lácteos</option>
+          </select>
+        </div>
+
+        <div style="flex: 1; min-width: 150px;">
+          <label for="estado" style="display: block; font-weight: bold; margin-bottom: 5px; font-size: 0.875rem;">Estado</label>
+          <select id="estado" name="estado" class="eq06-campo" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+            <option value="">Todos</option>
+            <option value="activo">Activo</option>
+            <option value="inactivo">Inactivo</option>
+          </select>
+        </div>
+
+        <div style="display: flex; gap: 10px;">
+          <button type="submit" class="eq06-btn" style="background-color: #A61E4D; color: white; padding: 8px 16px; border: none; border-radius: 4px; cursor: pointer;">Aplicar</button>
+          <a href="gestion-productos.php" class="eq06-btn eq06-btn-secundario" style="background-color: white; color: #333; border: 1px solid #ccc; padding: 8px 16px; text-decoration: none; border-radius: 4px;">Limpiar</a>
+        </div>
       </div>
     </form>
-    <p class="eq06-nota">
-      <a href="categorias-unidades.php">Categorías → C05</a> · <a href="categorias-unidades.php">Unidades → C05</a>
-    </p>
   </section>
 
-  <div class="eq06-seccion">
+  <!-- Enlaces de ayuda -->
+  <div style="border: 1px solid #ddd; padding: 10px 15px; margin-bottom: 20px; background-color: #fafafa; border-radius: 4px; font-size: 0.875rem;">
+    <a href="#" style="color: #A61E4D; text-decoration: underline;">Categorías → C05</a> · 
+    <a href="#" style="color: #A61E4D; text-decoration: underline;">Unidades → C05</a>
+  </div>
+
+  <section class="eq06-seccion">
     <div class="eq06-tabla-wrap">
-      <table class="eq06-tabla">
-        <caption>Listado de productos del catálogo</caption>
+      <table class="eq06-tabla" style="width: 100%; border-collapse: collapse;">
+        <caption style="text-align: left; font-weight: bold; margin-bottom: 10px;">Listado de productos del catálogo</caption>
         <thead>
-          <tr>
-            <th scope="col">Código</th>
-            <th scope="col">Producto</th>
-            <th scope="col">Categoría</th>
-            <th scope="col">Estado</th>
-            <th scope="col">Acciones</th>
+          <tr style="border-bottom: 2px solid #ddd; text-align: left;">
+            <th scope="col" style="padding: 10px;">Código</th>
+            <th scope="col" style="padding: 10px;">Producto</th>
+            <th scope="col" style="padding: 10px;">Categoría</th>
+            <th scope="col" style="padding: 10px;">Estado</th>
+            <th scope="col" style="padding: 10px;">Acciones</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td><abbr title="Código de producto">PR-001</abbr></td>
-            <td>Arroz</td>
-            <td>Granos</td>
-            <td><span class="eq06-badge eq06-badge-activo">Activo</span></td>
-            <td>
-              <a href="detalle-producto.php">Ver</a> /
-              <a href="formulario-producto.php">Editar</a> /
-              <a href="#" class="eq06-btn-peligro" style="text-decoration:underline;border:none;background:none;padding:0;color:#A61E4D;">Desactivar</a>
+          <?php 
+          $productos = isset($productos_demo) ? $productos_demo : [];
+          
+          if (empty($productos)): ?>
+            <tr>
+                <td colspan="5" style="padding: 15px; text-align: center; color: #666;">No hay productos registrados.</td>
+            </tr>
+          <?php else: 
+            foreach ($productos as $prod): 
+                // Simulamos el estado si no existe en el arreglo semilla (para cumplir con el diseño visual)
+                $estado = isset($prod['estado']) ? $prod['estado'] : 'activo';
+                $badge_estado = ($estado === 'activo') 
+                    ? '<span class="eq06-badge" style="border: 1px solid #666; padding: 2px 6px; border-radius: 4px; font-size: 0.75rem;">Activo</span>' 
+                    : '<span class="eq06-badge" style="background-color: #6c757d; color: white; padding: 2px 6px; border-radius: 4px; font-size: 0.75rem;">Inactivo</span>';
+          ?>
+          <tr style="border-bottom: 1px solid #eee;">
+            <td style="padding: 10px;"><abbr title="Código de producto" style="text-decoration: underline dotted;"><?php echo htmlspecialchars($prod['codigo']); ?></abbr></td>
+            <td style="padding: 10px;"><?php echo htmlspecialchars($prod['nombre']); ?></td>
+            <td style="padding: 10px;"><?php echo htmlspecialchars($prod['categoria']); ?></td>
+            <td style="padding: 10px;"><?php echo $badge_estado; ?></td>
+            <td style="padding: 10px;">
+              <a href="detalle-producto.php?id=<?php echo urlencode($prod['codigo']); ?>" style="color: #A61E4D; text-decoration: underline;">Ver</a> / 
+              <a href="formulario-producto.php?id=<?php echo urlencode($prod['codigo']); ?>" style="color: #A61E4D; text-decoration: underline;">Editar</a> 
+              <?php if ($estado === 'activo'): ?>
+                / <a href="#" style="color: #A61E4D; text-decoration: underline;">Desactivar</a>
+              <?php endif; ?>
             </td>
           </tr>
-          <tr>
-            <td><abbr title="Código de producto">PR-002</abbr></td>
-            <td>Aceite</td>
-            <td>Aceites</td>
-            <td><span class="eq06-badge eq06-badge-activo">Activo</span></td>
-            <td>
-              <a href="detalle-producto.php">Ver</a> /
-              <a href="formulario-producto.php">Editar</a> /
-              <a href="#" style="color:#A61E4D;">Desactivar</a>
-            </td>
-          </tr>
-          <tr>
-            <td><abbr title="Código de producto">PR-009</abbr></td>
-            <td>Harina anterior</td>
-            <td>Granos</td>
-            <td><span class="eq06-badge eq06-badge-inactivo">Inactivo</span></td>
-            <td>
-              <a href="detalle-producto.php">Ver</a> /
-              <a href="formulario-producto.php">Editar</a>
-            </td>
-          </tr>
+          <?php 
+            endforeach; 
+          endif; 
+          ?>
         </tbody>
       </table>
     </div>
-    <div class="eq06-alerta eq06-alerta-info eq06-mt-16" role="status">
+    
+    <div style="border: 1px solid #ddd; padding: 10px 15px; margin-top: 20px; background-color: #f8f9fa; border-radius: 4px; font-size: 0.875rem; color: #495057;">
       Confirmación de desactivación: el producto dejará de estar disponible para nuevos movimientos.
     </div>
-  </div>
+  </section>
 </main>
 
-<?php
-require_once 'includes/pie.php';
-?>
+<?php require_once 'includes/pie.php'; ?>
