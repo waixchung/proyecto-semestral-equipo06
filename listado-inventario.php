@@ -1,13 +1,17 @@
 <?php
 session_start();
 
-// Validar que el usuario tenga una sesión activa. Si no, expulsarlo al login.
+// Validar que el usuario tenga una sesión activa
 if (!isset($_SESSION['rol_usuario'])) {
     header('Location: inicio-sesion.php');
     exit;
 }
 
 define('APP_ACCESO', true);
+
+// Requerimos los archivos de datos y funciones para las reglas de negocio
+require_once 'config/datos_demo.php'; 
+require_once 'includes/funciones.php';
 
 $titulo_pagina = 'Listado de Inventario · Inventario'; 
 $pagina_actual = 'listado-inventario'; 
@@ -29,7 +33,7 @@ require_once 'includes/menu.php';
   <div class="eq06-seccion">
     <div class="eq06-tabla-wrap">
       <table class="eq06-tabla">
-        <caption>Existencias vigentes</caption>
+        <caption>Existencias vigentes y alertas de vencimiento</caption>
         <thead>
           <tr>
             <th scope="col">Producto / código</th>
@@ -42,24 +46,45 @@ require_once 'includes/menu.php';
           </tr>
         </thead>
         <tbody>
+          <?php 
+          // Si por alguna razón no existe el arreglo, evitamos errores
+          $productos = isset($productos_demo) ? $productos_demo : [];
+          
+          foreach ($productos as $prod): 
+              
+              // 1. Evaluar estado del Stock
+              $es_stock_bajo = ($prod['stock'] < $prod['minimo']);
+              $badge_stock = $es_stock_bajo 
+                  ? '<span class="eq06-badge eq06-badge-bajo">Stock bajo</span>' 
+                  : '<span class="eq06-badge eq06-badge-normal">Normal</span>';
+
+              // 2. Evaluar estado de Vencimiento usando la función
+              $estado_vence = determinarEstadoVencimiento($prod['vence']);
+              $badge_vence = '';
+              if ($estado_vence === 'Vencido') {
+                  $badge_vence = '<span class="eq06-badge eq06-badge-bajo" style="margin-left: 4px;">Vencido</span>';
+              } elseif ($estado_vence === 'Por vencer') {
+                  // Usamos un color naranja/amarillo para la alerta de "Por vencer"
+                  $badge_vence = '<span class="eq06-badge" style="background-color: #F08C00; color: white; margin-left: 4px;">Por vencer</span>';
+              }
+
+              // 3. Controlar campos faltantes (el arreglo del profesor no tiene unidad ni precio)
+              $unidad = isset($prod['unidad']) ? $prod['unidad'] : '-';
+              $precio = isset($prod['precio']) ? '$' . number_format($prod['precio'], 2) : '-';
+          ?>
           <tr>
-            <td>Arroz / <abbr title="Código de producto">PR-001</abbr></td>
-            <td>Granos</td>
-            <td>5</td>
-            <td>kg</td>
-            <td>$1.20</td>
-            <td><span class="eq06-badge eq06-badge-bajo">Stock bajo</span></td>
-            <td><a href="detalle-producto.php">Ver</a></td>
+            <td><?php echo htmlspecialchars($prod['nombre']); ?> / <abbr title="Código de producto"><?php echo htmlspecialchars($prod['codigo']); ?></abbr></td>
+            <td><?php echo htmlspecialchars($prod['categoria']); ?></td>
+            <td><?php echo htmlspecialchars($prod['stock']); ?></td>
+            <td><?php echo htmlspecialchars($unidad); ?></td>
+            <td><?php echo htmlspecialchars($precio); ?></td>
+            <td>
+                <?php echo $badge_stock; ?>
+                <?php echo $badge_vence; ?>
+            </td>
+            <td><a href="detalle-producto.php?id=<?php echo urlencode($prod['codigo']); ?>">Ver</a></td>
           </tr>
-          <tr>
-            <td>Aceite / <abbr title="Código de producto">PR-002</abbr></td>
-            <td>Aceites</td>
-            <td>12</td>
-            <td>L</td>
-            <td>$2.50</td>
-            <td><span class="eq06-badge eq06-badge-normal">Normal</span></td>
-            <td><a href="detalle-producto.php">Ver</a></td>
-          </tr>
+          <?php endforeach; ?>
         </tbody>
       </table>
     </div>
