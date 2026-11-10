@@ -67,15 +67,15 @@ if (!$validador->hayErrores()) {
         // 6. Determinar el dashboard correspondiente
         switch ($rol_actual) {
 
-            case 'Administrador':
+            case 'administrador':
                 $destino = 'dashboard-administrador.php';
                 break;
 
-            case 'Encargado de inventario':
+            case 'encargado':
                 $destino = 'dashboard-encargado.php';
                 break;
 
-            case 'Recepcionista':
+            case 'recepcionista':
                 $destino = 'dashboard-recepcionista.php';
                 break;
 
