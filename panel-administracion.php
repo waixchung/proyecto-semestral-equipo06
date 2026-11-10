@@ -1,14 +1,29 @@
+
 <?php
 session_start();
 
-// Validar que el usuario tenga una sesión activa. Si no, expulsarlo al login.
+// 1. Verificar que exista una sesión activa
 if (!isset($_SESSION['rol_usuario'])) {
     header('Location: inicio-sesion.php');
     exit;
 }
 
-define('APP_ACCESO', true);
+// 2. Obtener y normalizar el rol
+$rol_actual = strtolower(trim((string) $_SESSION['rol_usuario']));
 
+// 3. Permitir acceso únicamente al administrador
+if ($rol_actual !== 'administrador') {
+    http_response_code(403);
+
+    exit(
+        '<h2>403 - Acceso denegado</h2>' .
+        '<p>No tienes permisos para acceder a esta página.</p>' .
+        '<a href="index.php">Volver al inicio</a>'
+    );
+}
+
+// 4. Permitir la carga de archivos del sistema
+define('APP_ACCESO', true);
 $titulo_pagina = 'Panel de administración · Inventario'; 
 $pagina_actual = 'panel-administracion'; 
 

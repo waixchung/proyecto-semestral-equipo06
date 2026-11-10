@@ -1,14 +1,32 @@
+
 <?php
 session_start();
 
+// 1. Verificar que el usuario haya iniciado sesión
 if (!isset($_SESSION['rol_usuario'])) {
     header('Location: inicio-sesion.php');
     exit;
 }
 
+// 2. Obtener y normalizar el rol del usuario
+$rol_actual = strtolower(trim((string) $_SESSION['rol_usuario']));
+
+// 3. Permitir acceso únicamente al administrador
+if ($rol_actual !== 'Encargado de inventario') {
+    http_response_code(403);
+
+    exit(
+        '<h2>403 - Acceso denegado</h2>' .
+        '<p>No tienes permisos para acceder al dashboard del encargado.</p>' .
+        '<a href="index.php">Volver al inicio</a>'
+    );
+}
+
+// 4. Continuar con la carga del sistema
 define('APP_ACCESO', true);
 require_once 'config/datos_demo.php';
 require_once 'includes/funciones.php';
+
 
 $titulo_pagina = 'Dashboard Encargado · Inventario';
 $pagina_actual = 'dashboard';
