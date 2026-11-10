@@ -12,7 +12,7 @@ if (!isset($_SESSION['rol_usuario'])) {
 $rol_actual = strtolower(trim((string) $_SESSION['rol_usuario']));
 
 // 3. Permitir acceso únicamente al administrador
-if ($rol_actual !== 'Recepcionista') {
+if ($rol_actual !== 'recepcionista') {
     http_response_code(403);
 
     exit(

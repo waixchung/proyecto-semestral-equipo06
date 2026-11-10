@@ -7,19 +7,19 @@ $usuarios_demo = [
     [
         'correo' => 'wai.chung@utp.ac.pa',
         'contrasena' => 'P4$$w0rd2026.',
-        'rol' => 'Administrador',
+        'rol' => 'administrador',
         'nombre' => 'Waix'
     ],
     [
         'correo' => 'encargado@ejemplo.com',
         'contrasena' => 'P4$$w0rd2026.',
-        'rol' => 'Encargado de inventario',
+        'rol' => 'encargado',
         'nombre' => 'Luis Pérez'
     ],
     [
         'correo' => 'recepcionista@ejemplo.com',
         'contrasena' => 'P4$$w0rd2026.',
-        'rol' => 'Recepcionista',
+        'rol' => 'recepcionista',
         'nombre' => 'Luis Pérez'
     ]
 ];
