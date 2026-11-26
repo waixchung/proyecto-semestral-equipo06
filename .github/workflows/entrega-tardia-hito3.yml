@@ -12,7 +12,7 @@ permissions:
 
 env:
   HITO: "Hito 3"
-  LIMITE_UTC: "2026-11-25T04:59:59Z"   # 24-nov-2026 23:59:59 hora de Panamá (UTC-5)
+  LIMITE_UTC: "2026-12-01T04:59:59Z"   # 24-nov-2026 23:59:59 hora de Panamá (UTC-5)
   GRACIA_MIN: "120"
   DOCENTE: "SarmientoEdu"
 
