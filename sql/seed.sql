@@ -6,9 +6,9 @@ SET NAMES utf8mb4;
 
 -- 1. Usuarios de prueba (Contraseña para todos: P4$$w0rd2026.)
 INSERT INTO usuarios (nombre, correo, contrasena, rol) VALUES
-('Waix', 'wai.chung@utp.ac.pa', '$2y$10$TuS40Czjly3En/M4iMSLG.DL2ZwVs7DncqiNc/4mX9LdOcvOUBtD2', 'administrador'),
-('Luis Pérez', 'encargado@ejemplo.com', '$2y$10$TuS40Czjly3En/M4iMSLG.DL2ZwVs7DncqiNc/4mX9LdOcvOUBtD2', 'encargado'),
-('Ana Gómez', 'recepcionista@ejemplo.com', '$2y$10$TuS40Czjly3En/M4iMSLG.DL2ZwVs7DncqiNc/4mX9LdOcvOUBtD2', 'recepcionista');
+('Waix', 'wai.chung@utp.ac.pa', '$2y$10$FAEtXbsrQMjR8gFa93w/DuSQ.qjTnDk5gDkFT53ng5XdjtP1/foXa', 'administrador'),
+('Luis Pérez', 'encargado@ejemplo.com', '$2y$10$FAEtXbsrQMjR8gFa93w/DuSQ.qjTnDk5gDkFT53ng5XdjtP1/foXa', 'encargado'),
+('Ana Gómez', 'recepcionista@ejemplo.com', '$2y$10$FAEtXbsrQMjR8gFa93w/DuSQ.qjTnDk5gDkFT53ng5XdjtP1/foXa', 'recepcionista');
 
 -- Nota: Si deseas generar tus propios hashes en PHP, usa: password_hash('P4$$w0rd2026.', PASSWORD_DEFAULT)
 
