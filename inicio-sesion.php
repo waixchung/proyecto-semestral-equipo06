@@ -1,27 +1,27 @@
 <?php
 if (!defined('APP_ACCESO')) { define('APP_ACCESO', true); }
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
-// Inicialización para peticiones GET
-if (!isset($valores)) {
-    $valores = ['usuario' => ''];
-}
-if (!isset($errores)) {
-    $errores = [];
-}
+// Recuperar valores y errores de sesión si vienen de un intento fallido
+$valores = $_SESSION['valores_login'] ?? ($valores ?? ['usuario' => '']);
+$errores = $_SESSION['errores_login'] ?? ($errores ?? []);
+
+// Limpiar flash data de sesión para que no persistan al recargar
+unset($_SESSION['valores_login'], $_SESSION['errores_login']);
 
 $titulo_pagina = 'Iniciar sesión | Inventario';
-// No cargamos el menú interno porque es una página pública
 ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><?php echo $titulo_pagina; ?></title>
+  <title><?php echo htmlspecialchars($titulo_pagina); ?></title>
   <link rel="stylesheet" href="css/estilos.css">
 </head>
 <body>
-  <!-- Ajusta el encabezado público según tu maquetación -->
   <header class="eq06-encabezado">
     <div class="eq06-marca">Inventario</div>
   </header>
@@ -37,9 +37,9 @@ $titulo_pagina = 'Iniciar sesión | Inventario';
           <label class="eq06-etiqueta" for="usuario">Usuario o correo *</label>
           <input class="eq06-campo <?php echo isset($errores['usuario']) ? 'eq06-campo-error' : ''; ?>" 
                  type="text" id="usuario" name="usuario" required 
-                 value="<?php echo htmlspecialchars($valores['usuario']); ?>">
+                 value="<?php echo htmlspecialchars($valores['usuario'] ?? ''); ?>">
           <?php if (isset($errores['usuario'])): ?>
-              <span class="eq06-mensaje-error" style="color: #A61E4D; font-size: 0.875rem;"><?php echo $errores['usuario']; ?></span>
+              <span class="eq06-mensaje-error" style="color: #A61E4D; font-size: 0.875rem;"><?php echo htmlspecialchars($errores['usuario']); ?></span>
           <?php endif; ?>
         </div>
 
@@ -48,7 +48,7 @@ $titulo_pagina = 'Iniciar sesión | Inventario';
           <input class="eq06-campo <?php echo isset($errores['contrasena']) ? 'eq06-campo-error' : ''; ?>" 
                  type="password" id="contrasena" name="contrasena" required>
           <?php if (isset($errores['contrasena'])): ?>
-              <span class="eq06-mensaje-error" style="color: #A61E4D; font-size: 0.875rem;"><?php echo $errores['contrasena']; ?></span>
+              <span class="eq06-mensaje-error" style="color: #A61E4D; font-size: 0.875rem;"><?php echo htmlspecialchars($errores['contrasena']); ?></span>
           <?php endif; ?>
         </div>
 
@@ -65,7 +65,7 @@ $titulo_pagina = 'Iniciar sesión | Inventario';
         <!-- Alerta de credenciales incorrectas -->
         <?php if (isset($errores['auth'])): ?>
             <div style="background-color: #f8d7da; color: #721c24; padding: 10px; margin-top: 15px; border: 1px solid #f5c6cb;">
-                <strong>Estado de error:</strong> <?php echo $errores['auth']; ?>
+                <strong>Estado de error:</strong> <?php echo htmlspecialchars($errores['auth']); ?>
             </div>
         <?php endif; ?>
 
