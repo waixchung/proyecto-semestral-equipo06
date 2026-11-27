@@ -1,59 +1,76 @@
 <?php
+// detalle-producto.php
+define('APP_ACCESO', true);
 session_start();
 
-if (!isset($_SESSION['rol_usuario'])) {
-    header('Location: inicio-sesion.php');
-    exit;
-}
+require_once __DIR__ . '/includes/funciones.php';
+require_once __DIR__ . '/clases/Conexion.php';
+require_once __DIR__ . '/clases/Producto.php';
 
-define('APP_ACCESO', true);
-require_once 'config/datos_demo.php';
-require_once 'includes/funciones.php';
+verificarAcceso(['administrador', 'encargado', 'recepcionista']);
 
-// 1. Capturar el ID de la URL
-$codigo_producto = isset($_GET['id']) ? $_GET['id'] : '';
+// 1. Capturar el parámetro 'id' (acepta tanto id_producto numérico como código PR-xxxx)
+$paramId = trim($_GET['id'] ?? '');
 $producto_actual = null;
 
-// 2. Buscar el producto en nuestro arreglo (simulando un SELECT en BD)
-if (isset($productos_demo)) {
-    foreach ($productos_demo as $prod) {
-        if ($prod['codigo'] === $codigo_producto) {
-            $producto_actual = $prod;
-            break;
-        }
+if ($paramId !== '') {
+    if (ctype_digit($paramId)) {
+        $producto_actual = Producto::obtenerPorId((int)$paramId);
+    } else {
+        $producto_actual = Producto::obtenerPorCodigo($paramId);
     }
 }
 
-// 3. Si alguien altera la URL y pone un ID que no existe, lo regresamos al listado
+// 2. Si no existe, redirigir al catálogo
 if (!$producto_actual) {
-    header('Location: listado-inventario.php');
+    $_SESSION['mensaje_error'] = 'El producto solicitado no existe.';
+    header('Location: gestion-productos.php');
     exit;
 }
 
-$titulo_pagina = 'Detalle de producto · Inventario';
-$pagina_actual = 'productos'; 
+$idProducto = (int)$producto_actual['id_producto'];
 
-$rol_usuario = $_SESSION['rol_usuario']; 
-$nombre_usuario = $_SESSION['usuario_nombre']; 
-$usuario_autenticado = true; 
+// 3. Obtener proveedores asociados (JOIN N:M producto_proveedor + proveedores)
+$proveedores_asociados = Producto::listarProveedoresPorProducto($idProducto);
+$proveedor_principal = !empty($proveedores_asociados)
+    ? $proveedores_asociados[0]['nombre_empresa'] . ' ($' . number_format((float)$proveedores_asociados[0]['precio_compra'], 2) . ')'
+    : 'Sin asignar';
 
-require_once 'includes/encabezado.php';
-require_once 'includes/menu.php';
+// 4. Obtener historial de movimientos del producto (JOIN movimientos + usuarios)
+$pdo = Conexion::obtener();
+$stmtMov = $pdo->prepare(
+    'SELECT m.fecha_movimiento, m.tipo, m.cantidad, m.motivo, u.nombre AS usuario
+     FROM movimientos m
+     INNER JOIN usuarios u ON m.id_usuario = u.id_usuario
+     WHERE m.id_producto = :id_producto
+     ORDER BY m.fecha_movimiento DESC, m.id_movimiento DESC'
+);
+$stmtMov->execute([':id_producto' => $idProducto]);
+$movimientos_producto = $stmtMov->fetchAll();
 
-// 4. Calcular lógicas de negocio (Stock y Vencimiento)
-$es_stock_bajo = ($producto_actual['stock'] < $producto_actual['minimo']);
-$estado_vence = determinarEstadoVencimiento($producto_actual['vence']);
+$titulo_pagina       = 'Detalle de producto · Inventario';
+$pagina_actual       = 'productos';
+$rol_usuario         = $_SESSION['rol_usuario'];
+$nombre_usuario      = $_SESSION['usuario_nombre'];
+$usuario_autenticado = true;
+$puede_editar        = in_array($rol_usuario, ['administrador', 'encargado'], true);
 
-// Preparar campos que podrían no venir en los datos semilla del profesor
-$unidad = isset($producto_actual['unidad']) ? $producto_actual['unidad'] : '-';
-$precio = isset($producto_actual['precio']) ? '$' . number_format($producto_actual['precio'], 2) : '-';
-$proveedor = isset($producto_actual['proveedor']) ? $producto_actual['proveedor'] : 'Sin asignar';
+require_once __DIR__ . '/includes/encabezado.php';
+require_once __DIR__ . '/includes/menu.php';
+
+// 5. Lógicas de negocio (Stock y Vencimiento)
+$es_stock_bajo = ((int)$producto_actual['stock'] < (int)$producto_actual['minimo']);
+$estado_vence  = determinarEstadoVencimiento($producto_actual['vence']);
+$unidad        = $producto_actual['unidad_medida'] ?? '-';
+$precio        = '$' . number_format((float)$producto_actual['precio'], 2);
 ?>
 
 <main class="eq06-main">
-  <div class="eq06-titulo-pagina">
-    <h1><?php echo htmlspecialchars($producto_actual['nombre']); ?> · <abbr title="Código de producto"><?php echo htmlspecialchars($producto_actual['codigo']); ?></abbr></h1>
-    <a href="formulario-producto.php?id=<?php echo urlencode($producto_actual['codigo']); ?>" class="eq06-btn">Editar</a>
+  <div class="eq06-titulo-pagina" style="display: flex; justify-content: space-between; align-items: center;">
+    <h1><?php echo e($producto_actual['nombre']); ?> · <abbr title="Código de producto"><?php echo e($producto_actual['codigo']); ?></abbr></h1>
+    <?php if ($puede_editar): ?>
+      <a href="formulario-producto.php?id=<?php echo $idProducto; ?>" class="eq06-btn">Editar</a>
+    <?php endif; ?>
   </div>
 
   <section class="eq06-seccion" aria-labelledby="datos-producto">
@@ -61,79 +78,122 @@ $proveedor = isset($producto_actual['proveedor']) ? $producto_actual['proveedor'
     <dl class="eq06-detalle-grid">
       <div class="eq06-detalle-item">
         <dt>Categoría</dt>
-        <dd><?php echo htmlspecialchars($producto_actual['categoria']); ?></dd>
+        <dd><?php echo e($producto_actual['categoria']); ?></dd>
       </div>
       <div class="eq06-detalle-item">
         <dt>Unidad</dt>
-        <dd><?php echo htmlspecialchars($unidad); ?></dd>
+        <dd><?php echo e($unidad); ?></dd>
+      </div>
+      <div class="eq06-detalle-item">
+        <dt>Ubicación en bodega</dt>
+        <dd><strong><?php echo e($producto_actual['ubicacion']); ?></strong></dd>
       </div>
       <div class="eq06-detalle-item">
         <dt>Proveedor principal</dt>
-        <dd><?php echo htmlspecialchars($proveedor); ?></dd>
+        <dd><?php echo e($proveedor_principal); ?></dd>
       </div>
-      
       <div class="eq06-detalle-item">
         <dt>Precio unitario</dt>
-        <dd><?php echo htmlspecialchars($precio); ?></dd>
+        <dd><?php echo e($precio); ?></dd>
       </div>
       <div class="eq06-detalle-item">
         <dt>Fecha de caducidad</dt>
         <dd>
-            <?php echo !empty($producto_actual['vence']) ? htmlspecialchars($producto_actual['vence']) : 'No aplica'; ?>
-            <?php if ($estado_vence === 'Vencido'): ?>
-                <span class="eq06-badge eq06-badge-bajo" style="margin-left: 4px;">Vencido</span>
-            <?php elseif ($estado_vence === 'Por vencer'): ?>
-                <span class="eq06-badge" style="background-color: #F08C00; color: white; margin-left: 4px;">Por vencer</span>
-            <?php endif; ?>
+          <?php echo !empty($producto_actual['vence']) ? e($producto_actual['vence']) : 'No aplica'; ?>
+          <?php if ($estado_vence === 'Vencido'): ?>
+            <span class="eq06-badge eq06-badge-bajo" style="margin-left: 4px;">Vencido</span>
+          <?php elseif ($estado_vence === 'Por vencer'): ?>
+            <span class="eq06-badge" style="background-color: #F08C00; color: white; margin-left: 4px;">Por vencer</span>
+          <?php endif; ?>
         </dd>
       </div>
-
       <div class="eq06-detalle-item">
         <dt>Stock actual</dt>
         <dd>
-            <?php echo htmlspecialchars($producto_actual['stock']); ?> <?php echo htmlspecialchars($unidad); ?>
-            <?php if ($es_stock_bajo): ?>
-                · <span class="eq06-badge eq06-badge-bajo">Stock bajo</span>
-            <?php endif; ?>
+          <?php echo (int)$producto_actual['stock'] . ' ' . e($unidad); ?>
+          <?php if ($es_stock_bajo): ?>
+            · <span class="eq06-badge eq06-badge-bajo">Stock bajo</span>
+          <?php endif; ?>
         </dd>
       </div>
       <div class="eq06-detalle-item">
         <dt>Stock mínimo</dt>
-        <dd><?php echo htmlspecialchars($producto_actual['minimo']); ?> <?php echo htmlspecialchars($unidad); ?></dd>
-      </div>
-      <div class="eq06-detalle-item">
-        <dt>Estado del producto</dt>
-        <dd><span class="eq06-badge eq06-badge-activo">Activo</span></dd>
+        <dd><?php echo (int)$producto_actual['minimo'] . ' ' . e($unidad); ?></dd>
       </div>
     </dl>
   </section>
 
-  <section class="eq06-seccion">
+  <!-- Proveedores vinculados (JOIN N:M) -->
+  <?php if (!empty($proveedores_asociados)): ?>
+    <section class="eq06-seccion" style="margin-top: 20px;">
+      <h2>Proveedores vinculados</h2>
+      <div class="eq06-tabla-wrap">
+        <table class="eq06-tabla">
+          <thead>
+            <tr>
+              <th scope="col">Código</th>
+              <th scope="col">Empresa</th>
+              <th scope="col">Contacto</th>
+              <th scope="col">Teléfono</th>
+              <th scope="col">Precio compra</th>
+              <th scope="col">Entrega (días)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php foreach ($proveedores_asociados as $pv): ?>
+              <tr>
+                <td><?php echo e($pv['codigo']); ?></td>
+                <td><?php echo e($pv['nombre_empresa']); ?></td>
+                <td><?php echo e($pv['contacto']); ?></td>
+                <td><?php echo e($pv['telefono']); ?></td>
+                <td>$<?php echo number_format((float)$pv['precio_compra'], 2); ?></td>
+                <td><?php echo (int)$pv['tiempo_entrega_dias']; ?> días</td>
+              </tr>
+            <?php endforeach; ?>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  <?php endif; ?>
+
+  <!-- Historial real de movimientos del producto -->
+  <section class="eq06-seccion" style="margin-top: 20px;">
     <h2>Historial del producto · Más reciente primero</h2>
     <div class="eq06-tabla-wrap">
       <table class="eq06-tabla">
-        <caption>Movimientos de <?php echo htmlspecialchars($producto_actual['nombre']); ?></caption>
+        <caption>Movimientos de <?php echo e($producto_actual['nombre']); ?></caption>
         <thead>
           <tr>
             <th scope="col">Fecha</th>
             <th scope="col">Tipo</th>
             <th scope="col">Cantidad</th>
             <th scope="col">Usuario</th>
-            <th scope="col">Referencia</th>
+            <th scope="col">Referencia / Motivo</th>
           </tr>
         </thead>
         <tbody>
-          <!-- Como aún no tenemos base de datos para los movimientos, dejamos un mensaje vacío o datos de muestra -->
-          <tr>
-            <td colspan="5" style="text-align: center; color: #666;">No hay movimientos recientes registrados.</td>
-          </tr>
+          <?php if (empty($movimientos_producto)): ?>
+            <tr>
+              <td colspan="5" style="text-align: center; color: #666;">No hay movimientos recientes registrados para este producto.</td>
+            </tr>
+          <?php else: ?>
+            <?php foreach ($movimientos_producto as $mov): ?>
+              <tr>
+                <td><?php echo e($mov['fecha_movimiento']); ?></td>
+                <td><?php echo e(ucfirst($mov['tipo'])); ?></td>
+                <td><?php echo (int)$mov['cantidad'] . ' ' . e($unidad); ?></td>
+                <td><?php echo e($mov['usuario']); ?></td>
+                <td><?php echo e($mov['motivo']); ?></td>
+              </tr>
+            <?php endforeach; ?>
+          <?php endif; ?>
         </tbody>
       </table>
     </div>
     <p class="eq06-mt-16">
-      <a href="listado-inventario.php" class="eq06-btn eq06-btn-secundario">Volver</a>
+      <a href="gestion-productos.php" class="eq06-btn eq06-btn-secundario">Volver al catálogo</a>
     </p>
   </section>
 </main>
 
-<?php require_once 'includes/pie.php'; ?>
+<?php require_once __DIR__ . '/includes/pie.php'; ?>
