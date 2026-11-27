@@ -1,43 +1,55 @@
 <?php
+// listado-inventario.php
+define('APP_ACCESO', true);
 session_start();
 
-// Validar que el usuario tenga una sesión activa
-if (!isset($_SESSION['rol_usuario'])) {
-    header('Location: inicio-sesion.php');
-    exit;
-}
+require_once __DIR__ . '/includes/funciones.php';
+require_once __DIR__ . '/clases/Producto.php';
 
-define('APP_ACCESO', true);
+// Validar sesión activa para los roles del sistema
+verificarAcceso(['administrador', 'encargado', 'recepcionista']);
 
-// Requerimos los archivos de datos y funciones para las reglas de negocio
-require_once 'config/datos_demo.php'; 
-require_once 'includes/funciones.php';
+$titulo_pagina       = 'Listado de Inventario · Inventario';
+$pagina_actual       = 'listado-inventario';
+$rol_usuario         = $_SESSION['rol_usuario'];
+$nombre_usuario      = $_SESSION['usuario_nombre'];
+$usuario_autenticado = true;
 
-$titulo_pagina = 'Listado de Inventario · Inventario'; 
-$pagina_actual = 'listado-inventario'; 
+// Parámetros opcionales de búsqueda y paginación
+$busqueda  = trim($_GET['buscar'] ?? '');
+$pagina    = max(1, (int)($_GET['pagina'] ?? 1));
+$porPagina = 15;
 
-// Leer los datos directamente de la sesión
-$rol_usuario = $_SESSION['rol_usuario']; 
-$nombre_usuario = $_SESSION['usuario_nombre']; 
-$usuario_autenticado = true; 
+$resultado    = Producto::listar($busqueda, 0, 'codigo', 'ASC', $pagina, $porPagina);
+$productos    = $resultado['datos'];
+$total        = $resultado['total'];
+$totalPaginas = $resultado['total_paginas'];
 
-require_once 'includes/encabezado.php';
-require_once 'includes/menu.php';
+require_once __DIR__ . '/includes/encabezado.php';
+require_once __DIR__ . '/includes/menu.php';
 ?>
 
 <main class="eq06-main">
-  <div class="eq06-titulo-pagina">
+  <div class="eq06-titulo-pagina" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
     <h1>Inventario</h1>
+    <form method="get" action="listado-inventario.php" style="display: flex; gap: 8px;">
+      <input type="text" name="buscar" class="eq06-campo" value="<?php echo e($busqueda); ?>" placeholder="Buscar producto, código o ubicación..." style="padding: 6px 10px; border: 1px solid #ccc; border-radius: 4px;">
+      <button type="submit" class="eq06-btn" style="padding: 6px 14px;">Filtrar</button>
+      <?php if ($busqueda !== ''): ?>
+        <a href="listado-inventario.php" class="eq06-btn eq06-btn-secundario" style="padding: 6px 12px;">Limpiar</a>
+      <?php endif; ?>
+    </form>
   </div>
   
   <div class="eq06-seccion">
     <div class="eq06-tabla-wrap">
       <table class="eq06-tabla">
-        <caption>Existencias vigentes y alertas de vencimiento</caption>
+        <caption>Existencias vigentes y alertas de vencimiento (<?php echo $total; ?> productos)</caption>
         <thead>
           <tr>
             <th scope="col">Producto / código</th>
             <th scope="col">Categoría</th>
+            <th scope="col">Ubicación</th>
             <th scope="col">Stock</th>
             <th scope="col">Unidad</th>
             <th scope="col">Precio Unit.</th>
@@ -46,49 +58,61 @@ require_once 'includes/menu.php';
           </tr>
         </thead>
         <tbody>
-          <?php 
-          // Si por alguna razón no existe el arreglo, evitamos errores
-          $productos = isset($productos_demo) ? $productos_demo : [];
-          
-          foreach ($productos as $prod): 
-              
-              // 1. Evaluar estado del Stock
-              $es_stock_bajo = ($prod['stock'] < $prod['minimo']);
-              $badge_stock = $es_stock_bajo 
-                  ? '<span class="eq06-badge eq06-badge-bajo">Stock bajo</span>' 
-                  : '<span class="eq06-badge eq06-badge-normal">Normal</span>';
+          <?php if (empty($productos)): ?>
+            <tr>
+              <td colspan="8" style="text-align: center; color: #666; padding: 15px;">No hay existencias registradas que coincidan con la búsqueda.</td>
+            </tr>
+          <?php else: ?>
+            <?php foreach ($productos as $prod): 
+                // 1. Evaluar estado del Stock (RB-01)
+                $es_stock_bajo = ((int)$prod['stock'] < (int)$prod['minimo']);
+                $badge_stock = $es_stock_bajo 
+                    ? '<span class="eq06-badge eq06-badge-bajo">Stock bajo</span>' 
+                    : '<span class="eq06-badge eq06-badge-normal">Normal</span>';
 
-              // 2. Evaluar estado de Vencimiento usando la función
-              $estado_vence = determinarEstadoVencimiento($prod['vence']);
-              $badge_vence = '';
-              if ($estado_vence === 'Vencido') {
-                  $badge_vence = '<span class="eq06-badge eq06-badge-bajo" style="margin-left: 4px;">Vencido</span>';
-              } elseif ($estado_vence === 'Por vencer') {
-                  // Usamos un color naranja/amarillo para la alerta de "Por vencer"
-                  $badge_vence = '<span class="eq06-badge" style="background-color: #F08C00; color: white; margin-left: 4px;">Por vencer</span>';
-              }
+                // 2. Evaluar estado de Vencimiento
+                $estado_vence = determinarEstadoVencimiento($prod['vence']);
+                $badge_vence = '';
+                if ($estado_vence === 'Vencido') {
+                    $badge_vence = '<span class="eq06-badge eq06-badge-bajo" style="margin-left: 4px;">Vencido</span>';
+                } elseif ($estado_vence === 'Por vencer') {
+                    $badge_vence = '<span class="eq06-badge" style="background-color: #F08C00; color: white; margin-left: 4px;">Por vencer</span>';
+                }
 
-              // 3. Controlar campos faltantes (el arreglo del profesor no tiene unidad ni precio)
-              $unidad = isset($prod['unidad']) ? $prod['unidad'] : '-';
-              $precio = isset($prod['precio']) ? '$' . number_format($prod['precio'], 2) : '-';
-          ?>
-          <tr>
-            <td><?php echo htmlspecialchars($prod['nombre']); ?> / <abbr title="Código de producto"><?php echo htmlspecialchars($prod['codigo']); ?></abbr></td>
-            <td><?php echo htmlspecialchars($prod['categoria']); ?></td>
-            <td><?php echo htmlspecialchars($prod['stock']); ?></td>
-            <td><?php echo htmlspecialchars($unidad); ?></td>
-            <td><?php echo htmlspecialchars($precio); ?></td>
-            <td>
-                <?php echo $badge_stock; ?>
-                <?php echo $badge_vence; ?>
-            </td>
-            <td><a href="detalle-producto.php?id=<?php echo urlencode($prod['codigo']); ?>">Ver</a></td>
-          </tr>
-          <?php endforeach; ?>
+                // 3. Formatear unidad y precio unitario desde MySQL
+                $unidad = !empty($prod['unidad_medida']) ? $prod['unidad_medida'] : '-';
+                $precio = isset($prod['precio']) ? '$' . number_format((float)$prod['precio'], 2) : '-';
+            ?>
+            <tr>
+              <td><?php echo e($prod['nombre']); ?> / <abbr title="Código de producto"><?php echo e($prod['codigo']); ?></abbr></td>
+              <td><?php echo e($prod['categoria']); ?></td>
+              <td><?php echo e($prod['ubicacion']); ?></td>
+              <td><strong><?php echo (int)$prod['stock']; ?></strong></td>
+              <td><?php echo e($unidad); ?></td>
+              <td><?php echo e($precio); ?></td>
+              <td>
+                  <?php echo $badge_stock; ?>
+                  <?php echo $badge_vence; ?>
+              </td>
+              <td><a href="detalle-producto.php?id=<?php echo (int)$prod['id_producto']; ?>">Ver</a></td>
+            </tr>
+            <?php endforeach; ?>
+          <?php endif; ?>
         </tbody>
       </table>
     </div>
+
+    <?php if ($totalPaginas > 1): ?>
+      <nav aria-label="Paginación de inventario" style="margin-top: 15px; display: flex; gap: 6px;">
+        <?php for ($i = 1; $i <= $totalPaginas; $i++): ?>
+          <a href="?pagina=<?php echo $i; ?>&buscar=<?php echo urlencode($busqueda); ?>"
+             style="padding: 6px 12px; border: 1px solid #ddd; border-radius: 4px; text-decoration: none; <?php echo ($i === $pagina) ? 'background-color: #A61E4D; color: white; font-weight: bold;' : 'background-color: white; color: #333;'; ?>">
+            <?php echo $i; ?>
+          </a>
+        <?php endfor; ?>
+      </nav>
+    <?php endif; ?>
   </div>
 </main>
 
-<?php require_once 'includes/pie.php'; ?>
+<?php require_once __DIR__ . '/includes/pie.php'; ?>
