@@ -1,23 +1,36 @@
-
 <?php
+// cerrar-sesion.php
+define('APP_ACCESO', true);
 session_start();
+
+require_once __DIR__ . '/clases/Auditoria.php';
+
+// Registrar cierre de sesión en auditoría antes de limpiar $_SESSION
+if (isset($_SESSION['id_usuario'])) {
+    Auditoria::registrar(
+        (int)$_SESSION['id_usuario'],
+        'LOGOUT',
+        'usuarios',
+        (int)$_SESSION['id_usuario'],
+        'Cierre de sesión'
+    );
+}
 
 // 1. Vaciar todas las variables de sesión
 $_SESSION = [];
 
 // 2. Eliminar la cookie de sesión
 if (ini_get('session.use_cookies')) {
-
     $params = session_get_cookie_params();
 
     setcookie(
         session_name(),
         '',
         [
-            'expires' => time() - 42000,
-            'path' => $params['path'],
-            'domain' => $params['domain'],
-            'secure' => $params['secure'],
+            'expires'  => time() - 42000,
+            'path'     => $params['path'],
+            'domain'   => $params['domain'],
+            'secure'   => $params['secure'],
             'httponly' => $params['httponly'],
             'samesite' => $params['samesite'] ?? 'Lax'
         ]
