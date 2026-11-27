@@ -21,12 +21,17 @@ $validador = new Validador();
 $validador->requerido('usuario', $usuarioInput, 'El usuario o correo es obligatorio.');
 $validador->requerido('contrasena', $contrasena, 'La contraseña es obligatoria.');
 
-$errores = $validador->obtenerErrores();
+$errores = [];
+if ($validador->hayErrores()) {
+    // Si tiene método errores(), lo usamos; si no, asignamos el mensaje directo
+    $errores = method_exists($validador, 'errores')
+        ? $validador->errores()
+        : ['auth' => 'Complete todos los campos obligatorios.'];
+}
 
-if (empty($errores)) {
+if (!$validador->hayErrores()) {
     try {
         $pdo = Conexion::obtener();
-        // Permitir ingresar tanto por correo como por nombre de usuario
         $stmt = $pdo->prepare(
             'SELECT id_usuario, nombre, correo, contrasena, rol, activo 
              FROM usuarios 
@@ -85,7 +90,6 @@ if (empty($errores)) {
                 'Intento fallido para: ' . mb_substr($usuarioInput, 0, 100)
             );
 
-            // Mensaje genérico en la llave 'auth' que espera inicio-sesion.php
             $errores['auth'] = 'Correo o contraseña incorrectos.';
         }
     } catch (PDOException $e) {
