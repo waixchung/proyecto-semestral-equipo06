@@ -1,46 +1,98 @@
 <?php
+// recepcion-mercancia.php
+define('APP_ACCESO', true);
 session_start();
 
-// Validar que el usuario tenga una sesión activa. Si no, expulsarlo al login.
-if (!isset($_SESSION['rol_usuario'])) {
-    header('Location: inicio-sesion.php');
-    exit;
-}
+require_once __DIR__ . '/includes/funciones.php';
+require_once __DIR__ . '/clases/Conexion.php';
+require_once __DIR__ . '/clases/Producto.php';
 
-define('APP_ACCESO', true);
+// Solo recepcionista y administrador registran recepción de mercancía
+verificarAcceso(['recepcionista', 'administrador']);
 
-$titulo_pagina = 'Recepción de mercancía · Inventario'; 
-$pagina_actual = 'recepcion-mercancia'; 
+date_default_timezone_set('America/Panama');
 
-// Leer los datos directamente de la sesión
-$rol_usuario = $_SESSION['rol_usuario']; 
-$nombre_usuario = $_SESSION['usuario_nombre']; 
-$usuario_autenticado = true; 
+$titulo_pagina       = 'Recepción de mercancía · Inventario';
+$pagina_actual       = 'recepcion-mercancia';
+$rol_usuario         = $_SESSION['rol_usuario'];
+$nombre_usuario      = $_SESSION['usuario_nombre'] ?? '';
+$usuario_autenticado = true;
 
-require_once 'includes/encabezado.php';
-require_once 'includes/menu.php';
+$pdo = Conexion::obtener();
+
+// 1. Obtener proveedores activos reales desde MySQL
+$proveedores_activos = $pdo->query(
+    'SELECT id_proveedor, codigo, nombre_empresa 
+     FROM proveedores 
+     WHERE activo = 1 
+     ORDER BY nombre_empresa ASC'
+)->fetchAll();
+
+// 2. Obtener productos del catálogo desde MySQL
+$productos_bd = Producto::listar('', 0, 'codigo', 'ASC', 1, 200)['datos'];
+
+// 3. Calcular próximo número correlativo referencial de recepción
+$totalEntradas = (int)$pdo->query("SELECT COUNT(*) FROM movimientos WHERE tipo = 'entrada'")->fetchColumn();
+$proximoNumero = 'REC-' . str_pad((string)($totalEntradas + 1), 4, '0', STR_PAD_LEFT);
+
+// Mensajes flash tras procesar recepción
+$mensaje_exito = $_SESSION['mensaje_exito_recepcion'] ?? null;
+$errores       = $_SESSION['errores_recepcion'] ?? [];
+$valores       = $_SESSION['valores_recepcion'] ?? [
+    'fecha_recepcion' => date('Y-m-d'),
+    'id_proveedor'    => ''
+];
+unset($_SESSION['mensaje_exito_recepcion'], $_SESSION['errores_recepcion'], $_SESSION['valores_recepcion']);
+
+require_once __DIR__ . '/includes/encabezado.php';
+require_once __DIR__ . '/includes/menu.php';
 ?>
 
-<main class="eq06-contenido">
+<main class="eq06-contenido eq06-main">
   <section class="eq06-panel" aria-labelledby="eq06-titulo-recepcion">
     <h1 id="eq06-titulo-recepcion">Registrar recepción</h1>
+
+    <?php if ($mensaje_exito): ?>
+      <div class="eq06-alerta eq06-alerta-info" role="status" style="margin-bottom: 15px;">
+        <?php echo e($mensaje_exito); ?>
+      </div>
+    <?php endif; ?>
+
+    <?php if (!empty($errores)): ?>
+      <div class="eq06-alerta eq06-alerta-error" role="alert" style="margin-bottom: 15px;">
+        <p><strong>No se pudo confirmar la recepción:</strong></p>
+        <ul>
+          <?php foreach ($errores as $err): ?>
+            <li><?php echo e($err); ?></li>
+          <?php endforeach; ?>
+        </ul>
+      </div>
+    <?php endif; ?>
+
     <form class="eq06-formulario-recepcion" method="post" action="procesar_recepcion.php">
       <fieldset class="eq06-grupo-datos">
         <legend>Datos de recepción</legend>
         <div class="eq06-campos-recepcion">
           <div class="eq06-grupo-campo">
             <label for="eq06-numero-recepcion">N.º de recepción</label>
-            <input class="eq06-campo" type="text" id="eq06-numero-recepcion" name="numero_recepcion" placeholder="Se asigna al confirmar" readonly>
+            <input class="eq06-campo" type="text" id="eq06-numero-recepcion" name="numero_recepcion"
+                   value="<?php echo e($proximoNumero); ?>" readonly>
           </div>
           <div class="eq06-grupo-campo">
             <label for="eq06-fecha-recepcion">Fecha de recepción <span aria-hidden="true">*</span></label>
-            <input class="eq06-campo" type="date" id="eq06-fecha-recepcion" name="fecha_recepcion" required>
+            <input class="eq06-campo" type="date" id="eq06-fecha-recepcion" name="fecha_recepcion"
+                   value="<?php echo e($valores['fecha_recepcion'] ?? date('Y-m-d')); ?>" required>
           </div>
           <div class="eq06-grupo-campo">
             <label for="eq06-proveedor">Proveedor activo <span aria-hidden="true">*</span></label>
-            <select class="eq06-campo" id="eq06-proveedor" name="proveedor" required>
+            <select class="eq06-campo" id="eq06-proveedor" name="id_proveedor" required>
               <option value="">Seleccione un proveedor</option>
-              <option value="distribuidora-central">Distribuidora Central</option>
+              <?php foreach ($proveedores_activos as $pv): ?>
+                <option value="<?php echo (int)$pv['id_proveedor']; ?>"
+                  <?php echo ((string)($valores['id_proveedor'] ?? '') === (string)$pv['id_proveedor']) ? 'selected' : ''; ?>>
+                  <?php echo e($pv['codigo'] . ' · ' . $pv['nombre_empresa']); ?>
+                </option>
+              <?php endforeach; ?>
             </select>
           </div>
         </div>
@@ -49,7 +101,7 @@ require_once 'includes/menu.php';
       <fieldset class="eq06-grupo-detalle">
         <legend>Detalle de mercancía recibida</legend>
         <div class="eq06-tabla-contenedor">
-          <table class="eq06-tabla-recepcion">
+          <table class="eq06-tabla-recepcion" id="tabla-lineas-recepcion">
             <caption>Productos que componen la recepción</caption>
             <thead>
               <tr>
@@ -59,27 +111,32 @@ require_once 'includes/menu.php';
                 <th scope="col">Acción</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
+            <tbody id="cuerpo-lineas-recepcion">
+              <tr class="fila-recepcion">
                 <td>
-                  <label class="eq06-etiqueta-oculta" for="eq06-producto-1">Producto, línea 1</label>
-                  <select class="eq06-campo" id="eq06-producto-1" name="producto_1" required>
-                    <option value="">Seleccione un producto</option>
-                    <option value="arroz" selected>Arroz / PR-001</option>
-                    <option value="aceite">Aceite / PR-002</option>
+                  <label class="eq06-etiqueta-oculta">Producto</label>
+                  <select class="eq06-campo select-producto-rec" name="productos[]" required onchange="actualizarUnidadFila(this)">
+                    <option value="" data-unidad="-">Seleccione un producto</option>
+                    <?php foreach ($productos_bd as $prod): ?>
+                      <option value="<?php echo (int)$prod['id_producto']; ?>" data-unidad="<?php echo e($prod['unidad_medida']); ?>">
+                        <?php echo e($prod['nombre'] . ' / ' . $prod['codigo'] . ' (Stock: ' . (int)$prod['stock'] . ')'); ?>
+                      </option>
+                    <?php endforeach; ?>
                   </select>
                 </td>
                 <td>
-                  <label class="eq06-etiqueta-oculta" for="eq06-cantidad-1">Cantidad de la línea 1</label>
-                  <input class="eq06-campo" type="number" id="eq06-cantidad-1" name="cantidad_1" min="0.01" step="0.01" value="5" required>
+                  <label class="eq06-etiqueta-oculta">Cantidad</label>
+                  <input class="eq06-campo" type="number" name="cantidades[]" min="1" step="1" value="1" required>
                 </td>
-                <td>kg (automática)</td>
-                <td><button class="eq06-boton-secundario" type="button">Quitar</button></td>
+                <td class="celda-unidad">-</td>
+                <td>
+                  <button class="eq06-boton-secundario" type="button" onclick="quitarFilaRecepcion(this)">Quitar</button>
+                </td>
               </tr>
             </tbody>
           </table>
         </div>
-        <button class="eq06-boton-secundario eq06-agregar-linea" type="button">+ Incluir</button>
+        <button class="eq06-boton-secundario eq06-agregar-linea" type="button" onclick="agregarFilaRecepcion()">+ Incluir</button>
       </fieldset>
 
       <aside class="eq06-aviso" aria-label="Aviso antes de confirmar">
@@ -87,10 +144,40 @@ require_once 'includes/menu.php';
       </aside>
       <div class="eq06-acciones">
         <button class="eq06-boton" type="submit">Confirmar recepción</button>
-        <button class="eq06-boton-secundario" type="reset">Cancelar</button>
+        <a href="<?php echo ($rol_usuario === 'administrador') ? 'dashboard-administrador.php' : 'dashboard-recepcionista.php'; ?>" class="eq06-boton-secundario" style="text-decoration: none; padding: 8px 14px;">Cancelar</a>
       </div>
     </form>
   </section>
 </main>
 
-<?php require_once 'includes/pie.php'; ?>
+<script>
+function actualizarUnidadFila(selectElem) {
+  const opcion = selectElem.options[selectElem.selectedIndex];
+  const unidad = opcion ? (opcion.getAttribute('data-unidad') || '-') : '-';
+  const fila = selectElem.closest('tr');
+  if (fila) {
+    fila.querySelector('.celda-unidad').textContent = unidad;
+  }
+}
+
+function agregarFilaRecepcion() {
+  const tbody = document.getElementById('cuerpo-lineas-recepcion');
+  const primeraFila = tbody.querySelector('.fila-recepcion');
+  const nuevaFila = primeraFila.cloneNode(true);
+  nuevaFila.querySelector('select').selectedIndex = 0;
+  nuevaFila.querySelector('input[type="number"]').value = 1;
+  nuevaFila.querySelector('.celda-unidad').textContent = '-';
+  tbody.appendChild(nuevaFila);
+}
+
+function quitarFilaRecepcion(btn) {
+  const tbody = document.getElementById('cuerpo-lineas-recepcion');
+  if (tbody.querySelectorAll('.fila-recepcion').length > 1) {
+    btn.closest('tr').remove();
+  } else {
+    alert('La recepción debe contener al menos una línea de producto.');
+  }
+}
+</script>
+
+<?php require_once __DIR__ . '/includes/pie.php'; ?>
